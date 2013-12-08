@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/aceEditor.css">
+</head>
+<body id="body">
+
+<table> <!-- TODO: use divs instead of table -->
+
+    <tr>
+        <td style="width: 200px" id="tree1" rowspan="3">
+            <div  class="fileBrowser">
+                <div style="text-align: center;">
+                    <button onclick="myFunction()" class="myButton">Open Folder</button>
+                </div>
+                <ul id="fileTree"></ul>
+            </div>
+        </td>
+
+        <td id="grabBar2" onmousedown="onStartDrag('horizontal', 'tree1')" onmouseup="onStopDrag()" onmousemove="onDragging()" rowspan="3">
+
+        </td>
+
+        <td>
+            <div id="editor"></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td id="grabBar3" colspan="4" onmousedown="onStartDrag('vertical', 'output')" onmouseup="onStopDrag()" onmousemove="onDragging()"></td>
+    </tr>
+
+    <tr>
+
+        <td id="output" colspan="4">
+            <div id="termOutput">
+            <div id="outputText"></div>
+            </div>
+            <label for="termInput"><input type="text" name="command" value="" id="termInput" onkeypress="onEnterKey(event);"></label>
+
+        </td>
+    </tr>
+
+</table>
+
+<script src="ace/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="ace/src-noconflict/ext-modelist.js"></script>
+<script src="scripts/UtilFuctions.js"></script>
+<script src="aceEditor.js"></script>
+<script src="scripts/fileBrowser.js"></script>
+<script src="scripts/terminal.js"></script>
+
+</body>
+
+</html>
