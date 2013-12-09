@@ -36,10 +36,10 @@
     <tr>
 
         <td id="output" colspan="4">
-            <div id="termOutput">
-            <div id="outputText"></div>
-            </div>
-            <label for="termInput"><input type="text" name="command" value="" id="termInput" onkeypress="onEnterKey(event);"></label>
+            <!--<div id="termOutput">-->
+            <!--<div id="outputText"></div>-->
+            <!--</div>-->
+            <!--<label for="termInput"><input type="text" name="command" value="" id="termInput" onkeypress="onEnterKey(event);"></label>-->
 
         </td>
     </tr>
@@ -53,6 +53,10 @@
 <script src="scripts/fileBrowser.js"></script>
 <script src="scripts/terminal.js"></script>
 
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="term.js"></script>
+<script src="scripts/setupTerm.js"></script>
 </body>
 
 </html>
