@@ -19,7 +19,7 @@ term = undefined
 
          term.open document.getElementById('output')
 
-         term.write "\u001b[31mWelcome to term.js!\u001b[m\r\n"
+#         term.write('\x1b[31mWelcome to term.js!\x1b[m\r\n');
 
          socket.on "data", (data) ->
             term.write data
@@ -27,18 +27,41 @@ term = undefined
          socket.on "disconnect", ->
             term.destroy()
 
+         resizeTerm()
+         socket.emit "data", 'pwd\r'
+
 ).call this
 
 
 rowHeight = ->
-   termCH = document.getElementsByClassName('terminal')[0].clientHeight
-   termCH / term.rows
+   h = document.getElementsByClassName('terminal')[0].clientHeight
+   h / term.rows
 
 
-resizeTerm = (height) ->
-   termOH = document.getElementsByClassName('terminal')[0].offsetHeight
+colWidth = ->
+   w = document.getElementsByClassName('terminal')[0].clientWidth
+   w / term.cols
 
-   if (height > (termOH + rowHeight()))
-      term.resize(term.cols, term.rows + 1)
-   if (height < (termOH - rowHeight()))
-      term.resize(term.cols, term.rows - 1)
+
+resizeTerm = ->
+   resizeTermWidth()
+   resizeTermHeight()
+
+
+resizeTermWidth =  ->
+   parent = document.getElementById('output').clientWidth
+
+   cols = Math.floor(parent / colWidth()) - 4
+
+   if (cols != term.cols)
+      term.resize(cols, term.rows)
+
+
+resizeTermHeight = ->
+   parent = document.getElementById('output').clientHeight
+
+   rows = Math.floor(parent / rowHeight()) - 1
+
+   if (rows != term.rows)
+      term.resize(term.cols, rows)
+

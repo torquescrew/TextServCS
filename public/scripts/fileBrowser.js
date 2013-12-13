@@ -22,13 +22,16 @@ onStartDrag = function(axis, id) {
   }
   if (kAxis === "horizontal") {
     document.body.onmousemove = function(evt) {
-      return currentEl().setAttribute("style", "width:" + evt.clientX + "px");
+      var w;
+      w = evt.clientX;
+      resizeTerm();
+      return currentEl().setAttribute("style", "width:" + w + "px");
     };
   } else {
     document.body.onmousemove = function(evt) {
       var h;
       h = $(document).height() - (evt.clientY + 5);
-      resizeTerm(h);
+      resizeTerm();
       return currentEl().setAttribute("style", "height:" + h + "px");
     };
   }
