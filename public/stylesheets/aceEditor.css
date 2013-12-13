@@ -5,10 +5,10 @@
     position: absolute;
     margin: 0;
     padding: 0;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    /*-webkit-user-select: none;*/
+    /*-moz-user-select: none;*/
+    /*-ms-user-select: none;*/
+    /*user-select: none;*/
 }
 
 .fileBrowser {
@@ -21,6 +21,10 @@
     cursor: default;
     font-family: sans-serif;
     line-height: 1.5em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 #editor {
@@ -30,6 +34,8 @@
     left: 0;
     width: 100%;
     height: 100%;
+    font-family: "PT Mono", Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace;
+    font-size: 80%;
 }
 
 #output {
@@ -124,4 +130,12 @@ ul {
     /*overflow-x: inherit;*/
     /*top: 0;*/
     /*vertical-align: top;*/
+}
+
+/* Needs !important to override style set by term.js in javascript*/
+.terminal {
+    /*background-color: pink !important;*/
+    
+    font-size: 75%;
+    font-family: "PT Mono", Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace;
 }
