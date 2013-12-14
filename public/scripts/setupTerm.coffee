@@ -1,4 +1,5 @@
 term = undefined
+termId = 'output2'
 
 (->
    window.onload = ->
@@ -17,7 +18,7 @@ term = undefined
          term.on "title", (title) ->
             document.title = title
 
-         term.open document.getElementById('output')
+         term.open document.getElementById(termId)
 
 #         term.write('\x1b[31mWelcome to term.js!\x1b[m\r\n');
 
@@ -28,6 +29,7 @@ term = undefined
             term.destroy()
 
          resizeTerm()
+         resizeEditor()
          socket.emit "data", 'pwd\r'
 
 ).call this
@@ -44,12 +46,13 @@ colWidth = ->
 
 
 resizeTerm = ->
+#   console.log('resizeTerm')
    resizeTermWidth()
    resizeTermHeight()
 
 
 resizeTermWidth =  ->
-   parent = document.getElementById('output').clientWidth
+   parent = document.getElementById(termId).clientWidth
 
    cols = Math.floor(parent / colWidth()) - 4
 
@@ -58,7 +61,8 @@ resizeTermWidth =  ->
 
 
 resizeTermHeight = ->
-   parent = document.getElementById('output').clientHeight
+   console.log("resizeHeight")
+   parent = document.getElementById(termId).offsetHeight
 
    rows = Math.floor(parent / rowHeight()) - 1
 

@@ -5,10 +5,6 @@
     position: absolute;
     margin: 0;
     padding: 0;
-    /*-webkit-user-select: none;*/
-    /*-moz-user-select: none;*/
-    /*-ms-user-select: none;*/
-    /*user-select: none;*/
 }
 
 .fileBrowser {
@@ -36,10 +32,16 @@
     height: 100%;
     font-family: "PT Mono", Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace;
     font-size: 80%;
+    display: table;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-#output {
-    height: 120px;
+#output2 {
+    height: 40px;
     background-color: #000000;
 }
 
@@ -61,7 +63,7 @@ table {
     border: 0;
     margin: 0;
     padding: 0;
-    border-collapse: collapse;
+    /*border-collapse: collapse;*/
     border-spacing: 0;
 }
 
@@ -108,38 +110,7 @@ ul {
     font-size: 90%;
 }
 
-#termInput {
-    width: 100%;
-    position: fixed;
-    /*margin-bottom: 0;*/
-    bottom: 0;
-}
-
-#termOutput {
-    font-family: sans-serif;
-    overflow-y: scroll;
-    width: 100%;
-    height: 100%;
-
-}
-
-#outputText {
-    font-family: sans-serif;
-    padding: 1em;
-    font-size: 90%;
-    color: #bbbbbb;
-    /*overflow-y: scroll;*/
-    /*overflow-x: inherit;*/
-    /*top: 0;*/
-    /*vertical-align: top;*/
-}
-
-/* Needs !important to override style set by term.js in javascript*/
 .terminal {
-    /*background-color: pink !important;*/
-    /*overflow: auto !important;*/
-    /*font-family: sans-serif, monospace;*/
-    /*font-family: sans "Bitstream Vera Sans Mono";*/
     font-size: 75%;
     font-family: "PT Mono", Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace;
 }

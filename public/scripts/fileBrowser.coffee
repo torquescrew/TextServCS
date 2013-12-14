@@ -17,13 +17,11 @@ onStartDrag = (axis, id) ->
    if kAxis is "horizontal"
       document.body.onmousemove = (evt) ->
          w = evt.clientX
-#         resizeTermWidth()
          resizeTerm()
          currentEl().setAttribute "style", "width:" + w + "px"
    else
       document.body.onmousemove = (evt) ->
          h = $(document).height() - (evt.clientY + 5)
-#         resizeTermHeight(h)
          resizeTerm()
          currentEl().setAttribute "style", "height:" + h + "px"
 
@@ -33,7 +31,7 @@ onStartDrag = (axis, id) ->
 
 onStopDrag = ->
    resizeEditor()
-#   resizeTermWidth()
+   resizeTerm()
    document.body.onmousemove = null
    document.body.onmouseup = null
 
@@ -61,12 +59,15 @@ setUpFileTree = ->
       $(this).css "color", "#999999"
 
    $(".folder ul").hide()
-   $(".folder").click ->
-      event.stopPropagation()
+   $(".folder").click (evt) ->
+      evt.stopPropagation()
+#      console.log($(this).children("ul"))
+#      this.ch
       $(this).children("ul").slideToggle 100
+#      $(this).children("ul").show()
 
-   $(".file").click ->
-      event.stopPropagation()
+   $(".file").click (evt) ->
+      evt.stopPropagation()
       openFile $(this).attr("id")
 
    $(".myButton").hover (->

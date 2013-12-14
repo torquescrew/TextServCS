@@ -42,6 +42,7 @@ onStartDrag = function(axis, id) {
 
 onStopDrag = function() {
   resizeEditor();
+  resizeTerm();
   document.body.onmousemove = null;
   return document.body.onmouseup = null;
 };
@@ -71,12 +72,12 @@ setUpFileTree = function() {
     return $(this).css("color", "#999999");
   });
   $(".folder ul").hide();
-  $(".folder").click(function() {
-    event.stopPropagation();
+  $(".folder").click(function(evt) {
+    evt.stopPropagation();
     return $(this).children("ul").slideToggle(100);
   });
-  $(".file").click(function() {
-    event.stopPropagation();
+  $(".file").click(function(evt) {
+    evt.stopPropagation();
     return openFile($(this).attr("id"));
   });
   return $(".myButton").hover((function() {

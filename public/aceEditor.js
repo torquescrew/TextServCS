@@ -15,7 +15,7 @@ function main() {
   openFile();
   openFolder();
 }
-main();
+$( document ).ready( main );
 
 
 function setUpEditor() {
@@ -145,7 +145,7 @@ function openFile(file) {
 
 
 function openFolder(folder) {
-  "use strict";
+//  "use strict";
 
   if (!U.validStr(folder)) {
     folder = "";
