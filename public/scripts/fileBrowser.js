@@ -24,14 +24,14 @@ onStartDrag = function(axis, id) {
     document.body.onmousemove = function(evt) {
       var w;
       w = evt.clientX;
-      resizeTerm();
+      resizeTermWidth($(document).width() - w);
       return currentEl().setAttribute("style", "width:" + w + "px");
     };
   } else {
     document.body.onmousemove = function(evt) {
       var h;
       h = $(document).height() - (evt.clientY + 5);
-      resizeTerm();
+      resizeTermHeight(h);
       return currentEl().setAttribute("style", "height:" + h + "px");
     };
   }
@@ -42,7 +42,6 @@ onStartDrag = function(axis, id) {
 
 onStopDrag = function() {
   resizeEditor();
-  resizeTerm();
   document.body.onmousemove = null;
   return document.body.onmouseup = null;
 };

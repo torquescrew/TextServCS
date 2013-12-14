@@ -17,12 +17,14 @@ onStartDrag = (axis, id) ->
    if kAxis is "horizontal"
       document.body.onmousemove = (evt) ->
          w = evt.clientX
-         resizeTerm()
+##         resizeTerm()
+         resizeTermWidth($(document).width() - w)
          currentEl().setAttribute "style", "width:" + w + "px"
    else
       document.body.onmousemove = (evt) ->
          h = $(document).height() - (evt.clientY + 5)
-         resizeTerm()
+#         resizeTerm()
+         resizeTermHeight(h)
          currentEl().setAttribute "style", "height:" + h + "px"
 
    document.body.onmouseup = () ->
@@ -31,7 +33,10 @@ onStartDrag = (axis, id) ->
 
 onStopDrag = ->
    resizeEditor()
-   resizeTerm()
+#   w = event.clientX
+   #         resizeTerm()
+#   resizeTermWidth($(document).width() - w)
+#   resizeTerm()
    document.body.onmousemove = null
    document.body.onmouseup = null
 

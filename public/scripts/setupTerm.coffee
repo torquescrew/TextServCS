@@ -28,44 +28,50 @@ termId = 'output2'
          socket.on "disconnect", ->
             term.destroy()
 
-         resizeTerm()
+#         resizeTerm()
          resizeEditor()
+#         document.getElementById(termId).clientHeight = term.rows * rowHeight()
+#         console.log(term.rows * rowHeight())
          socket.emit "data", 'pwd\r'
 
 ).call this
 
 
+termWidth = ->
+   document.getElementsByClassName('terminal')[0].clientWidth
+
+termHeight = ->
+   document.getElementsByClassName('terminal')[0].clientHeight
+
+
 rowHeight = ->
-   h = document.getElementsByClassName('terminal')[0].clientHeight
-   h / term.rows
+#   h = document.getElementsByClassName('terminal')[0].clientHeight
+   termHeight() / term.rows
 
 
 colWidth = ->
-   w = document.getElementsByClassName('terminal')[0].clientWidth
-   w / term.cols
+#   w = document.getElementsByClassName('terminal')[0].clientWidth
+   termWidth() / term.cols
 
 
-resizeTerm = ->
-#   console.log('resizeTerm')
-   resizeTermWidth()
-   resizeTermHeight()
+#resizeTerm = ->
+#   resizeTermWidth(termWidth())
+#   resizeTermHeight(termHeight())
 
 
-resizeTermWidth =  ->
-   parent = document.getElementById(termId).clientWidth
+resizeTermWidth = (width) ->
+   col = colWidth()
+   cols = Math.floor(width / col) - 2
 
-   cols = Math.floor(parent / colWidth()) - 4
-
-   if (cols != term.cols)
+   if (width > col * (term.cols + 1) or width < col * (term.cols - 1))
       term.resize(cols, term.rows)
 
 
-resizeTermHeight = ->
-   console.log("resizeHeight")
-   parent = document.getElementById(termId).offsetHeight
 
-   rows = Math.floor(parent / rowHeight()) - 1
+resizeTermHeight = (height) ->
+   row = rowHeight()
+   rows = Math.floor(height / rowHeight()) - 1
 
-   if (rows != term.rows)
+   if (height > row * (term.rows + 1) or height < row * (term.rows + 1))
       term.resize(term.cols, rows)
 

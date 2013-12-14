@@ -43,6 +43,7 @@
 #output2 {
     height: 40px;
     background-color: #000000;
+    overflow: hidden;
 }
 
 #grabBar2 {
@@ -111,6 +112,8 @@ ul {
 }
 
 .terminal {
+    /*overflow: hidden !important;*/
+    /*background-color: pink !important;*/
     font-size: 75%;
     font-family: "PT Mono", Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace;
 }
