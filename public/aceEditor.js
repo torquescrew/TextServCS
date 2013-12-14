@@ -21,7 +21,9 @@ $( document ).ready( main );
 function setUpEditor() {
   "use strict";
 
-  editor.setTheme("ace/theme/monokai");
+//  editor.setTheme("ace/theme/monokai");
+  editor.setTheme("ace/theme/solarized_dark");
+
   setHotKeys();
 }
 

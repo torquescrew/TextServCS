@@ -5,9 +5,14 @@ termId = 'output2'
    window.onload = ->
       socket = io.connect()
       socket.on "connect", ->
+         c =  Terminal.colors
+         c[256] = '#333333' # background
+         c[257] = '#bbbbbb' # foreground
+
          term = new Terminal(
             cols: 80
             rows: 10
+            colors: c
             useStyle: true
             screenKeys: true
          )
@@ -28,10 +33,7 @@ termId = 'output2'
          socket.on "disconnect", ->
             term.destroy()
 
-#         resizeTerm()
          resizeEditor()
-#         document.getElementById(termId).clientHeight = term.rows * rowHeight()
-#         console.log(term.rows * rowHeight())
          socket.emit "data", 'pwd\r'
 
 ).call this
@@ -45,18 +47,11 @@ termHeight = ->
 
 
 rowHeight = ->
-#   h = document.getElementsByClassName('terminal')[0].clientHeight
    termHeight() / term.rows
 
 
 colWidth = ->
-#   w = document.getElementsByClassName('terminal')[0].clientWidth
    termWidth() / term.cols
-
-
-#resizeTerm = ->
-#   resizeTermWidth(termWidth())
-#   resizeTermHeight(termHeight())
 
 
 resizeTermWidth = (width) ->
@@ -67,10 +62,9 @@ resizeTermWidth = (width) ->
       term.resize(cols, term.rows)
 
 
-
 resizeTermHeight = (height) ->
    row = rowHeight()
-   rows = Math.floor(height / rowHeight()) - 1
+   rows = Math.floor(height / rowHeight())
 
    if (height > row * (term.rows + 1) or height < row * (term.rows + 1))
       term.resize(term.cols, rows)

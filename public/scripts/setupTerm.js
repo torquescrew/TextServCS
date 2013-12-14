@@ -10,9 +10,14 @@ termId = 'output2';
     var socket;
     socket = io.connect();
     return socket.on("connect", function() {
+      var c;
+      c = Terminal.colors;
+      c[256] = '#333333';
+      c[257] = '#bbbbbb';
       term = new Terminal({
         cols: 80,
         rows: 10,
+        colors: c,
         useStyle: true,
         screenKeys: true
       });
@@ -63,7 +68,7 @@ resizeTermWidth = function(width) {
 resizeTermHeight = function(height) {
   var row, rows;
   row = rowHeight();
-  rows = Math.floor(height / rowHeight()) - 1;
+  rows = Math.floor(height / rowHeight());
   if (height > row * (term.rows + 1) || height < row * (term.rows + 1)) {
     return term.resize(term.cols, rows);
   }

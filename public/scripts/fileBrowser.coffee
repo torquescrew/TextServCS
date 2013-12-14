@@ -23,7 +23,6 @@ onStartDrag = (axis, id) ->
    else
       document.body.onmousemove = (evt) ->
          h = $(document).height() - (evt.clientY + 5)
-#         resizeTerm()
          resizeTermHeight(h)
          currentEl().setAttribute "style", "height:" + h + "px"
 
