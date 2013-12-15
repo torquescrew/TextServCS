@@ -36,7 +36,6 @@ term.on "data", (data) ->
 console.log "" + "Created shell with pty master/slave" + " pair (master: %d, pid: %d)", term.fd, term.pid
 
 
-
 app = express()
 
 # all environments
@@ -50,16 +49,16 @@ app.use express.methodOverride()
 app.use app.router
 app.use express.static(path.join(__dirname, "public"))
 
-app.use (req, res, next) ->
-   setHeader = res.setHeader
-   res.setHeader = (name) ->
-      switch name
-         when "Cache-Control", "Last-Modified"
-         , "ETag"
-            return
-      setHeader.apply res, arguments
-
-   next()
+#app.use (req, res, next) ->
+#   setHeader = res.setHeader
+#   res.setHeader = (name) ->
+#      switch name
+#         when "Cache-Control", "Last-Modified"
+#         , "ETag"
+#            return
+#      setHeader.apply res, arguments
+#
+#   next()
 
 app.use(terminal.middleware())
 
@@ -68,20 +67,23 @@ app.use(terminal.middleware())
 app.use express.errorHandler()  if "development" is app.get("env")
 
 app.get "/", (req, res) ->
-  res.sendfile(__dirname + '/public/aceEditor.html')
+   res.sendfile(__dirname + '/public/aceEditor.html')
 
 
 app.get "/_open_file", (req, res) ->
-  openFile(req.query.filename, res)
+   openFile(req.query.filename, res)
 
 
 app.get "/_open_folder", (req, res) ->
-  folder = req.query.folderName
-  if (u.badString(folder))
-#    folder = process.env.HOME
-    folder = '/Users/tobysuggate/Documents/Repos/CppDependencies/workspace/Dependancies'
+   folder = req.query.folderName
 
-  openFolder(folder, res)
+   if (u.badString(folder))
+      if (fs.existsSync('/Users/tobysuggate/Doc1uments/Repos/CppDependencies/workspace/Dependancies'))
+         folder = '/Users/tobysuggate/Documents/Repos/CppDependencies/workspace/Dependancies'
+      else
+         folder = process.env.HOME + "/Desktop"
+
+   openFolder(folder, res)
 
 
 app.post "/_save_file", (req, res) ->
@@ -92,11 +94,12 @@ app.post "/_save_file", (req, res) ->
       saveFile(file, content)
    else
       console.log("/_save_file received invalid strings")
+   res.send("wrote file: #{file}")
 
 
 server = http.createServer(app)
 server.listen app.get("port"), ->
-  console.log "Express server listening on port " + app.get("port")
+   console.log "Express server listening on port " + app.get("port")
 
 
 server.on "connection", (socket) ->
@@ -131,16 +134,16 @@ saveFile = (file, content) ->
 
 
 openFile = (file, response) ->
-  fs.readFile(file, (err, data) ->
-    if err
-      throw err
-    response.json({filename: file, content: data.toString()})
-  )
+   fs.readFile(file, (err, data) ->
+      if err
+         throw err
+      response.json({filename: file, content: data.toString()})
+   )
 
 
 openFolder = (folder, response) ->
-  if (u.okString(folder))
-    wd.getDirectoryList(folder, response)
+   if (u.okString(folder))
+      wd.getDirectoryList(folder, response)
 
 
 

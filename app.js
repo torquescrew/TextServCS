@@ -76,21 +76,6 @@ app.use(app.router);
 
 app.use(express["static"](path.join(__dirname, "public")));
 
-app.use(function(req, res, next) {
-  var setHeader;
-  setHeader = res.setHeader;
-  res.setHeader = function(name) {
-    switch (name) {
-      case "Cache-Control":
-      case "Last-Modified":
-      case "ETag":
-        return;
-    }
-    return setHeader.apply(res, arguments);
-  };
-  return next();
-});
-
 app.use(terminal.middleware());
 
 if ("development" === app.get("env")) {
@@ -109,7 +94,11 @@ app.get("/_open_folder", function(req, res) {
   var folder;
   folder = req.query.folderName;
   if (u.badString(folder)) {
-    folder = '/Users/tobysuggate/Documents/Repos/CppDependencies/workspace/Dependancies';
+    if (fs.existsSync('/Users/tobysuggate/Doc1uments/Repos/CppDependencies/workspace/Dependancies')) {
+      folder = '/Users/tobysuggate/Documents/Repos/CppDependencies/workspace/Dependancies';
+    } else {
+      folder = process.env.HOME + "/Desktop";
+    }
   }
   return openFolder(folder, res);
 });
@@ -119,10 +108,11 @@ app.post("/_save_file", function(req, res) {
   file = req.body.filename;
   content = req.body.content;
   if (u.okString(file) && u.okString(content)) {
-    return saveFile(file, content);
+    saveFile(file, content);
   } else {
-    return console.log("/_save_file received invalid strings");
+    console.log("/_save_file received invalid strings");
   }
+  return res.send("wrote file: " + file);
 });
 
 server = http.createServer(app);
