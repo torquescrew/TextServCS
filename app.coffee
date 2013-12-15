@@ -83,6 +83,17 @@ app.get "/_open_folder", (req, res) ->
 
   openFolder(folder, res)
 
+
+app.post "/_save_file", (req, res) ->
+   file = req.body.filename
+   content = req.body.content
+
+   if u.okString(file) and u.okString(content)
+      saveFile(file, content)
+   else
+      console.log("/_save_file received invalid strings")
+
+
 server = http.createServer(app)
 server.listen app.get("port"), ->
   console.log "Express server listening on port " + app.get("port")
@@ -93,7 +104,7 @@ server.on "connection", (socket) ->
    if address isnt "127.0.0.1" and address isnt "::1"
       try
          socket.destroy()
-      console.log "Attempted connection from %s. Refused.", address
+      console.log "Attempted connection from #{address}. Refused."
 
 
 ###
@@ -113,6 +124,10 @@ io.sockets.on "connection", (sock) ->
 
    socket.emit "data", buff.shift()  while buff.length
 
+
+saveFile = (file, content) ->
+   fs.writeFileSync(file, content);
+   console.log "wrote file: #{file}"
 
 
 openFile = (file, response) ->

@@ -22,6 +22,7 @@ termId = 'output2';
         screenKeys: true
       });
       term.on("data", function(data) {
+        console.log("data: " + data);
         return socket.emit("data", data);
       });
       term.on("title", function(title) {

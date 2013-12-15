@@ -24,6 +24,11 @@ function setUpEditor() {
 //  editor.setTheme("ace/theme/monokai");
   editor.setTheme("ace/theme/solarized_dark");
 
+  editor.setOptions({
+    enableBasicAutocompletion: true,
+    enableSnippets: true
+  });
+
   setHotKeys();
 }
 
@@ -141,6 +146,9 @@ function openFile(file) {
       editor.scrollToLine(0);
 
       document.title = U.removePath(getCurrentFile());
+
+      var UndoManager = ace.require("ace/undomanager").UndoManager;
+      editor.getSession().setUndoManager(new UndoManager());
     });
   }
 }

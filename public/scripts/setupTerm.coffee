@@ -18,6 +18,7 @@ termId = 'output2'
          )
 
          term.on "data", (data) ->
+            console.log("data: #{data}")
             socket.emit "data", data
 
          term.on "title", (title) ->
