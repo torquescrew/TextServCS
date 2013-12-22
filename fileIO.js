@@ -11,9 +11,66 @@ var express = require("express")
   , fs = require("fs");
 
 
+var settingsFile = process.env.HOME + "/.textServ";
+
+var defaultSettings = {
+  folder: process.env.HOME + "/Desktop"
+};
+
+
 exports.saveFile = saveFile;
 exports.openFile = openFile;
 exports.openFolder = openFolder;
+
+
+function createDefaultSettingsFile() {
+  if (!fs.existsSync(settingsFile)) {
+    var content = JSON.stringify(defaultSettings, null, 4);
+
+    fs.writeFileSync(settingsFile, content);
+  }
+}
+
+
+function readSetting(name) {
+  var setting = null;
+
+  if (!fs.existsSync(settingsFile)) {
+    createDefaultSettingsFile();
+  }
+
+  console.log("settingsFile: " + settingsFile);
+
+  var data = fs.readFileSync(settingsFile);
+
+  console.log(data.toString());
+
+  var settings = JSON.parse(data);
+  setting = settings[name];
+
+  return setting;
+}
+
+
+function writeSetting(name, value) {
+  if (!fs.existsSync(settingsFile)) {
+    createDefaultSettingsFile();
+  }
+
+
+  var data = fs.readFileSync(settingsFile);
+
+  if (data) {
+    var settings = JSON.parse(data);
+    settings[name] = value;
+
+    var content = JSON.stringify(settings, null, 4);
+    fs.writeFileSync(settingsFile, content);
+  }
+
+  
+
+}
 
 
 function openFile(req, res) {
@@ -25,13 +82,17 @@ function openFolder(req, res) {
   var folder;
   folder = req.query.folderName;
   if (u.badString(folder)) {
-    if (fs.existsSync('/Users/tobysuggate/Documents/Repos/CppDependencies/workspace/Dependancies')) {
-      folder = '/Users/tobysuggate/Documents/Repos/CppDependencies/workspace/Dependancies';
-    } else {
-      folder = process.env.HOME + "/Desktop";
-    }
+    folder = readSetting('folder');
+
+
+//    if (fs.existsSync('/Users/tobysuggate/Documents/Repos/CppDependencies/workspace/Dependancies')) {
+//      folder = '/Users/tobysuggate/Documents/Repos/CppDependencies/workspace/Dependancies';
+//    } else {
+//      folder = process.env.HOME + "/Desktop";
+//    }
   }
   readFolder(folder, res);
+
 }
 
 
@@ -71,6 +132,7 @@ function readFile(file, response) {
 function readFolder(folder, response) {
   if (u.okString(folder)) {
     wd.getDirectoryList(folder, response);
+    writeSetting('folder', folder);
   }
 }
 
