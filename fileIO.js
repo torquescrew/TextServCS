@@ -2,13 +2,14 @@
  * Created by tobysuggate on 22/12/13.
  */
 
-var express = require("express")
-  , user = require("./routes/user")
-  , http = require("http")
-  , path = require("path")
-  , wd = require("./walkDirectory")
-  , u = require("./util")
-  , fs = require("fs");
+
+var express = require("express"),
+  user = require("./routes/user"),
+  http = require("http"),
+  path = require("path"),
+  wd = require("./walkDirectory"),
+  u = require("./util"),
+  fs = require("fs");
 
 
 var settingsFile = process.env.HOME + "/.textServ";
@@ -38,12 +39,7 @@ function readSetting(name) {
   if (!fs.existsSync(settingsFile)) {
     createDefaultSettingsFile();
   }
-
-  console.log("settingsFile: " + settingsFile);
-
   var data = fs.readFileSync(settingsFile);
-
-  console.log(data.toString());
 
   var settings = JSON.parse(data);
   setting = settings[name];
@@ -56,8 +52,6 @@ function writeSetting(name, value) {
   if (!fs.existsSync(settingsFile)) {
     createDefaultSettingsFile();
   }
-
-
   var data = fs.readFileSync(settingsFile);
 
   if (data) {
@@ -67,9 +61,6 @@ function writeSetting(name, value) {
     var content = JSON.stringify(settings, null, 4);
     fs.writeFileSync(settingsFile, content);
   }
-
-  
-
 }
 
 
@@ -83,16 +74,8 @@ function openFolder(req, res) {
   folder = req.query.folderName;
   if (u.badString(folder)) {
     folder = readSetting('folder');
-
-
-//    if (fs.existsSync('/Users/tobysuggate/Documents/Repos/CppDependencies/workspace/Dependancies')) {
-//      folder = '/Users/tobysuggate/Documents/Repos/CppDependencies/workspace/Dependancies';
-//    } else {
-//      folder = process.env.HOME + "/Desktop";
-//    }
   }
   readFolder(folder, res);
-
 }
 
 

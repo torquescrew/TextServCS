@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Frame Test</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/frameResizer.css">
+</head>
+<body>
+
+<table>
+
+  <tr>
+    <td id="left" rowspan="3">
+      <iframe id="frame1" src="frame1.html" seamless></iframe>
+    </td>
+
+    <td id="horizontalBar" rowspan="3"></td>
+
+    <td id="center">
+      <iframe id="frame2" src="frame2.html" seamless></iframe>
+    </td>
+  </tr>
+
+  <tr>
+    <td id="verticalBar" colspan="2"></td>
+  </tr>
+
+  <tr>
+    <td id="bottom" colspan="2">
+      <iframe id="frame3" src="frame3.html" seamless></iframe>
+    </td>
+  </tr>
+
+</table>
+
+
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="scripts/frameResizer.js"></script>
+
+</body>
+</html>
