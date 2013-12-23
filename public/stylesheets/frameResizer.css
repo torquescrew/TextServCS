@@ -31,16 +31,16 @@ tr {
 
 #left {
     width: 200px;
-    pointer-events: none;
+    /*pointer-events: none;*/
 }
 
 #bottom {
     height: 150px;
-    pointer-events: none;
+    /*pointer-events: none;*/
 }
 
 #center {
-    pointer-events: none;
+    /*pointer-events: none;*/
 }
 
 #frame1 {

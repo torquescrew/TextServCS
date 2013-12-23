@@ -4,25 +4,12 @@
 
 "use strict";
 
-var kId = "tree1";
-var kAxis = "horizontal";
-
 
 function setupResizing() {
-//  $("#horizontalBar").click(startHorizontalDrag);
-//  $("#horizontalBar").click(function() {
-//    console.log("left");
-//  });
-//  console.log("hi");
-//
-  document.getElementById('horizontalBar').onclick = startHorizontalDrag;
-  document.getElementById('verticalBar').onclick = startVerticalDrag;
+  document.getElementById('horizontalBar').onmousedown = startHorizontalDrag;
+  document.getElementById('verticalBar').onmousedown = startVerticalDrag;
 }
 setupResizing();
-
-function currentEl() {
-  return document.getElementById(kId);
-}
 
 
 function getLeft() {
@@ -36,10 +23,7 @@ function getButtom() {
 
 
 function startHorizontalDrag() {
-  console.log("startHorizontalDrag");
-
-  $('#left').css('pointer-events', 'none');
-  $('#bottom').css('pointer-events', 'none');
+  enablePointerEvents(false);
 
   document.body.onmousemove = function (evt) {
     var w = evt.clientX;
@@ -53,15 +37,22 @@ function startHorizontalDrag() {
 }
 
 
-function disablePointerEvents(disable) {
-  
+function enablePointerEvents(enable) {
+  if (enable) {
+    $('#frame1').css('pointer-events', 'auto');
+    $('#frame2').css('pointer-events', 'auto');
+    $('#frame3').css('pointer-events', 'auto');
+  }
+  else {
+    $('#frame1').css('pointer-events', 'none');
+    $('#frame2').css('pointer-events', 'none');
+    $('#frame3').css('pointer-events', 'none');
+  }
 }
 
 
 function startVerticalDrag() {
-
-  $('#left').css('pointer-events', 'none');
-  $('#bottom').css('pointer-events', 'none');
+  enablePointerEvents(false);
 
   document.body.onmousemove = function (evt) {
     var h = $(document).height() - (evt.clientY + 5);
@@ -75,49 +66,10 @@ function startVerticalDrag() {
 }
 
 
-function onStartDrag(axis, id) {
-  if (axis.length > 0) {
-    kAxis = axis;
-  }
-
-  if (id.length > 0) {
-    kId = id;
-  }
-
-  if (kAxis === "horizontal") {
-    document.body.onmousemove = function (evt) {
-      var w = evt.clientX;
-//      resizeTermWidth($(document).width() - w);
-      currentEl().setAttribute("style", "width:" + w + "px");
-    };
-  }
-
-  else {
-    document.body.onmousemove = function (evt) {
-      var h = $(document).height() - (evt.clientY + 5);
-//      resizeTermHeight(h);
-      currentEl().setAttribute("style", "height:" + h + "px");
-    };
-  }
-
-  document.body.onmouseup = function () {
-    onStopDrag();
-  };
-}
-
-
 function onStopDrag() {
 //  resizeEditor();
+  enablePointerEvents(true);
+
   document.body.onmousemove = null;
   document.body.onmouseup = null;
-}
-
-
-function onDragging() {
-  if (kAxis === "horizontal") {
-    currentEl().setAttribute("style", "width:" + event.clientX + "px");
-  }
-  else {
-    currentEl().setAttribute("style", "height:" + ($(document).height() - (event.clientY + 5)) + "px");
-  }
 }
