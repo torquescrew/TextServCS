@@ -154,23 +154,23 @@ function openFile(file) {
 }
 
 
-function openFolder(folder) {
+//function openFolder(folder) {
 //  "use strict";
-
-  if (!U.validStr(folder)) {
-    folder = "";
-  }
-
-  $.getJSON('/_open_folder', {
-      folderName: folder
-    },
-    function (data) {
-      if (data.content) {
-        $("#fileTree").html(data.content);
-        setUpFileTree();
-      }
-    });
-}
+//
+//  if (!U.validStr(folder)) {
+//    folder = "";
+//  }
+//
+//  $.getJSON('/_open_folder', {
+//      folderName: folder
+//    },
+//    function (data) {
+//      if (data.content) {
+//        $("#fileTree").html(data.content);
+//        setUpFileTree();
+//      }
+//    });
+//}
 
 
 function getUserDir() {

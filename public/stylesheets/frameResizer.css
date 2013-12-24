@@ -31,16 +31,17 @@ tr {
 
 #left {
     width: 200px;
-    /*pointer-events: none;*/
 }
 
 #bottom {
     height: 150px;
-    /*pointer-events: none;*/
 }
 
 #center {
-    /*pointer-events: none;*/
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 #frame1 {

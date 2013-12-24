@@ -33,7 +33,8 @@
     font-family: "PT Mono", Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace;
     font-size: 80%;
     display: table;
-    position: relative;
+    position: absolute;
+    /*position: relative;*/
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
