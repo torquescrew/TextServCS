@@ -1,0 +1,44 @@
+body {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.fileBrowser {
+    height: 100%;
+    overflow: auto;
+    border: 0;
+    background-color: #333333;
+    padding-left: 10px;
+    font-size: 80%;
+    cursor: default;
+    font-family: sans-serif;
+    line-height: 1.5em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.folder {
+    list-style-type: none;
+    font-weight: bolder;
+    padding-left: 0;
+    margin-left: 0;
+    color: #BBBBBB;
+}
+
+.file {
+    list-style-type: none;
+    font-weight: lighter;
+    padding-left: 0;
+    margin-left: 0;
+    color: #999999;
+}
+
+ul {
+    margin-left: 0;
+    padding-left: 12px;
+}

@@ -2,6 +2,9 @@
 <html>
 <head>
   <title></title>
+
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <link rel="stylesheet" type="text/css" href="stylesheets/fileBrowser.css">
 </head>
 <body>
 
@@ -9,6 +12,21 @@
   <ul id="fileTree"></ul>
 </div>
 
+<script src="scripts/UtilFuctions.js"></script>
 <script src="scripts/fileBrowser.js"></script>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="scripts/talkToServer.js"></script>
+<!--<script>-->
+  <!--var socket = io.connect('http://localhost');-->
+  <!--socket.on('news', function (data) {-->
+    <!--console.log(data);-->
+    <!--socket.emit('my other event', { my: 'data' });-->
+  <!--});-->
+
+  <!--console.log("hi from fileBrowser");-->
+
+<!--</script>-->
+
 </body>
 </html>

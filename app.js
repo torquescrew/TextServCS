@@ -6,13 +6,16 @@ var express = require("express")
   , path = require("path")
   , fs = require("fs")
   , u = require("./util")
-  , io = require('socket.io')
+//  , io = require('socket.io').listen(80)
   , terminal = require('term.js')
   , fileIO = require('./fileIO')
   , termServer = require('./setupTermServer');
 
-
 var app = express();
+var server = http.createServer(app);
+var io = require('socket.io').listen(server, { log: false });
+
+
 app.set("port", process.env.PORT || 3000);
 app.use(express.favicon());
 app.use(express.logger("dev"));
@@ -38,11 +41,25 @@ app.get("/_open_folder", fileIO.openFolder);
 app.post("/_save_file", fileIO.saveFile);
 
 
-var server = http.createServer(app);
+
 
 server.listen(app.get("port"), function () {
   console.log("Express server listening on port " + app.get("port"));
 });
 
+
 termServer.setup(server);
+
+io.sockets.on('connection', function (socket) {
+
+  termServer.onConnection(socket);
+
+
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
+
+//console.log("hi");
 

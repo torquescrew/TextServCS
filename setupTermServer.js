@@ -21,7 +21,9 @@ var socket = null;
 var term = null;
 var server = null;
 
-function setup(s) {
+exports.setup = function (s) {
+  "use strict";
+
   server = s;
 
   term = pty.fork(process.env.SHELL || "sh", [], {
@@ -37,14 +39,15 @@ function setup(s) {
     }
     if (!socket) {
       buff.push(data);
-    } else {
+    }
+    else {
       socket.emit("data", data);
     }
   });
 
   console.log("" + "Created shell with pty master/slave" + " pair (master: %d, pid: %d)", term.fd, term.pid);
 
-  server.on('connection', function(socket) {
+  server.on('connection', function (socket) {
     var address = socket.remoteAddress;
     if (address !== '127.0.0.1' && address !== '::1') {
       try {
@@ -59,28 +62,50 @@ function setup(s) {
   /*
    Sockets
    */
-  io = io.listen(server, {
-    log: false
+//  io = io.listen(server, {
+//    log: false
+//  });
+//
+//  io.sockets.on('connection', function(sock) {
+//    socket = sock;
+//
+//    socket.on('data', function(data) {
+//      if (stream) stream.write('IN: ' + data + '\n-\n');
+//      term.write(data);
+//    });
+//
+//    socket.on('disconnect', function() {
+//      socket = null;
+//    });
+//
+//    while (buff.length) {
+//      socket.emit('data', buff.shift());
+//    }
+//  });
+};
+
+
+exports.onConnection = function (s) {
+  "use strict";
+
+  socket = s;
+
+  socket.on('data', function (data) {
+    if (stream) stream.write('IN: ' + data + '\n-\n');
+    term.write(data);
   });
 
-  io.sockets.on('connection', function(sock) {
-    socket = sock;
-
-    socket.on('data', function(data) {
-      if (stream) stream.write('IN: ' + data + '\n-\n');
-      term.write(data);
-    });
-
-    socket.on('disconnect', function() {
-      socket = null;
-    });
-
-    while (buff.length) {
-      socket.emit('data', buff.shift());
-    }
+  socket.on('disconnect', function () {
+    socket = null;
   });
-}
 
-exports.setup = setup;
+  while (buff.length) {
+    socket.emit('data', buff.shift());
+  }
+};
+
+
+//exports.setup = setup;
+//exports.onConnection = onConnection;
 
 

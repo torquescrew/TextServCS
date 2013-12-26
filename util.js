@@ -13,9 +13,8 @@ function tailAfterLast(str, char) {
   i = str.lastIndexOf(char);
   if (i > 0) {
     return str.slice(i + 1);
-  } else {
-    return "";
   }
+  return "";
 }
 
 function tailAfterFirst(str, char) {
@@ -23,9 +22,8 @@ function tailAfterFirst(str, char) {
   i = str.indexOf(char);
   if (i > 0) {
     return str.slice(i + 1);
-  } else {
-    return "";
   }
+  return "";
 }
 
 function endsWith(str, suffix) {

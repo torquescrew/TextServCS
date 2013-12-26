@@ -93,6 +93,9 @@ function saveFile(req, res) {
 }
 
 
+//exports.saveFile2 = function
+
+
 function writeFile(file, content) {
   fs.writeFileSync(file, content);
   console.log("wrote file: " + file);

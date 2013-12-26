@@ -2,20 +2,31 @@
  setUpFileTree: false*/
 
 
-var editor;
+var editor = null;
 
-function main() {
+//function main() {
+//  "use strict";
+//
+//  console.log("javascript main()");
+//
+//  editor = ace.edit("editor");
+//  setUpEditor();
+//
+//  openFile();
+////  openFolder();
+//}
+//$( document ).ready( main );
+
+(function() {
   "use strict";
 
-  console.log("javascript main()");
+//  console.log("javascript main()");
 
   editor = ace.edit("editor");
   setUpEditor();
 
   openFile();
-  openFolder();
-}
-$( document ).ready( main );
+})();
 
 
 function setUpEditor() {
