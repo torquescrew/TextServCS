@@ -3,58 +3,37 @@
  */
 
 
-var App = App || {};
+var Editor = Editor || {};
 
-App.socket = io.connect('http://localhost');
+//Editor.socket = null;
+Editor.socket = io.connect('http://localhost');
+
 
 var gEditor;
 
-/**
- *  init App.socket
- */
-$( document ).ready(function() {
-  "use strict";
-
-//  console.log("editor socket setup");
-
-//  App.setupServerSocket();
-  App.initEditorSocket();
-//  console.log(App.socket);
 
 
-//  App.socket.on('news', function(data) {
-//    console.log(data);
-//    App.socket.emit('my other event', { my: 'data' });
-//  });
-//
-//  App.socket.on('res_open_file', function(data) {
-////    console.log('res_open_file: ' + data);
-//    console.log('res_open_file: ' + data.fileName);
-////    console.log('content: ' + data.content);
-//
-//    openFile(data.fileName, data.content);
-//  });
 
-});
+//Editor.initEditorSocket = function() {
+//  "use strict";
 
+//  Editor.socket = io.connect('http://localhost');
+//  console.log("connect editor.js");
 
-App.initEditorSocket = function() {
-  "use strict";
-
-  App.socket.on('news', function(data) {
+  Editor.socket.on('news', function(data) {
     console.log('editor on news: ');
     console.log(data);
-    App.socket.emit('my other event', { my: 'data' });
+    Editor.socket.emit('my other event', { my: 'data' });
   });
 
-  App.socket.on('res_open_file', function(data) {
+  Editor.socket.on('res_open_file', function(data) {
 //    console.log('res_open_file: ' + data);
     console.log('res_open_file: ' + data.fileName);
 //    console.log('content: ' + data.content);
 
     openFile(data.fileName, data.content);
   });
-};
+//};
 
 
 /**
@@ -187,3 +166,30 @@ function setMode(fileName) {
   }
 }
 
+/**
+ *  init App.socket
+ */
+//(function() {
+//  "use strict";
+//
+////  console.log("editor socket setup");
+//
+////  App.setupServerSocket();
+//  Editor.initEditorSocket();
+////  console.log(App.socket);
+//
+//
+////  App.socket.on('news', function(data) {
+////    console.log(data);
+////    App.socket.emit('my other event', { my: 'data' });
+////  });
+////
+////  App.socket.on('res_open_file', function(data) {
+//////    console.log('res_open_file: ' + data);
+////    console.log('res_open_file: ' + data.fileName);
+//////    console.log('content: ' + data.content);
+////
+////    openFile(data.fileName, data.content);
+////  });
+//
+//})();

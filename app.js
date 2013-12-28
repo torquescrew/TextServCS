@@ -53,7 +53,7 @@ server.listen(app.get("port"), function () {
 io.sockets.on('connection', function (socket) {
 
   termServer.onConnection(socket);
-  fileIO.setSocket(socket);
+  fileIO.setSocket(socket, io.sockets);
 
 
   socket.emit('news', { hello: 'world' });

@@ -11,7 +11,7 @@ var express = require("express"),
   u = require("./util"),
   fs = require("fs");
 
-var gSocket;
+var gSockets;
 var gSettingsFile = process.env.HOME + "/.textServ";
 
 var defaultSettings = {
@@ -23,7 +23,7 @@ exports.saveFile = saveFile;
 exports.openFile = openFile;
 exports.openFolder = openFolder;
 exports.openFileRes = openFileRes;
-exports.setSocket = setSocket;
+//exports.setSocket = setSocket;
 
 
 function createDefaultSettingsFile() {
@@ -134,35 +134,36 @@ function openFileRes(fileName) {
 
   if (fs.existsSync(fileName)) {
     data = fs.readFileSync(fileName);
+
+
+    if (u.okString(fileName) && u.okString(data.toString())) {
+      console.log('res_open_file ' + fileName);
+
+      gSockets.emit('res_open_file', {
+        fileName: fileName,
+        content: data.toString()
+      });
+    }
   }
-
-  if (u.okString(fileName) && u.okString(data.toString())) {
-    console.log('emitting ' + fileName);
-
-    gSocket.emit('res_open_file', {
-      fileName: fileName,
-      content: data.toString()
-    });
-  }
-
 }
 
 
 /**
  * @param {Socket} socket
+ * @param {object} sockets
  */
-function setSocket(socket) {
+exports.setSocket = function(socket, sockets) {
   "use strict";
 
-  gSocket = socket;
-  initSocketHandlers();
-}
+  gSockets = sockets;
+  initSocketHandlers(socket);
+};
 
 
-function initSocketHandlers() {
+function initSocketHandlers(socket) {
   "use strict";
 
-  gSocket.on('req_open_file', function (data) {
+  socket.on('req_open_file', function (data) {
     console.log("req_open_file: " + data.fileName);
     openFileRes(data.fileName);
   });

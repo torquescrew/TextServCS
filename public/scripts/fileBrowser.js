@@ -1,19 +1,21 @@
 
-var App = App || {};
-App.socket = io.connect('http://localhost');
+var Browser = Browser || {};
+//Browser.socket = null;
+Browser.socket = io.connect('http://localhost');
 
-$( document ).ready(function() {
-  "use strict";
+//(function() {
+//  "use strict";
 
+//  Browser.socket = io.connect('http://localhost');
 
-
-  App.socket.on('news', function(data) {
+  Browser.socket.on('news', function(data) {
     console.log('fileBrowser on news ' + data);
-    App.socket.emit('my other event', { my: 'data' });
+    Browser.socket.emit('my other event', { my: 'data' });
   });
 
   openFolder("");
-});
+
+//})();
 
 
 function openFolder(folder) {
@@ -29,7 +31,7 @@ function openFolder(folder) {
     function (data) {
       if (data.content) {
         $("#fileTree").html(data.content);
-        App.setUpFileTree();
+        Browser.setUpFileTree();
       }
     });
 }
@@ -39,18 +41,23 @@ function openFolder(folder) {
  * Ask server to read file and post it to editor
  * @param {string} file
  */
-App.requestOpenFile = function(file) {
+Browser.requestOpenFile = function(file) {
   "use strict";
+
+
+  if (Browser.socket === null) {
+    alert("Browser.socket is null");
+  }
 
   if (validStr(file)) {
     console.log("emit req_open_file: " + file);
-    App.socket.emit('req_open_file', { fileName: file });
+    Browser.socket.emit('req_open_file', { fileName: file });
   }
 
 };
 
 
-App.setUpFileTree = function() {
+Browser.setUpFileTree = function() {
   "use strict";
 
   var folder = $(".folder");
@@ -79,7 +86,7 @@ App.setUpFileTree = function() {
 
   file.click(function(evt) {
     evt.stopPropagation();
-    App.requestOpenFile($(this).attr("id"));
+    Browser.requestOpenFile($(this).attr("id"));
   });
 
   $(".myButton").hover((function() {
