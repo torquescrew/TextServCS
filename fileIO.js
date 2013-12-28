@@ -11,8 +11,8 @@ var express = require("express"),
   u = require("./util"),
   fs = require("fs");
 
-
-var settingsFile = process.env.HOME + "/.textServ";
+var gSocket;
+var gSettingsFile = process.env.HOME + "/.textServ";
 
 var defaultSettings = {
   folder: process.env.HOME + "/Desktop"
@@ -22,24 +22,26 @@ var defaultSettings = {
 exports.saveFile = saveFile;
 exports.openFile = openFile;
 exports.openFolder = openFolder;
+exports.openFileRes = openFileRes;
+exports.setSocket = setSocket;
 
 
 function createDefaultSettingsFile() {
-  if (!fs.existsSync(settingsFile)) {
+  if (!fs.existsSync(gSettingsFile)) {
     var content = JSON.stringify(defaultSettings, null, 4);
 
-    fs.writeFileSync(settingsFile, content);
+    fs.writeFileSync(gSettingsFile, content);
   }
 }
 
 
 function readSetting(name) {
-  var setting = null;
+  var setting;
 
-  if (!fs.existsSync(settingsFile)) {
+  if (!fs.existsSync(gSettingsFile)) {
     createDefaultSettingsFile();
   }
-  var data = fs.readFileSync(settingsFile);
+  var data = fs.readFileSync(gSettingsFile);
 
   var settings = JSON.parse(data);
   setting = settings[name];
@@ -49,17 +51,17 @@ function readSetting(name) {
 
 
 function writeSetting(name, value) {
-  if (!fs.existsSync(settingsFile)) {
+  if (!fs.existsSync(gSettingsFile)) {
     createDefaultSettingsFile();
   }
-  var data = fs.readFileSync(settingsFile);
+  var data = fs.readFileSync(gSettingsFile);
 
   if (data) {
     var settings = JSON.parse(data);
     settings[name] = value;
 
     var content = JSON.stringify(settings, null, 4);
-    fs.writeFileSync(settingsFile, content);
+    fs.writeFileSync(gSettingsFile, content);
   }
 }
 
@@ -122,3 +124,48 @@ function readFolder(folder, response) {
   }
 }
 
+/**
+ * @param {string} fileName
+ */
+function openFileRes(fileName) {
+  "use strict";
+
+  var data = "";
+
+  if (fs.existsSync(fileName)) {
+    data = fs.readFileSync(fileName);
+  }
+
+  if (u.okString(fileName) && u.okString(data.toString())) {
+    console.log('emitting ' + fileName);
+
+    gSocket.emit('res_open_file', {
+      fileName: fileName,
+      content: data.toString()
+    });
+  }
+
+}
+
+
+/**
+ * @param {Socket} socket
+ */
+function setSocket(socket) {
+  "use strict";
+
+  gSocket = socket;
+  initSocketHandlers();
+}
+
+
+function initSocketHandlers() {
+  "use strict";
+
+  gSocket.on('req_open_file', function (data) {
+    console.log("req_open_file: " + data.fileName);
+    openFileRes(data.fileName);
+  });
+
+
+}

@@ -48,11 +48,12 @@ server.listen(app.get("port"), function () {
 });
 
 
-termServer.setup(server);
+//termServer.setup(server);
 
 io.sockets.on('connection', function (socket) {
 
   termServer.onConnection(socket);
+  fileIO.setSocket(socket);
 
 
   socket.emit('news', { hello: 'world' });

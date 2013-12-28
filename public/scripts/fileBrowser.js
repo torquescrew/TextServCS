@@ -1,9 +1,19 @@
-function onLoad() {
+
+var App = App || {};
+App.socket = io.connect('http://localhost');
+
+$( document ).ready(function() {
   "use strict";
 
+
+
+  App.socket.on('news', function(data) {
+    console.log('fileBrowser on news ' + data);
+    App.socket.emit('my other event', { my: 'data' });
+  });
+
   openFolder("");
-}
-onLoad();
+});
 
 
 function openFolder(folder) {
@@ -19,45 +29,63 @@ function openFolder(folder) {
     function (data) {
       if (data.content) {
         $("#fileTree").html(data.content);
-        setUpFileTree();
+        App.setUpFileTree();
       }
     });
 }
 
 
-setUpFileTree = function () {
+/**
+ * Ask server to read file and post it to editor
+ * @param {string} file
+ */
+App.requestOpenFile = function(file) {
+  "use strict";
+
+  if (validStr(file)) {
+    console.log("emit req_open_file: " + file);
+    App.socket.emit('req_open_file', { fileName: file });
+  }
+
+};
+
+
+App.setUpFileTree = function() {
   "use strict";
 
   var folder = $(".folder");
-  folder.mouseover(function () {
+  folder.mouseover(function() {
     $(this).css("color", "#ffffff");
   });
-  folder.mouseout(function () {
+
+  folder.mouseout(function() {
     $(this).css("color", "#BBBBBB");
   });
 
   var file = $(".file");
-  file.mouseover(function () {
+  file.mouseover(function() {
     $(this).css("color", "#ffffff");
   });
-  file.mouseout(function () {
+
+  file.mouseout(function() {
     $(this).css("color", "#999999");
   });
   $(".folder ul").hide();
 
-  folder.click(function (evt) {
+  folder.click(function(evt) {
     evt.stopPropagation();
     $(this).children("ul").slideToggle(100);
   });
-  file.click(function (evt) {
+
+  file.click(function(evt) {
     evt.stopPropagation();
-    openFile($(this).attr("id"));
+    App.requestOpenFile($(this).attr("id"));
   });
 
-  $(".myButton").hover((function () {
+  $(".myButton").hover((function() {
     $(this).css("color", "#ffffff");
     $(this).css("background-color", "#111111");
-  }), function () {
+  }), function() {
     $(this).css("color", "#bbbbbb");
     $(this).css("background", "none");
   });
