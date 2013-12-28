@@ -6,7 +6,6 @@ var express = require("express")
   , path = require("path")
   , fs = require("fs")
   , u = require("./util")
-//  , io = require('socket.io').listen(80)
   , terminal = require('term.js')
   , fileIO = require('./fileIO')
   , termServer = require('./setupTermServer');
@@ -14,6 +13,7 @@ var express = require("express")
 var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server, { log: false });
+termServer.setup(server);
 
 
 app.set("port", process.env.PORT || 3000);
@@ -31,7 +31,7 @@ if ("development" === app.get("env")) {
 }
 
 app.get("/", function (req, res) {
-  res.sendfile(__dirname + '/public/aceEditor.html');
+  res.sendfile(__dirname + '/public/frames.html');
 });
 
 app.get("/_open_file", fileIO.openFile);
@@ -41,20 +41,18 @@ app.get("/_open_folder", fileIO.openFolder);
 app.post("/_save_file", fileIO.saveFile);
 
 
-
-
 server.listen(app.get("port"), function () {
   console.log("Express server listening on port " + app.get("port"));
 });
 
 
-//termServer.setup(server);
-
 io.sockets.on('connection', function (socket) {
 
-  termServer.onConnection(socket);
-  fileIO.setSocket(socket, io.sockets);
+  socket.on('setup term', function (data) {
+    termServer.onConnection(socket, io.sockets);
+  });
 
+  fileIO.setSocket(socket, io.sockets);
 
   socket.emit('news', { hello: 'world' });
   socket.on('my other event', function (data) {
@@ -62,5 +60,4 @@ io.sockets.on('connection', function (socket) {
   });
 });
 
-//console.log("hi");
 

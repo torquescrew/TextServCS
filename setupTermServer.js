@@ -18,6 +18,7 @@ if (process.argv[2] === '--dump') {
  */
 var buff = [];
 var socket = null;
+//var sockets = null;
 var term = null;
 var server = null;
 
@@ -37,12 +38,9 @@ exports.setup = function (s) {
     if (stream) {
       stream.write("OUT: " + data + "\n-\n");
     }
-    if (!socket) {
-      buff.push(data);
-    }
-    else {
-      socket.emit("data", data);
-    }
+    return !socket
+      ? buff.push(data)
+      : socket.emit('data', data);
   });
 
   console.log("" + "Created shell with pty master/slave" + " pair (master: %d, pid: %d)", term.fd, term.pid);
@@ -84,18 +82,30 @@ exports.setup = function (s) {
 //  });
 };
 
-
-exports.onConnection = function (s) {
+/**
+ * @param {Socket} s
+ * @param {object} ss
+ */
+exports.onConnection = function (s, ss) {
   "use strict";
 
+  console.log('onConnection');
+
+//  console.log(s);
+
+
   socket = s;
+//  sockets = ss;
 
   socket.on('data', function (data) {
+    console.log("socket.on data: " + data);
+
     if (stream) stream.write('IN: ' + data + '\n-\n');
     term.write(data);
   });
 
   socket.on('disconnect', function () {
+    console.log("socket.on('disconnect'");
     socket = null;
   });
 

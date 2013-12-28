@@ -2,6 +2,7 @@
  * Created by tobysuggate on 22/12/13.
  */
 
+"use strict";
 
 var express = require("express"),
   user = require("./routes/user"),
@@ -19,10 +20,10 @@ var defaultSettings = {
 };
 
 
-exports.saveFile = saveFile;
-exports.openFile = openFile;
-exports.openFolder = openFolder;
-exports.openFileRes = openFileRes;
+//exports.saveFile = saveFile;
+//exports.openFile = openFile;
+//exports.openFolder = openFolder;
+//exports.openFileRes = openFileRes;
 //exports.setSocket = setSocket;
 
 
@@ -35,6 +36,10 @@ function createDefaultSettingsFile() {
 }
 
 
+/**
+ * @param {string} name
+ * @returns {*}
+ */
 function readSetting(name) {
   var setting;
 
@@ -49,7 +54,10 @@ function readSetting(name) {
   return setting;
 }
 
-
+/**
+ * @param {string} name
+ * @param value
+ */
 function writeSetting(name, value) {
   if (!fs.existsSync(gSettingsFile)) {
     createDefaultSettingsFile();
@@ -65,23 +73,34 @@ function writeSetting(name, value) {
   }
 }
 
-
-function openFile(req, res) {
+/**
+ * @param {object} req
+ * @param {object} res
+ */
+exports.openFile = function (req, res) {
   readFile(req.query.filename, res);
-}
+};
 
 
-function openFolder(req, res) {
+/**
+ * @param {object} req
+ * @param {object} res
+ */
+exports.openFolder = function (req, res) {
   var folder;
   folder = req.query.folderName;
   if (u.badString(folder)) {
     folder = readSetting('folder');
   }
   readFolder(folder, res);
-}
+};
 
-
-function saveFile(req, res) {
+/**
+ *
+ * @param {Request} req
+ * @param {object} res
+ */
+exports.saveFile = function (req, res) {
   var file = req.body.filename;
   var content = req.body.content;
 
@@ -92,18 +111,23 @@ function saveFile(req, res) {
     console.log("/_save_file received invalid strings");
   }
   res.send("wrote file: " + file);
-}
+};
 
 
-//exports.saveFile2 = function
 
-
+/**
+ * @param {string} file
+ * @param {string} content
+ */
 function writeFile(file, content) {
   fs.writeFileSync(file, content);
   console.log("wrote file: " + file);
 }
 
-
+/**
+ * @param {string} file
+ * @param {object} response
+ */
 function readFile(file, response) {
   fs.readFile(file, function (err, data) {
     if (err) {
@@ -117,6 +141,10 @@ function readFile(file, response) {
 }
 
 
+/**
+ * @param {string} folder
+ * @param {object} response
+ */
 function readFolder(folder, response) {
   if (u.okString(folder)) {
     wd.getDirectoryList(folder, response);
@@ -160,6 +188,9 @@ exports.setSocket = function(socket, sockets) {
 };
 
 
+/**
+ * @param {Socket} socket
+ */
 function initSocketHandlers(socket) {
   "use strict";
 
@@ -167,6 +198,4 @@ function initSocketHandlers(socket) {
     console.log("req_open_file: " + data.fileName);
     openFileRes(data.fileName);
   });
-
-
 }

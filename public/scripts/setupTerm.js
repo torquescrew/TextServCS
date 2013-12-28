@@ -1,20 +1,21 @@
-
-//var colWidth, resizeTermHeight, resizeTermWidth, rowHeight, term, termHeight, termId, termWidth;
-
 "use strict";
 
 var term = null;
 var termId = 'output2';
+var socket = null;
 
-(function() {
-  return window.onload = function() {
-    var socket;
-    socket = io.connect();
-    socket.on("connect", function() {
-      var c;
-      c = Terminal.colors;
+(function () {
+  window.onload = function () {
+
+    socket = io.connect('http://localhost');
+
+    socket.on("connect", function () {
+
+      var c = Terminal.colors;
+
       c[256] = '#333333';
       c[257] = '#bbbbbb';
+
       term = new Terminal({
         cols: 80,
         rows: 10,
@@ -22,42 +23,68 @@ var termId = 'output2';
         useStyle: true,
         screenKeys: true
       });
-      term.on("data", function(data) {
+
+      term.on("data", function (data) {
         console.log("data: " + data);
+//        term.write(data);
         socket.emit("data", data);
       });
-      term.on("title", function(title) {
+
+      term.on("title", function (title) {
         document.title = title;
       });
-      term.open(document.getElementById(termId));
-      socket.on("data", function(data) {
+
+//      term.open(document.getElementById(termId));
+      term.open(document.body);
+
+      socket.on("data", function (data) {
+        console.log("write data");
         term.write(data);
       });
-      socket.on("disconnect", function() {
+
+      socket.on("disconnect", function () {
         term.destroy();
       });
 //      resizeEditor();
       socket.emit("data", 'pwd\r');
+      socket.emit('setup term', 'hi');
     });
   };
-}).call();
+})();
 
+/**
+ * @returns {number}
+ */
 function termWidth() {
   return document.getElementsByClassName('terminal')[0].clientWidth;
 }
 
+
+/**
+ * @returns {number}
+ */
 function termHeight() {
   return document.getElementsByClassName('terminal')[0].clientHeight;
 }
 
+/**
+ * @returns {number}
+ */
 function rowHeight() {
   return termHeight() / term.rows;
 }
 
+/**
+ * @returns {number}
+ */
 function colWidth() {
   return termWidth() / term.cols;
 }
 
+
+/**
+ * @param {number} width
+ */
 function resizeTermWidth(width) {
   var col, cols;
   col = colWidth();
@@ -67,6 +94,9 @@ function resizeTermWidth(width) {
   }
 }
 
+/**
+ * @param {number} height
+ */
 function resizeTermHeight(height) {
   var row, rows;
   row = rowHeight();
