@@ -1,5 +1,7 @@
 "use strict";
 
+//var Term = Term || {};
+
 var term = null;
 var termId = 'output2';
 var socket = null;
@@ -34,8 +36,8 @@ var socket = null;
         document.title = title;
       });
 
-//      term.open(document.getElementById(termId));
-      term.open(document.body);
+      term.open(document.getElementById(termId));
+//      term.open(document.body);
 
       socket.on("data", function (data) {
         console.log("write data");
@@ -47,10 +49,11 @@ var socket = null;
       });
 //      resizeEditor();
       socket.emit("data", 'pwd\r');
-      socket.emit('setup term', 'hi');
+      socket.emit('setup term', '');
     });
   };
 })();
+
 
 /**
  * @returns {number}
@@ -86,9 +89,9 @@ function colWidth() {
  * @param {number} width
  */
 function resizeTermWidth(width) {
-  var col, cols;
-  col = colWidth();
-  cols = Math.floor(width / col) - 2;
+//  var col, cols;
+  var col = colWidth();
+  var cols = Math.floor(width / col) - 2;
   if (width > col * (term.cols + 1) || width < col * (term.cols - 1)) {
     term.resize(cols, term.rows);
   }
@@ -98,9 +101,9 @@ function resizeTermWidth(width) {
  * @param {number} height
  */
 function resizeTermHeight(height) {
-  var row, rows;
-  row = rowHeight();
-  rows = Math.floor(height / rowHeight());
+//  var row, rows;
+  var row = rowHeight();
+  var rows = Math.floor(height / rowHeight());
   if (height > row * (term.rows + 1) || height < row * (term.rows + 1)) {
     term.resize(term.cols, rows);
   }

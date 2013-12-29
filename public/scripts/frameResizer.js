@@ -36,7 +36,9 @@ function startHorizontalDrag() {
   };
 }
 
-
+/**
+ * @param {boolean} enable
+ */
 function enablePointerEvents(enable) {
   if (enable) {
     $('#frame1').css('pointer-events', 'auto');

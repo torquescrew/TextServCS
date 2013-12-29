@@ -112,8 +112,8 @@ console.log("after openFile");
 function setUpEditor() {
   "use strict";
 
-//  editor.setTheme("ace/theme/monokai");
-  gEditor.setTheme("ace/theme/solarized_dark");
+  gEditor.setTheme("ace/theme/monokai");
+//  gEditor.setTheme("ace/theme/solarized_dark");
 
   gEditor.setOptions({
     enableBasicAutocompletion: true,
