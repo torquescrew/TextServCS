@@ -125,7 +125,9 @@ function saveFile() {
   }
 }
 
-
+/**
+ * @param {string} fileName
+ */
 function setMode(fileName) {
   "use strict";
   var modelist = ace.require('ace/ext/modelist');
@@ -140,6 +142,9 @@ function setMode(fileName) {
 }
 
 
+/**
+ * @param {string} file
+ */
 function openFile(file) {
   "use strict";
 
@@ -183,7 +188,9 @@ function openFile(file) {
 //    });
 //}
 
-
+/**
+ * @returns {string}
+ */
 function getUserDir() {
   "use strict";
 
@@ -202,6 +209,9 @@ function getUserDir() {
 }
 
 
+/**
+ * @returns {void}
+ */
 function myFunction() {
   "use strict";
 

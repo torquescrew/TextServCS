@@ -85,6 +85,7 @@ exports.setup = function (s) {
 /**
  * @param {Socket} s
  * @param {object} ss
+ * @returns {void}
  */
 exports.onConnection = function (s, ss) {
   "use strict";

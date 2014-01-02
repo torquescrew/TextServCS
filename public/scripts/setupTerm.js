@@ -1,110 +1,131 @@
 "use strict";
 
-//var Term = Term || {};
+var Term = Term || {};
 
-var term = null;
-var termId = 'output2';
-var socket = null;
+Term.mTerm = null;
+Term.mSocket = null;
+Term.mId = 'output2';
+Term.forground = '#bbbbbb';
+Term.background = '#333333';
+
 
 (function () {
   window.onload = function () {
 
-    socket = io.connect('http://localhost');
+    Term.mSocket = io.connect('http://localhost');
 
-    socket.on("connect", function () {
-
-      var c = Terminal.colors;
-
-      c[256] = '#333333';
-      c[257] = '#bbbbbb';
-
-      term = new Terminal({
+    Term.mSocket.on("connect", function () {
+      Term.mTerm = new Terminal({
         cols: 80,
         rows: 10,
-        colors: c,
+        colors: Term.getColors(),
         useStyle: true,
         screenKeys: true
       });
 
-      term.on("data", function (data) {
-        console.log("data: " + data);
-//        term.write(data);
-        socket.emit("data", data);
+      Term.mTerm.on("data", function (data) {
+        Term.mSocket.emit("data", data);
       });
 
-      term.on("title", function (title) {
+      Term.mTerm.on("title", function (title) {
         document.title = title;
       });
 
-      term.open(document.getElementById(termId));
-//      term.open(document.body);
+      Term.mTerm.open(document.getElementById(Term.mId));
 
-      socket.on("data", function (data) {
-        console.log("write data");
-        term.write(data);
+      Term.mSocket.on("data", function (data) {
+        Term.mTerm.write(data);
       });
 
-      socket.on("disconnect", function () {
-        term.destroy();
+      Term.mSocket.on("disconnect", function () {
+        Term.mTerm.destroy();
       });
-//      resizeEditor();
-      socket.emit("data", 'pwd\r');
-      socket.emit('setup term', '');
+
+      Term.resize();
+
+      Term.mSocket.emit("data", 'pwd\r');
+      Term.mSocket.emit('setup term', '');
     });
   };
+
+  $(window).resize(function () {
+    Term.resize();
+  });
+
 })();
 
 
 /**
+ * @returns {Terminal.colors|*}
+ */
+Term.getColors = function () {
+  var c = Terminal.colors;
+
+  c[256] = Term.background;
+  c[257] = Term.forground;
+
+  return c;
+};
+
+
+/**
+ * @returns {void}
+ */
+Term.resize = function () {
+  Term.resizeTermWidth($(window).width());
+  Term.resizeTermHeight($(window).height());
+};
+
+/**
  * @returns {number}
  */
-function termWidth() {
+Term.pixWidth = function () {
   return document.getElementsByClassName('terminal')[0].clientWidth;
-}
-
+};
 
 /**
  * @returns {number}
  */
-function termHeight() {
+Term.pixHeight = function () {
   return document.getElementsByClassName('terminal')[0].clientHeight;
-}
+};
 
 /**
  * @returns {number}
  */
-function rowHeight() {
-  return termHeight() / term.rows;
-}
+Term.rowHeight = function () {
+  return Term.pixHeight() / Term.mTerm.rows;
+};
 
 /**
  * @returns {number}
  */
-function colWidth() {
-  return termWidth() / term.cols;
-}
-
+Term.colWidth = function () {
+  return Term.pixWidth() / Term.mTerm.cols;
+};
 
 /**
  * @param {number} width
+ * @returns {void}
  */
-function resizeTermWidth(width) {
-//  var col, cols;
-  var col = colWidth();
+Term.resizeTermWidth = function (width) {
+  var col = Term.colWidth();
   var cols = Math.floor(width / col) - 2;
-  if (width > col * (term.cols + 1) || width < col * (term.cols - 1)) {
-    term.resize(cols, term.rows);
+
+  if (width > col * (Term.mTerm.cols + 1) || width < col * (Term.mTerm.cols - 1)) {
+    Term.mTerm.resize(cols, Term.mTerm.rows);
   }
-}
+};
 
 /**
  * @param {number} height
+ * @returns {void}
  */
-function resizeTermHeight(height) {
-//  var row, rows;
-  var row = rowHeight();
-  var rows = Math.floor(height / rowHeight());
-  if (height > row * (term.rows + 1) || height < row * (term.rows + 1)) {
-    term.resize(term.cols, rows);
+Term.resizeTermHeight = function (height) {
+  var row = Term.rowHeight();
+  var rows = Math.floor(height / Term.rowHeight()) - 1;
+
+  if (height > row * (Term.mTerm.rows + 1) || height < row * (Term.mTerm.rows + 1)) {
+    Term.mTerm.resize(Term.mTerm.cols, rows);
   }
-}
+};

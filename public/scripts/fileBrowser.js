@@ -18,6 +18,10 @@ Browser.socket = io.connect('http://localhost');
 //})();
 
 
+/**
+ * @param {string} folder
+ * @returns {void}
+ */
 function openFolder(folder) {
   "use strict";
 
@@ -57,6 +61,9 @@ Browser.requestOpenFile = function(file) {
 };
 
 
+/**
+ * @returns {void}
+ */
 Browser.setUpFileTree = function() {
   "use strict";
 

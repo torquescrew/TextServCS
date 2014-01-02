@@ -12,16 +12,23 @@ function setupResizing() {
 setupResizing();
 
 
+/**
+ * @returns {HTMLElement}
+ */
 function getLeft() {
   return document.getElementById('left');
 }
 
-
-function getButtom() {
+/**
+ * @returns {HTMLElement}
+ */
+function getBottom() {
   return document.getElementById('bottom');
 }
 
-
+/**
+ * @returns {void}
+ */
 function startHorizontalDrag() {
   enablePointerEvents(false);
 
@@ -59,7 +66,7 @@ function startVerticalDrag() {
   document.body.onmousemove = function (evt) {
     var h = $(document).height() - (evt.clientY + 5);
 //    resizeTermHeight(h);
-    getButtom().setAttribute("style", "height:" + h + "px");
+    getBottom().setAttribute("style", "height:" + h + "px");
   };
 
   document.body.onmouseup = function () {
@@ -67,7 +74,9 @@ function startVerticalDrag() {
   };
 }
 
-
+/**
+ * @returns {void}
+ */
 function onStopDrag() {
 //  resizeEditor();
   enablePointerEvents(true);
