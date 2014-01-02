@@ -35,6 +35,8 @@ exports.setup = function (s) {
   });
 
   term.on("data", function (data) {
+//    console.log("term on data");
+
     if (stream) {
       stream.write("OUT: " + data + "\n-\n");
     }
@@ -90,7 +92,7 @@ exports.setup = function (s) {
 exports.onConnection = function (s, ss) {
   "use strict";
 
-  console.log('onConnection');
+//  console.log('onConnection');
 
 //  console.log(s);
 
@@ -99,14 +101,14 @@ exports.onConnection = function (s, ss) {
 //  sockets = ss;
 
   socket.on('data', function (data) {
-    console.log("socket.on data: " + data);
+//    console.log("socket.on data: " + data);
 
     if (stream) stream.write('IN: ' + data + '\n-\n');
     term.write(data);
   });
 
   socket.on('disconnect', function () {
-    console.log("socket.on('disconnect'");
+//    console.log("socket.on('disconnect'");
     socket = null;
   });
 

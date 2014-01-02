@@ -29,36 +29,22 @@ tr {
 }
 
 
-#left {
+#browser {
     width: 200px;
 }
 
-#bottom {
+#terminal {
     height: 150px;
 }
 
-#center {
+#editor {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
 }
 
-#frame1 {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-}
-
-#frame2 {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-}
-
-#frame3 {
+iframe {
     width: 100%;
     height: 100%;
     padding: 0;

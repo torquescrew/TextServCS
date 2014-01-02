@@ -31,7 +31,7 @@ if ("development" === app.get("env")) {
 }
 
 app.get("/", function (req, res) {
-  res.sendfile(__dirname + '/public/frames.html');
+  res.sendfile(__dirname + '/public/ide.html');
 });
 
 app.get("/_open_file", fileIO.openFile);

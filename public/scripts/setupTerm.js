@@ -9,7 +9,10 @@ Term.forground = '#bbbbbb';
 Term.background = '#333333';
 
 
-(function () {
+/**
+ * @returns {void}
+ */
+Term.setup = function () {
   window.onload = function () {
 
     Term.mSocket = io.connect('http://localhost');
@@ -43,16 +46,24 @@ Term.background = '#333333';
 
       Term.resize();
 
-      Term.mSocket.emit("data", 'pwd\r');
       Term.mSocket.emit('setup term', '');
+      Term.mSocket.emit("data", 'pwd\r');
     });
+
+
+
   };
 
   $(window).resize(function () {
     Term.resize();
   });
+};
+Term.setup();
+//Term.destroy();
 
-})();
+Term.destroy = function () {
+  Term.mTerm.destroy();
+};
 
 
 /**

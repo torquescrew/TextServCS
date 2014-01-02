@@ -6,17 +6,17 @@
 </head>
 <body>
 
-<table>
+<table id="table">
 
   <tr>
-    <td id="left" rowspan="3">
-      <iframe id="frame1" src="fileBrowser.html" seamless></iframe>
+    <td id="browser" rowspan="3">
+      <iframe src="fileBrowser.html" seamless></iframe>
     </td>
 
     <td id="horizontalBar" rowspan="3"></td>
 
-    <td id="center">
-      <iframe id="frame2" src="editor.html" seamless></iframe>
+    <td id="editor">
+      <iframe src="editor.html" seamless></iframe>
     </td>
   </tr>
 
@@ -24,9 +24,9 @@
     <td id="verticalBar" colspan="2"></td>
   </tr>
 
-  <tr>
-    <td id="bottom" colspan="2">
-      <iframe id="frame3" src="Term.html" seamless></iframe>
+  <tr >
+    <td id="terminal" colspan="2">
+      <iframe src="Term.html" seamless></iframe>
     </td>
   </tr>
 
@@ -35,6 +35,7 @@
 
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="scripts/frameResizer.js"></script>
+<script src="scripts/ide.js"></script>
 
 </body>
 </html>

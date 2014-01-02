@@ -4,26 +4,28 @@
 
 "use strict";
 
-
+/**
+ * @returns {void}
+ */
 function setupResizing() {
   document.getElementById('horizontalBar').onmousedown = startHorizontalDrag;
   document.getElementById('verticalBar').onmousedown = startVerticalDrag;
 }
 setupResizing();
 
-
 /**
  * @returns {HTMLElement}
  */
 function getLeft() {
-  return document.getElementById('left');
+  return document.getElementById('browser');
 }
 
 /**
+ * TODO: refactor
  * @returns {HTMLElement}
  */
 function getBottom() {
-  return document.getElementById('bottom');
+  return document.getElementById('terminal');
 }
 
 /**
@@ -47,25 +49,20 @@ function startHorizontalDrag() {
  * @param {boolean} enable
  */
 function enablePointerEvents(enable) {
-  if (enable) {
-    $('#frame1').css('pointer-events', 'auto');
-    $('#frame2').css('pointer-events', 'auto');
-    $('#frame3').css('pointer-events', 'auto');
-  }
-  else {
-    $('#frame1').css('pointer-events', 'none');
-    $('#frame2').css('pointer-events', 'none');
-    $('#frame3').css('pointer-events', 'none');
-  }
+//  $('#frame1').css('pointer-events', enable? 'auto':'none');
+//  $('#frame2').css('pointer-events', enable? 'auto':'none');
+//  $('#frame3').css('pointer-events', enable? 'auto':'none');
+  $('iframe').css('pointer-events', enable? 'auto':'none');
 }
 
-
+/**
+ * @returns {void}
+ */
 function startVerticalDrag() {
   enablePointerEvents(false);
 
   document.body.onmousemove = function (evt) {
     var h = $(document).height() - (evt.clientY + 5);
-//    resizeTermHeight(h);
     getBottom().setAttribute("style", "height:" + h + "px");
   };
 
@@ -78,9 +75,7 @@ function startVerticalDrag() {
  * @returns {void}
  */
 function onStopDrag() {
-//  resizeEditor();
   enablePointerEvents(true);
-
   document.body.onmousemove = null;
   document.body.onmouseup = null;
 }

@@ -29,6 +29,8 @@ var editor = null;
 })();
 
 
+console.log("do i do anything?");
+
 function setUpEditor() {
   "use strict";
 
