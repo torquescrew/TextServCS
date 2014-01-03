@@ -8,8 +8,8 @@
  * @returns {void}
  */
 function setupResizing() {
-  document.getElementById('horizontalBar').onmousedown = startHorizontalDrag;
-  document.getElementById('verticalBar').onmousedown = startVerticalDrag;
+  document.getElementById('verticalBar').onmousedown = startHorizontalDrag;
+  document.getElementById('horizontalBar').onmousedown = startVerticalDrag;
 }
 setupResizing();
 
@@ -49,9 +49,6 @@ function startHorizontalDrag() {
  * @param {boolean} enable
  */
 function enablePointerEvents(enable) {
-//  $('#frame1').css('pointer-events', enable? 'auto':'none');
-//  $('#frame2').css('pointer-events', enable? 'auto':'none');
-//  $('#frame3').css('pointer-events', enable? 'auto':'none');
   $('iframe').css('pointer-events', enable? 'auto':'none');
 }
 

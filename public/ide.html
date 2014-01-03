@@ -8,23 +8,30 @@
 
 <table id="table">
 
-  <tr>
+  <tr id="row1">
+    <td colspan="3">
+      <button id="toggleTerminal">Terminal</button>
+      <button id="toggleBrowser">File Browser</button>
+    </td>
+  </tr>
+
+  <tr id="row2">
     <td id="browser" rowspan="3">
       <iframe src="fileBrowser.html" seamless></iframe>
     </td>
 
-    <td id="horizontalBar" rowspan="3"></td>
+    <td id="verticalBar" rowspan="3"></td>
 
     <td id="editor">
       <iframe src="editor.html" seamless></iframe>
     </td>
   </tr>
 
-  <tr>
-    <td id="verticalBar" colspan="2"></td>
+  <tr id="row3">
+    <td id="horizontalBar" colspan="2"></td>
   </tr>
 
-  <tr >
+  <tr id="row4">
     <td id="terminal" colspan="2">
       <iframe src="Term.html" seamless></iframe>
     </td>

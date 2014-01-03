@@ -28,6 +28,11 @@ tr {
     padding: 0;
 }
 
+#row1 {
+    height: 20px;
+    background-color: #444444;
+}
+
 
 #browser {
     width: 200px;
@@ -51,13 +56,13 @@ iframe {
     margin: 0;
 }
 
-#verticalBar {
+#horizontalBar {
     height: 7px;
     background-color: #444444;
     cursor: ns-resize;
 }
 
-#horizontalBar {
+#verticalBar {
     width: 7px;
     background-color: #444444;
     cursor: ew-resize;
