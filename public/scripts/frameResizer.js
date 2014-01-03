@@ -36,7 +36,6 @@ function startHorizontalDrag() {
 
   document.body.onmousemove = function (evt) {
     var w = evt.clientX;
-//    resizeTermWidth($(document).width() - w);
     getLeft().setAttribute("style", "width:" + w + "px");
   };
 

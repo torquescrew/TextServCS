@@ -49,6 +49,16 @@ tr {
     user-select: none;
 }
 
+#toggleTerminal {
+    float: right;
+}
+
+
+#toggleBrowser {
+    float: right;
+}
+
+
 iframe {
     width: 100%;
     height: 100%;

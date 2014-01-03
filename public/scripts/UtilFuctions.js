@@ -2,50 +2,60 @@
  * Created by tobysuggate on 30/11/13.
  */
 
+"use strict";
 
-var U = {
-  validStr: validStr,
-  tailAfter: tailAfter,
-  removePath: removePath,
-  fileExtension: fileExtension,
-  modeForFile: modeForFile
+
+/** @type {U} */
+var U = U || {};
+
+
+/**
+ * @param {string} string
+ * @returns {boolean}
+ */
+U.validStr = function (string) {
+  return (typeof string !== 'undefined' && string.length > 0);
 };
 
 
-function validStr(string) {
-  "use strict";
-
-  return (typeof string !== 'undefined' && string.length > 0);
-}
-
-
-function tailAfter(string, char) {
-  "use strict";
-
+/**
+ * @param {string} string
+ * @param {string} char
+ * @returns {string}
+ */
+U.tailAfter = function (string, char) {
   var i = string.lastIndexOf(char);
   if (i > 0) {
     return string.slice(i + 1);
   }
   return "";
-}
-
-function removePath(file) {
-  "use strict";
-
-  return tailAfter(file, '/');
-}
-
-function fileExtension(file) {
-  "use strict";
-
-  return tailAfter(file, '.');
-}
+};
 
 
-function modeForFile(file) {
-  "use strict";
+/**
+ * @param {string} file
+ * @returns {string}
+ */
+U.removePath = function (file) {
+  return U.tailAfter(file, '/');
+};
 
-  var ext = fileExtension(file);
+
+/**
+ * @param {string} file
+ * @returns {string}
+ */
+U.fileExtension = function (file) {
+  return U.tailAfter(file, '.');
+};
+
+
+/**
+ * @param {string} file
+ * @returns {string}
+ */
+U.modeForFile = function (file) {
+  var ext = U.fileExtension(file);
 
   switch (ext) {
     case "clj": return "clojure";
@@ -59,4 +69,4 @@ function modeForFile(file) {
     case "iml": return "xml";
   }
   return ext;
-}
+};

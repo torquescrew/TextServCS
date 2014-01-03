@@ -96,7 +96,6 @@ exports.openFolder = function (req, res) {
 };
 
 /**
- *
  * @param {Request} req
  * @param {object} res
  */
