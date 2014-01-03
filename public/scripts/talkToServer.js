@@ -1,63 +1,55 @@
 /**
- * Created by tobysuggate on 26/12/13.
- *
- * This file should contain requests to server, not responses.
+ * Created by tobysuggate on 3/01/14.
  */
 
+"use strict";
 
-var App = App || {};
-//App.socket = App.socket || io.connect('http://localhost');
+var Serv = Serv || {};
 
-//$( document ).ready(function() {
-//  "use strict";
-//
-////  console.log(App.socket);
-//
-//  App.socket.on('news', function(data) {
-//    console.log(data);
-//    App.socket.emit('my other event', { my: 'data' });
-//  });
-//
-//
-//
-////  App.socket.on('res_open_file', function(data) {
-//////    console.log('res_open_file: ' + data);
-////    console.log('fileName: ' + data.fileName);
-//////    console.log('content: ' + data.content);
-////
-////    openFile(data.fileName, data.content);
-////  });
-////  App./
-//
-//});
+/** @type {Socket} */
+Serv.mSocket = null;
 
 
-App.setupServerSocket = function() {
-  "use strict";
+/**
+ * @param {Socket} socket
+ * @returns {Serv}
+ */
+Serv.setSocket = function (socket) {
+  Serv.mSocket = socket;
 
-  console.log("setupServerSocket");
+  Serv.setupHandlers();
 
-  App.socket = App.socket || io.connect('http://localhost');
-
-  App.socket.on('news', function(data) {
-//    console.log(data);
-//    console.log('talkToServer on news:');
-    console.log(data);
-    App.socket.emit('my other event', { my: 'data' });
-  });
+  return Serv;
 };
 
 
 /**
- * Ask server to read file and post it to editor
- * @param {string} file
+ * @returns {void}
  */
-App.requestOpenFile = function(file) {
-  "use strict";
+Serv.setupHandlers = function () {
+  Serv.mSocket.on('read_setting_res', function (value) {
+    console.log(value);
+  });
 
-  if (validStr(file)) {
-    console.log("emit req_open_file: " + file);
-    App.socket.emit('req_open_file', { fileName: file });
+};
+
+
+Serv.queryBrowserOpen = function () {
+  Serv.checkSocket();
+
+  Serv.mSocket.emit('read_setting', { name: 'browser_open' });
+};
+
+
+Serv.queryTerminalOpen = function () {
+  Serv.checkSocket();
+
+  Serv.mSocket.emit ('read_setting', { name: 'terminal_open' });
+};
+
+
+Serv.checkSocket = function () {
+  if (!Serv.mSocket) {
+    alert("Serv.mSocket == null");
   }
-
 };

@@ -1,29 +1,47 @@
 "use strict";
 
-var fs = require('fs'),
-  u = require('./util'),
-  underscore = require('underscore');
+var fs = require('fs')
+  , u = require('./util')
+  , underscore = require('underscore');
 
+
+/** @type {string[]} */
 var ignore = [".hi", ".o", ".hs~"];
 
+/**
+ * @param {string} path
+ * @returns {boolean}
+ */
 function isDir(path) {
   return u.okString(path) && u.stripFolder(path)[0] !== '.' && fs.statSync(path).isDirectory();
 }
 
+/**
+ * @param {string} path
+ * @returns {boolean}
+ */
 function isFile(path) {
   return u.okString(path) && fs.statSync(path).isFile() && !shouldIgnore(path);
 }
 
+/**
+ * @param {string} path
+ * @returns {boolean}
+ */
 function shouldIgnore(path) {
   return underscore.some(ignore, function (ext) {
     return u.endsWith(path, ext);
   });
 }
 
+/**
+ * @param {string} folder
+ * @param {object} response
+ * @returns {void}
+ */
 function getDirectoryList(folder, response) {
-  var html, walk;
-  html = '';
-  walk = function (folder) {
+  var html = '';
+  var walk = function (folder) {
     var item, path, _i, _len, _ref, _results;
     _ref = fs.readdirSync(folder);
     _results = [];
@@ -39,10 +57,9 @@ function getDirectoryList(folder, response) {
       }
       _results.push(html);
     }
-    return _results;
   };
   walk(folder);
-  return response.json({
+  response.json({
     folderName: folder,
     content: html
   });

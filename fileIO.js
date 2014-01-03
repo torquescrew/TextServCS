@@ -4,13 +4,13 @@
 
 "use strict";
 
-var express = require("express"),
-  user = require("./routes/user"),
-  http = require("http"),
-  path = require("path"),
-  wd = require("./walkDirectory"),
-  u = require("./util"),
-  fs = require("fs");
+var express = require("express")
+  , user = require("./routes/user")
+  , http = require("http")
+  , path = require("path")
+  , wd = require("./walkDirectory")
+  , u = require("./util")
+  , fs = require("fs");
 
 var gSockets;
 var gSettingsFile = process.env.HOME + "/.textServ";
@@ -18,13 +18,6 @@ var gSettingsFile = process.env.HOME + "/.textServ";
 var defaultSettings = {
   folder: process.env.HOME + "/Desktop"
 };
-
-
-//exports.saveFile = saveFile;
-//exports.openFile = openFile;
-//exports.openFolder = openFolder;
-//exports.openFileRes = openFileRes;
-//exports.setSocket = setSocket;
 
 
 function createDefaultSettingsFile() {
@@ -113,7 +106,6 @@ exports.saveFile = function (req, res) {
 };
 
 
-
 /**
  * @param {string} file
  * @param {string} content
@@ -122,6 +114,7 @@ function writeFile(file, content) {
   fs.writeFileSync(file, content);
   console.log("wrote file: " + file);
 }
+
 
 /**
  * @param {string} file
@@ -155,13 +148,10 @@ function readFolder(folder, response) {
  * @param {string} fileName
  */
 function openFileRes(fileName) {
-  "use strict";
-
   var data = "";
 
   if (fs.existsSync(fileName)) {
     data = fs.readFileSync(fileName);
-
 
     if (u.okString(fileName) && u.okString(data.toString())) {
       console.log('res_open_file ' + fileName);
@@ -180,8 +170,6 @@ function openFileRes(fileName) {
  * @param {object} sockets
  */
 exports.setSocket = function(socket, sockets) {
-  "use strict";
-
   gSockets = sockets;
   initSocketHandlers(socket);
 };
@@ -191,10 +179,18 @@ exports.setSocket = function(socket, sockets) {
  * @param {Socket} socket
  */
 function initSocketHandlers(socket) {
-  "use strict";
-
   socket.on('req_open_file', function (data) {
     console.log("req_open_file: " + data.fileName);
     openFileRes(data.fileName);
   });
+
+  socket.on('write_setting', function (data) {
+    writeSetting(data.name, data.value);
+  });
+
+  socket.on('read_setting', function (data) {
+    var value = readSetting(data.name);
+    socket.emit('read_setting_res', value);
+  });
 }
+
