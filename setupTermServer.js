@@ -2,51 +2,54 @@
  * Created by tobysuggate on 22/12/13.
  */
 
+"use strict";
+
+
+var term = term || {};
+
 var express = require("express")
   , fs = require("fs")
   , pty = require('pty.js')
   , io = require('socket.io')
   , terminal = require('term.js');
 
+
 var stream;
 if (process.argv[2] === '--dump') {
   stream = fs.createWriteStream(__dirname + '/dump.log');
 }
 
-/*
- Open Terminal
+
+term.mBuff = [];
+term.mTerm = null;
+term.mServer = null;
+term.mSocket = null;
+
+/**
+ * @param {Server} server
  */
-var buff = [];
-var socket = null;
-var term = null;
-var server = null;
+term.setup = function (server) {
+  term.mServer = server;
 
-exports.setup = function (s) {
-  "use strict";
-
-  server = s;
-
-  term = pty.fork(process.env.SHELL || "sh", [], {
+  term.mTerm = pty.fork(process.env.SHELL || "sh", [], {
     name: (fs.existsSync("/usr/share/terminfo/x/xterm-256color") ? "xterm-256color" : "xterm"),
     cols: 80,
     rows: 24,
     cwd: process.env.HOME
   });
 
-  term.on("data", function (data) {
-//    console.log("term on data");
-
+  term.mTerm.on("data", function (data) {
     if (stream) {
       stream.write("OUT: " + data + "\n-\n");
     }
-    return !socket
-      ? buff.push(data)
-      : socket.emit('data', data);
+    return !term.mSocket
+      ? term.mBuff.push(data)
+      : term.mSocket.emit('data', data);
   });
 
   console.log("" + "Created shell with pty master/slave" + " pair (master: %d, pid: %d)", term.fd, term.pid);
 
-  server.on('connection', function (socket) {
+  term.mServer.on('connection', function (socket) {
     var address = socket.remoteAddress;
     if (address !== '127.0.0.1' && address !== '::1') {
       try {
@@ -60,40 +63,27 @@ exports.setup = function (s) {
 };
 
 /**
- * @param {Socket} s
- * @param {object} ss
+ * @param {Socket} socket
  * @returns {void}
  */
-exports.onConnection = function (s, ss) {
-  "use strict";
+term.onConnection = function (socket) {
+  term.mSocket = socket;
 
-//  console.log('onConnection');
-
-//  console.log(s);
-
-
-  socket = s;
-//  sockets = ss;
-
-  socket.on('data', function (data) {
-//    console.log("socket.on data: " + data);
-
+  term.mSocket.on('data', function (data) {
     if (stream) stream.write('IN: ' + data + '\n-\n');
-    term.write(data);
+    term.mTerm.write(data);
   });
 
-  socket.on('disconnect', function () {
-//    console.log("socket.on('disconnect'");
-    socket = null;
+  term.mSocket.on('disconnect', function () {
+    term.mSocket = null;
   });
 
-  while (buff.length) {
-    socket.emit('data', buff.shift());
+  while (term.mBuff.length) {
+    term.mSocket.emit('data', term.mBuff.shift());
   }
 };
 
-
-//exports.setup = setup;
-//exports.onConnection = onConnection;
+exports.setup = term.setup;
+exports.onConnection = term.onConnection;
 
 

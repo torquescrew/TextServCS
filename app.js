@@ -48,7 +48,7 @@ server.listen(app.get("port"), function () {
 io.sockets.on('connection', function (socket) {
 
   socket.on('setup term', function (data) {
-    termServer.onConnection(socket, io.sockets);
+    termServer.onConnection(socket);
   });
 
   fileIO.setSocket(socket, io.sockets);
