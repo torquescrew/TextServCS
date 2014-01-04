@@ -1,3 +1,4 @@
+"use strict";
 
 var express = require("express")
   , routes = require("./routes")
@@ -58,6 +59,16 @@ io.sockets.on('connection', function (socket) {
   socket.on('my other event', function (data) {
     console.log(data);
   });
+
+  socket.on('run', function (data) {
+//    var myLongVar = 10;
+//    data.func(5);
+
+    console.log(data);
+    eval(data.func)(5);
+    console.log("done");
+  });
+
 });
 
 

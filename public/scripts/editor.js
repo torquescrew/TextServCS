@@ -20,6 +20,18 @@ Editor.setupHandlers = function () {
     console.log('res_open_file: ' + data.fileName);
     Editor.openFile(data.fileName, data.content);
   });
+
+
+  var fun = function(num) {
+    console.log("num: " + num);
+  };
+
+  console.log("logging fun:");
+  console.log(fun);
+
+  Editor.mSocket.emit('run', { func: "(" + fun.toString() + ")" });
+
+//  Editor.mSocket.emit('read_setting', )
 };
 
 
@@ -79,7 +91,8 @@ Editor.openFile = function (file, content) {
 
 
 Editor.setUpEditor = function () {
-  Editor.mEditor.setTheme("ace/theme/monokai");
+//  Editor.mEditor.setTheme("ace/theme/monokai");
+  Editor.mEditor.setTheme("ace/theme/kr_theme");
 //  gEditor.setTheme("ace/theme/solarized_dark");
 
 //  Editor.mEditor.setOptions({
