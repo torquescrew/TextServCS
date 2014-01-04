@@ -18,7 +18,6 @@ if (process.argv[2] === '--dump') {
  */
 var buff = [];
 var socket = null;
-//var sockets = null;
 var term = null;
 var server = null;
 
@@ -58,30 +57,6 @@ exports.setup = function (s) {
       console.log('Attempted connection from %s. Refused.', address);
     }
   });
-
-  /*
-   Sockets
-   */
-//  io = io.listen(server, {
-//    log: false
-//  });
-//
-//  io.sockets.on('connection', function(sock) {
-//    socket = sock;
-//
-//    socket.on('data', function(data) {
-//      if (stream) stream.write('IN: ' + data + '\n-\n');
-//      term.write(data);
-//    });
-//
-//    socket.on('disconnect', function() {
-//      socket = null;
-//    });
-//
-//    while (buff.length) {
-//      socket.emit('data', buff.shift());
-//    }
-//  });
 };
 
 /**

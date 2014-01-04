@@ -25,7 +25,7 @@ Browser.socket = io.connect('http://localhost');
 function openFolder(folder) {
   "use strict";
 
-  if (!U.validStr(folder)) {
+  if (!u.validStr(folder)) {
     folder = "";
   }
 
@@ -53,7 +53,7 @@ Browser.requestOpenFile = function(file) {
     alert("Browser.socket is null");
   }
 
-  if (U.validStr(file)) {
+  if (u.validStr(file)) {
     console.log("emit req_open_file: " + file);
     Browser.socket.emit('req_open_file', { fileName: file });
   }

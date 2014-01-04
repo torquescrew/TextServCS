@@ -1,7 +1,7 @@
 "use strict";
 
 var fs = require('fs')
-  , u = require('./util')
+  , u = require('./public/scripts/utility')
   , underscore = require('underscore');
 
 

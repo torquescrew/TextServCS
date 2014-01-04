@@ -5,11 +5,11 @@
 "use strict";
 
 var express = require("express")
-  , user = require("./routes/user")
+//  , user = require("./routes/user")
   , http = require("http")
   , path = require("path")
   , wd = require("./walkDirectory")
-  , u = require("./util")
+  , u = require("./public/scripts/utility")
   , fs = require("fs");
 
 var gSockets;

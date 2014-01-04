@@ -39,9 +39,9 @@ Editor.setupHandlers = function () {
  * @param {string} name
  */
 Editor.setCurrentFile = function (name) {
-  if (U.validStr(name)) {
+  if (u.validStr(name)) {
     location.hash = name;
-    document.title = U.removePath(name);
+    document.title = u.removePath(name);
   }
   else {
     console.log("failed to set current file: null string");
@@ -53,7 +53,7 @@ Editor.setCurrentFile = function (name) {
  * @returns {string}
  */
 Editor.getCurrentFile = function () {
-  if (U.validStr(location.hash.slice(1))) {
+  if (u.validStr(location.hash.slice(1))) {
     return location.hash.slice(1);
   }
   else {
@@ -69,17 +69,17 @@ Editor.getCurrentFile = function () {
 Editor.openFile = function (file, content) {
   console.log('openFile(res)');
 
-  if (U.validStr(file)) {
+  if (u.validStr(file)) {
     Editor.setCurrentFile(file);
   }
 
-  if (U.validStr(Editor.getCurrentFile())) {
+  if (u.validStr(Editor.getCurrentFile())) {
     setMode(Editor.getCurrentFile());
     Editor.mEditor.setValue(content);
     Editor.mEditor.clearSelection();
     Editor.mEditor.scrollToLine(0);
 
-    document.title = U.removePath(Editor.getCurrentFile());
+    document.title = u.removePath(Editor.getCurrentFile());
 
     var UndoManager = ace.require("ace/undomanager").UndoManager;
     Editor.mEditor.getSession().setUndoManager(new UndoManager());
@@ -134,7 +134,7 @@ function setMode(fileName) {
   var modelist = ace.require('ace/ext/modelist');
   var mode = modelist.getModeForPath(fileName).mode;
 
-  if (U.validStr(mode)) {
+  if (u.validStr(mode)) {
     Editor.mEditor.session.setMode(mode);
   }
   else {

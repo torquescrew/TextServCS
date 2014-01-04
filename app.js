@@ -1,12 +1,10 @@
 "use strict";
 
 var express = require("express")
-  , routes = require("./routes")
-  , user = require("./routes/user")
   , http = require("http")
   , path = require("path")
   , fs = require("fs")
-  , u = require("./util")
+  , u = require("./public/scripts/utility")
   , terminal = require('term.js')
   , fileIO = require('./fileIO')
   , termServer = require('./setupTermServer');
