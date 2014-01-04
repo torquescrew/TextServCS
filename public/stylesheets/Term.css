@@ -5,11 +5,11 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: #333333;
+    background-color: #222222;
 }
 
 .terminal {
-
+    font-size: 90%;
 }
 
 #output2 {

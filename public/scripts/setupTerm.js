@@ -6,7 +6,7 @@ Term.mTerm = null;
 Term.mSocket = null;
 Term.mId = 'output2';
 Term.forground = '#bbbbbb';
-Term.background = '#333333';
+Term.background = '#222222';
 
 
 /**
