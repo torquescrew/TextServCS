@@ -6,7 +6,7 @@ var express = require("express")
   , fs = require("fs")
   , u = require("./public/scripts/utility")
   , terminal = require('term.js')
-  , fileIO = require('./fileIO')
+  , fileIO = require('./public/scripts/fileIO')
   , termServer = require('./setupTermServer');
 
 var app = express();
