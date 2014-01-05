@@ -6,7 +6,7 @@ var express = require("express")
   , fs = require("fs")
   , u = require("./public/scripts/utility")
   , terminal = require('term.js')
-  , fileIO = require('./public/scripts/fileIO')
+  , fio = require('./public/scripts/fileIO')
   , termServer = require('./setupTermServer');
 
 var app = express();
@@ -33,11 +33,11 @@ app.get("/", function (req, res) {
   res.sendfile(__dirname + '/public/ide.html');
 });
 
-app.get("/_open_file", fileIO.openFile);
+app.get("/_open_file", fio.openFile);
 
-app.get("/_open_folder", fileIO.openFolder);
+app.get("/_open_folder", fio.openFolder);
 
-app.post("/_save_file", fileIO.saveFile);
+app.post("/_save_file", fio.saveFile);
 
 
 server.listen(app.get("port"), function () {
@@ -51,20 +51,25 @@ io.sockets.on('connection', function (socket) {
     termServer.onConnection(socket);
   });
 
-  fileIO.setSocket(socket, io.sockets);
+  fio.setSocket(socket, io.sockets);
 
   socket.emit('news', { hello: 'world' });
   socket.on('my other event', function (data) {
     console.log(data);
   });
 
-  socket.on('run', function (data) {
-//    var myLongVar = 10;
-//    data.func(5);
+//  socket.on('run', function (data) {
+////    var myLongVar = 10;
+////    data.func(5);
+//
+//    console.log(data);
+//    eval(data.func)(5);
+//    console.log("done");
+//  });
 
-    console.log(data);
-    eval(data.func)(5);
-    console.log("done");
+  socket.on('task', function (data) {
+    var result = eval(data.func)();
+    socket.emit(data.id, result);
   });
 
 });

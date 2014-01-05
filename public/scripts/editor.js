@@ -22,16 +22,12 @@ Editor.setupHandlers = function () {
   });
 
 
-  var fun = function(num) {
-    console.log("num: " + num);
-  };
-
-  console.log("logging fun:");
-  console.log(fun);
-
-  Editor.mSocket.emit('run', { func: "(" + fun.toString() + ")" });
-
-//  Editor.mSocket.emit('read_setting', )
+  u.runOnServer(Editor.mSocket, function () {
+    return fio.readSetting('folder');
+  }, function (result) {
+    console.log("result of function: ");
+    console.log(result);
+  });
 };
 
 
