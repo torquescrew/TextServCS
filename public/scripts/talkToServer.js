@@ -67,33 +67,56 @@ serv.createId = function () {
 };
 
 
-/**
- * @param {function} func
- * @param {function} callback
- */
-serv.run = function (func, callback) {
-  var taskId = serv.createId();
+///**
+// * @param {function} func
+// * @param {function} callback
+// */
+//serv.run = function (func, callback) {
+//  var taskId = serv.createId();
+//
+//  serv.mSocket.on(taskId, function (result) {
+//    callback(result);
+//    serv.mSocket.removeListener(taskId);
+//  });
+//
+//  serv.mSocket.emit('task', { id: taskId, func: "(" + func.toString() + ")" });
+//};
 
-  serv.mSocket.on(taskId, function (result) {
-    callback(result);
-    serv.mSocket.removeListener(taskId);
-  });
 
-  serv.mSocket.emit('task', { id: taskId, func: "(" + func.toString() + ")" });
-};
+///**
+// * Beware:
+// * - takes variable number of parameters, callback function is last
+// * - this function assumes that fio[funcName] exists on server
+// *
+// * @param {string} funcName
+// */
+//serv.run2 = function (funcName) {
+//  var taskId = serv.createId();
+//  var args = Array.prototype.slice.call(arguments, 1);
+//  var callback = u.isFunction(u.last(args)) ? args.pop() : null;
+//
+//  serv.mSocket.on(taskId, function (result) {
+//    if (callback) {
+//      callback(result);
+//    }
+//
+//    serv.mSocket.removeListener(taskId);
+//  });
+//
+//  serv.mSocket.emit('task2', { id: taskId, name: funcName, args: args });
+//};
 
 
 /**
  * Beware:
- * - takes variable number of parameters, callback function is last
  * - this function assumes that fio[funcName] exists on server
  *
  * @param {string} funcName
+ * @param {array} args
+ * @param {function} callback
  */
-serv.run2 = function (funcName) {
+serv.run = function (funcName, args, callback) {
   var taskId = serv.createId();
-  var args = Array.prototype.slice.call(arguments, 1);
-  var callback = u.isFunction(u.last(args)) ? args.pop() : null;
 
   serv.mSocket.on(taskId, function (result) {
     if (callback) {

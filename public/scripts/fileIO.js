@@ -78,6 +78,14 @@ fio.writeSetting = function (name, value) {
 };
 
 
+
+fio.readFileSync = function (file) {
+  var content = fs.readFileSync(file);
+
+  return { file: file, content: content.toString() };
+};
+
+
 /**
  * @param {object} req
  * @param {object} res
@@ -194,7 +202,9 @@ fio.setSocket = function(socket, sockets) {
 fio.initSocketHandlers = function (socket) {
   socket.on('req_open_file', function (data) {
     console.log("req_open_file: " + data.fileName);
-    fio.openFileRes(data.fileName);
+//    fio.openFileRes(data.fileName);
+
+    fio.mSockets.emit('req_open_file', data);
   });
 
   socket.on('write_setting', function (data) {
@@ -220,4 +230,5 @@ if (typeof exports !== 'undefined') {
   exports.openFileRes = fio.openFileRes;
   exports.setSocket = fio.setSocket;
   exports.initSocketHandlers = fio.initSocketHandlers;
+  exports.readFileSync = fio.readFileSync;
 }

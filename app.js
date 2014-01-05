@@ -79,11 +79,18 @@ io.sockets.on('connection', function (socket) {
 
     console.log(task);
 
-    var result = fio[task.name].apply(this, task.args);
+    if (typeof fio[task.name] !== 'undefined') {
+      var result = fio[task.name].apply(this, task.args);
 
-    console.log('result2: ' + result);
+      console.log('result2: ' + result);
 
-    socket.emit(task.id, result);
+      socket.emit(task.id, result);
+    }
+    else {
+      console.log("fio[task.name] doesn't exist!");
+    }
+
+
   });
 
 });
