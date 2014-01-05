@@ -57,6 +57,7 @@ fio.readSetting = function (name) {
 /**
  * @param {string} name
  * @param {*} value
+ * @returns {boolean}
  */
 fio.writeSetting = function (name, value) {
   if (!fs.existsSync(fio.mSettingsFile)) {
@@ -70,7 +71,10 @@ fio.writeSetting = function (name, value) {
 
     var content = JSON.stringify(settings, null, 4);
     fs.writeFileSync(fio.mSettingsFile, content);
+
+    return true;
   }
+  return false;
 };
 
 

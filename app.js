@@ -72,6 +72,20 @@ io.sockets.on('connection', function (socket) {
     socket.emit(data.id, result);
   });
 
+  socket.on('task2', function (task) {
+//    var result = eval(data.func)();
+
+    //app[func].apply(this, args);
+
+    console.log(task);
+
+    var result = fio[task.name].apply(this, task.args);
+
+    console.log('result2: ' + result);
+
+    socket.emit(task.id, result);
+  });
+
 });
 
 

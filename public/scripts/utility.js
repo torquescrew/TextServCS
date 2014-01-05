@@ -142,6 +142,25 @@ u.removeTopFolder = function (fileName) {
 
 
 /**
+ * @param {function} functionToCheck
+ * @returns {boolean}
+ */
+u.isFunction = function (functionToCheck) {
+  var getType = {};
+  return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+};
+
+
+/**
+ * @param {Array} array
+ * @returns {*}
+ */
+u.last = function (array) {
+  return array[array.length-1];
+};
+
+
+/**
  * @returns {boolean}
  */
 u.exportDefined = function () {

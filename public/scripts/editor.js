@@ -24,11 +24,18 @@ edit.setupHandlers = function () {
 
   serv.setSocket(edit.mSocket);
 
-  serv.run(function () {
-    return fio.readSetting('folder');
-  }, function (result) {
-    console.log(result);
+//  serv.run(function () {
+//    return fio.readSetting('folder');
+//  }, function (result) {
+//    console.log(result);
+//  });
+
+
+  serv.run2('readSetting', 'folder', function (res) {
+    console.log('omg: ' + res);
   });
+
+
 };
 
 
@@ -39,6 +46,14 @@ edit.setCurrentFile = function (name) {
   if (u.validStr(name)) {
     location.hash = name;
     document.title = u.removePath(name);
+
+//    serv.run(function () {
+//      return fio.writeSetting('file', name);
+//    }, function (res) {
+//      console.log("current file set: " + name);
+//      console.log(res);
+//    });
+    serv.run2('writeSetting', 'file', name);
   }
   else {
     console.log("failed to set current file: null string");
@@ -50,6 +65,10 @@ edit.setCurrentFile = function (name) {
  * @returns {string}
  */
 edit.getCurrentFile = function () {
+
+
+
+
   if (u.validStr(location.hash.slice(1))) {
     return location.hash.slice(1);
   }
