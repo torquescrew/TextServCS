@@ -4,52 +4,80 @@
 
 "use strict";
 
-var Serv = Serv || {};
+var serv = serv || {};
 
 /** @type {Socket} */
-Serv.mSocket = null;
+serv.mSocket = null;
 
 
 /**
  * @param {Socket} socket
- * @returns {Serv}
+ * @returns {serv}
  */
-Serv.setSocket = function (socket) {
-  Serv.mSocket = socket;
+serv.setSocket = function (socket) {
+  serv.mSocket = socket;
 
-  Serv.setupHandlers();
+  serv.setupHandlers();
 
-  return Serv;
+  return serv;
 };
 
 
 /**
  * @returns {void}
  */
-Serv.setupHandlers = function () {
-  Serv.mSocket.on('read_setting_res', function (value) {
+serv.setupHandlers = function () {
+  serv.mSocket.on('read_setting_res', function (value) {
     console.log(value);
   });
 
 };
 
 
-Serv.queryBrowserOpen = function () {
-  Serv.checkSocket();
+serv.queryBrowserOpen = function () {
+  serv.checkSocket();
 
-  Serv.mSocket.emit('read_setting', { name: 'browser_open' });
+  serv.mSocket.emit('read_setting', { name: 'browser_open' });
 };
 
 
-Serv.queryTerminalOpen = function () {
-  Serv.checkSocket();
+serv.queryTerminalOpen = function () {
+  serv.checkSocket();
 
-  Serv.mSocket.emit ('read_setting', { name: 'terminal_open' });
+  serv.mSocket.emit ('read_setting', { name: 'terminal_open' });
 };
 
 
-Serv.checkSocket = function () {
-  if (!Serv.mSocket) {
+serv.checkSocket = function () {
+  if (!serv.mSocket) {
     alert("Serv.mSocket == null");
   }
+};
+
+
+/** @type {number} */
+serv.mPageLoadTime = new Date().getTime();
+
+
+/**
+ * @returns {string}
+ */
+serv.createId = function () {
+  return (new Date().getTime() - serv.mPageLoadTime).toString();
+};
+
+
+/**
+ * @param {function} func
+ * @param {function} callback
+ */
+serv.run = function (func, callback) {
+  var taskId = serv.createId();
+
+  serv.mSocket.on(taskId, function (result) {
+    callback(result);
+    serv.mSocket.removeListener(taskId);
+  });
+
+  serv.mSocket.emit('task', { id: taskId, func: "(" + func.toString() + ")" });
 };

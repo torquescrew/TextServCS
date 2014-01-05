@@ -149,30 +149,6 @@ u.exportDefined = function () {
 };
 
 
-/** @type {number} */
-u.mPageLoadTime = new Date().getTime();
-
-
-/**
- * @returns {string}
- */
-u.createId = function () {
-  return (new Date().getTime() - u.mPageLoadTime).toString();
-};
-
-
-u.runOnServer = function (socket, func, callback) {
-  var taskId = u.createId();
-
-  socket.on(taskId, function (result) {
-    callback(result);
-    socket.removeListener(taskId);
-  });
-
-  socket.emit('task', { id: taskId, func: "(" + func.toString() + ")" });
-};
-
-
 if (u.exportDefined()) {
   exports.okString = u.okString;
   exports.badString = u.badString;

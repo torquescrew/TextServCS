@@ -3,29 +3,30 @@
  */
 "use strict";
 
-var Editor = Editor || {};
+var edit = edit || {};
 
-Editor.mSocket = io.connect('http://localhost');
-Editor.mEditor = null;
+edit.mSocket = io.connect('http://localhost');
+edit.mEditor = null;
 
 
-Editor.setupHandlers = function () {
-  Editor.mSocket.on('news', function(data) {
+edit.setupHandlers = function () {
+  edit.mSocket.on('news', function (data) {
     console.log('editor on news: ');
     console.log(data);
-    Editor.mSocket.emit('my other event', { my: 'data' });
+    edit.mSocket.emit('my other event', { my: 'data' });
   });
 
-  Editor.mSocket.on('res_open_file', function(data) {
+  edit.mSocket.on('res_open_file', function (data) {
     console.log('res_open_file: ' + data.fileName);
-    Editor.openFile(data.fileName, data.content);
+    edit.openFile(data.fileName, data.content);
   });
 
 
-  u.runOnServer(Editor.mSocket, function () {
+  serv.setSocket(edit.mSocket);
+
+  serv.run(function () {
     return fio.readSetting('folder');
   }, function (result) {
-    console.log("result of function: ");
     console.log(result);
   });
 };
@@ -34,7 +35,7 @@ Editor.setupHandlers = function () {
 /**
  * @param {string} name
  */
-Editor.setCurrentFile = function (name) {
+edit.setCurrentFile = function (name) {
   if (u.validStr(name)) {
     location.hash = name;
     document.title = u.removePath(name);
@@ -48,7 +49,7 @@ Editor.setCurrentFile = function (name) {
 /**
  * @returns {string}
  */
-Editor.getCurrentFile = function () {
+edit.getCurrentFile = function () {
   if (u.validStr(location.hash.slice(1))) {
     return location.hash.slice(1);
   }
@@ -62,23 +63,23 @@ Editor.getCurrentFile = function () {
  * @param {string} file
  * @param {string} content
  */
-Editor.openFile = function (file, content) {
+edit.openFile = function (file, content) {
   console.log('openFile(res)');
 
   if (u.validStr(file)) {
-    Editor.setCurrentFile(file);
+    edit.setCurrentFile(file);
   }
 
-  if (u.validStr(Editor.getCurrentFile())) {
-    setMode(Editor.getCurrentFile());
-    Editor.mEditor.setValue(content);
-    Editor.mEditor.clearSelection();
-    Editor.mEditor.scrollToLine(0);
+  if (u.validStr(edit.getCurrentFile())) {
+    edit.setMode(edit.getCurrentFile());
+    edit.mEditor.setValue(content);
+    edit.mEditor.clearSelection();
+    edit.mEditor.scrollToLine(0);
 
-    document.title = u.removePath(Editor.getCurrentFile());
+    document.title = u.removePath(edit.getCurrentFile());
 
     var UndoManager = ace.require("ace/undomanager").UndoManager;
-    Editor.mEditor.getSession().setUndoManager(new UndoManager());
+    edit.mEditor.getSession().setUndoManager(new UndoManager());
   }
   else {
     console.log("invalid current file");
@@ -86,9 +87,9 @@ Editor.openFile = function (file, content) {
 };
 
 
-Editor.setUpEditor = function () {
+edit.setUpEditor = function () {
 //  Editor.mEditor.setTheme("ace/theme/monokai");
-  Editor.mEditor.setTheme("ace/theme/kr_theme");
+  edit.mEditor.setTheme("ace/theme/kr_theme");
 //  gEditor.setTheme("ace/theme/solarized_dark");
 
 //  Editor.mEditor.setOptions({
@@ -96,12 +97,12 @@ Editor.setUpEditor = function () {
 //    enableSnippets: true
 //  });
 
-  Editor.setHotKeys();
+  edit.setHotKeys();
 };
 
 
-Editor.setHotKeys = function () {
-  Editor.mEditor.commands.addCommand({
+edit.setHotKeys = function () {
+  edit.mEditor.commands.addCommand({
     name: 'save',
     bindKey: {win: 'Ctrl-S', mac: 'Command-S'},
     exec: function () {
@@ -109,7 +110,7 @@ Editor.setHotKeys = function () {
     }
   });
 
-  Editor.mEditor.commands.addCommand({
+  edit.mEditor.commands.addCommand({
     name: 'build',
     bindKey: {win: 'Ctrl-B', mac: 'Command-B'},
     exec: function () {
@@ -120,29 +121,30 @@ Editor.setHotKeys = function () {
       runCommand(command);
     }
   });
-}
+};
 
 
 /**
  * @param {string} fileName
  */
-function setMode(fileName) {
+edit.setMode = function (fileName) {
   var modelist = ace.require('ace/ext/modelist');
   var mode = modelist.getModeForPath(fileName).mode;
 
   if (u.validStr(mode)) {
-    Editor.mEditor.session.setMode(mode);
+    edit.mEditor.session.setMode(mode);
   }
   else {
-    Editor.mEditor.session.setMode("ace/mode/html");
+    edit.mEditor.session.setMode("ace/mode/html");
   }
-}
+};
 
-Editor.setupHandlers();
 
-$( document ).ready(function() {
+edit.setupHandlers();
+
+$(document).ready(function () {
   if ($('#editor').length) {
-    Editor.mEditor = ace.edit("editor");
-    Editor.setUpEditor();
+    edit.mEditor = ace.edit("editor");
+    edit.setUpEditor();
   }
 });
