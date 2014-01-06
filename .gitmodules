@@ -1,3 +1,6 @@
 [submodule "public/ace"]
 	path = public/ace
 	url = https://github.com/ajaxorg/ace-builds.git
+[submodule "public/jquery-ui-1.10.3"]
+	path = public/jquery-ui-1.10.3
+	url = https://github.com/jquery/jquery-ui.git
