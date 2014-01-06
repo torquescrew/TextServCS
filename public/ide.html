@@ -2,10 +2,13 @@
 <html>
 <head>
   <title>Toby's Text Editor</title>
+  <script src="scripts/jquery-1.10.2.js"></script>
   <link rel="stylesheet" type="text/css" href="stylesheets/frameResizer.css">
   <link rel="stylesheet" type="text/css" href="stylesheets/global.css">
 </head>
 <body>
+
+
 
 <table id="table">
 
@@ -40,12 +43,12 @@
 
 </table>
 
-
-<script src="scripts/jquery-1.10.2.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="scripts/talkToServer.js"></script>
 <script src="scripts/frameResizer.js"></script>
-<script src="scripts/ide.js"></script>
 <script src="scripts/utility.js"></script>
 <script src="scripts/fileIO.js"></script>
+<script src="scripts/ide.js"></script>
 
 </body>
 </html>

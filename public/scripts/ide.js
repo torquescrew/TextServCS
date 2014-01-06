@@ -4,74 +4,97 @@
 
 "use strict";
 
-var Ide = Ide || {};
+var ide = ide || {};
 
-Ide.mTable = $('#table');
-Ide.mHasBrowser = true;
-Ide.mBrowser = $('#browser');
-Ide.mEditor = $('#editor');
-Ide.mTerminal = $('#terminal');
-Ide.mHasTerminal = true;
-Ide.mVerticalBar = $('#verticalBar');
-Ide.mHorizontalBar = $('#horizontalBar');
+ide.mSocket = io.connect('http://localhost');
 
-Ide.mRow2 = $('#row2');
-Ide.mRow3 = $('#row3');
-Ide.mRow4 = $('#row4');
+ide.mTable = $('#table');
+ide.mHasBrowser = true;
+ide.mBrowser = $('#browser');
+ide.mEditor = $('#editor');
+ide.mTerminal = $('#terminal');
+ide.mHasTerminal = true;
+ide.mVerticalBar = $('#verticalBar');
+ide.mHorizontalBar = $('#horizontalBar');
 
-Ide.mToggleTermButton = $('#toggleTerminal');
-Ide.mToggleBrowser = $('#toggleBrowser');
+ide.mRow2 = $('#row2');
+ide.mRow3 = $('#row3');
+ide.mRow4 = $('#row4');
 
-Ide.setup = function () {
-  Ide.setupButtons();
-};
+ide.mToggleTermButton = $('#toggleTerminal');
+ide.mToggleBrowser = $('#toggleBrowser');
 
+ide.setup = function () {
+  serv.setSocket(ide.mSocket);
+  ide.setupButtons();
 
-Ide.setupButtons = function () {
-  Ide.mToggleTermButton.click(function () {
-    if (Ide.mHasTerminal) {
-      Ide.hideTerm();
+  serv.run('readSetting', ['browser_open'], function (open) {
+    if (!open) {
+      ide.hideBrowser();
     }
-    else {
-      Ide.restoreTerm();
-    }
-    Ide.mHasTerminal = !Ide.mHasTerminal;
   });
 
-  Ide.mToggleBrowser.click(function  () {
-    if (Ide.mHasBrowser) {
-      Ide.hideBrowser();
+  serv.run('readSetting', ['terminal_open'], function (open) {
+    if (!open) {
+      ide.hideTerm();
     }
-    else {
-      Ide.restoreBrowser();
-    }
-    Ide.mHasBrowser = !Ide.mHasBrowser;
   });
 };
 
 
-Ide.hideBrowser = function () {
-  Ide.mVerticalBar.detach();
-  Ide.mBrowser.detach();
+ide.setupButtons = function () {
+  ide.mToggleTermButton.click(function () {
+    if (ide.mHasTerminal) {
+      ide.hideTerm();
+    }
+    else {
+      ide.restoreTerm();
+    }
+    ide.mHasTerminal = !ide.mHasTerminal;
+  });
+
+  ide.mToggleBrowser.click(function  () {
+    if (ide.mHasBrowser) {
+      ide.hideBrowser();
+    }
+    else {
+      ide.restoreBrowser();
+    }
+    ide.mHasBrowser = !ide.mHasBrowser;
+  });
 };
 
 
-Ide.restoreBrowser = function () {
-  Ide.mRow2.prepend(Ide.mVerticalBar);
-  Ide.mRow2.prepend(Ide.mBrowser);
+ide.hideBrowser = function () {
+  ide.mVerticalBar.detach();
+  ide.mBrowser.detach();
+
+  serv.run('writeSetting', ['browser_open', false]);
 };
 
 
-Ide.hideTerm = function () {
-  Ide.mTerminal.detach();
-  Ide.mHorizontalBar.detach();
-  Ide.mEditor.height('100%');
+ide.restoreBrowser = function () {
+  ide.mRow2.prepend(ide.mVerticalBar);
+  ide.mRow2.prepend(ide.mBrowser);
+
+  serv.run('writeSetting', ['browser_open', true]);
 };
 
 
-Ide.restoreTerm = function () {
-  Ide.mRow3.append(Ide.mHorizontalBar);
-  Ide.mRow4.append(Ide.mTerminal);
+ide.hideTerm = function () {
+  ide.mTerminal.detach();
+  ide.mHorizontalBar.detach();
+  ide.mEditor.height('100%');
+
+  serv.run('writeSetting', ['terminal_open', false]);
 };
 
-Ide.setup();
+
+ide.restoreTerm = function () {
+  ide.mRow3.append(ide.mHorizontalBar);
+  ide.mRow4.append(ide.mTerminal);
+
+  serv.run('writeSetting', ['terminal_open', true]);
+};
+
+ide.setup();

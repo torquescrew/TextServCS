@@ -108,12 +108,11 @@ serv.createId = function () {
 
 
 /**
- * Beware:
- * - this function assumes that fio[funcName] exists on server
+ * This function assumes that fio[funcName] exists on server
  *
  * @param {string} funcName
- * @param {array} args
- * @param {function} callback
+ * @param {Array.<*>} args
+ * @param {function=} callback (optional)
  */
 serv.run = function (funcName, args, callback) {
   var taskId = serv.createId();
