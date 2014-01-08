@@ -6,41 +6,19 @@
 
 var menu = menu || {};
 
-/*
- $('#user_button').toggle(function () {
- $("#user_button").css({borderBottomLeftRadius: "0px"});
- }, function () {
- $("#user_button").css({borderBottomLeftRadius: "5px"});
- });
- */
-
 menu.fileMenu = $('#file-menu');
 menu.fileButton = $('#file-button');
 
 menu.viewButton = $('#view-button');
 menu.viewMenu = $('#view-menu');
 
-menu.items = $('li');
+menu.items = $('.item-row');
 menu.backgroundColor = menu.fileMenu.css('background-color');
 
 menu.setup = function () {
 
-
-  menu.fileButton.click(function () {
-    var pos = $(this).offset();
-    pos.top += $(this).outerHeight(true);
-
-    menu.fileMenu.css({ top: pos.top-2, left: pos.left-2 });
-    menu.fileMenu.toggleClass('hide-menu');
-  });
-
-  menu.viewButton.click(function () {
-    var pos = $(this).offset();
-    pos.top += $(this).outerHeight(true);
-
-    menu.viewMenu.css({ top: pos.top-2, left: pos.left-2 });
-    menu.viewMenu.toggleClass('hide-menu');
-  });
+  menu.setupMenuToggle(menu.fileMenu, menu.fileButton);
+  menu.setupMenuToggle(menu.viewMenu, menu.viewButton);
 
   menu.items.mouseover(function() {
 //    $(this).css("color", "#ffffff");
@@ -52,6 +30,18 @@ menu.setup = function () {
     $(this).css("background-color", menu.backgroundColor);
   });
 
+};
+
+
+menu.setupMenuToggle = function (men, but) {
+  but.click(function () {
+    var pos = $(this).offset();
+    pos.top += $(this).outerHeight(true);
+
+    men.css({ top: pos.top, left: pos.left});
+    men.toggleClass('show');
+    but.toggleClass('darken');
+  });
 };
 
 
