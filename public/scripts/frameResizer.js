@@ -4,74 +4,76 @@
 
 "use strict";
 
+var resizer = resizer || {};
+
 /**
  * @returns {void}
  */
-function setupResizing() {
-  document.getElementById('verticalBar').onmousedown = startHorizontalDrag;
-  document.getElementById('horizontalBar').onmousedown = startVerticalDrag;
-}
-setupResizing();
+resizer.setup = function () {
+  document.getElementById('verticalBar').onmousedown = resizer.startHorizontalDrag;
+  document.getElementById('horizontalBar').onmousedown = resizer.startVerticalDrag;
+};
 
 /**
  * @returns {HTMLElement}
  */
-function getLeft() {
+resizer.getLeft = function () {
   return document.getElementById('browser');
-}
+};
 
 /**
- * TODO: refactor
  * @returns {HTMLElement}
  */
-function getBottom() {
+resizer.getBottom = function () {
   return document.getElementById('terminal');
-}
+};
 
 /**
  * @returns {void}
  */
-function startHorizontalDrag() {
-  enablePointerEvents(false);
+resizer.startHorizontalDrag = function () {
+  resizer.enablePointerEvents(false);
 
   document.body.onmousemove = function (evt) {
     var w = evt.clientX;
-    getLeft().setAttribute("style", "width:" + w + "px");
+    resizer.getLeft().setAttribute("style", "width:" + w + "px");
   };
 
   document.body.onmouseup = function () {
-    onStopDrag();
+    resizer.onStopDrag();
   };
-}
+};
 
 /**
  * @param {boolean} enable
  */
-function enablePointerEvents(enable) {
+resizer.enablePointerEvents = function (enable) {
   $('iframe').css('pointer-events', enable? 'auto':'none');
-}
+};
 
 /**
  * @returns {void}
  */
-function startVerticalDrag() {
-  enablePointerEvents(false);
+resizer.startVerticalDrag = function () {
+  resizer.enablePointerEvents(false);
 
   document.body.onmousemove = function (evt) {
     var h = $(document).height() - (evt.clientY + 5);
-    getBottom().setAttribute("style", "height:" + h + "px");
+    resizer.getBottom().setAttribute("style", "height:" + h + "px");
   };
 
   document.body.onmouseup = function () {
-    onStopDrag();
+    resizer.onStopDrag();
   };
-}
+};
 
 /**
  * @returns {void}
  */
-function onStopDrag() {
-  enablePointerEvents(true);
+resizer.onStopDrag = function () {
+  resizer.enablePointerEvents(true);
   document.body.onmousemove = null;
   document.body.onmouseup = null;
-}
+};
+
+resizer.setup();

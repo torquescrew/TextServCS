@@ -1,0 +1,85 @@
+
+#topMenu {
+    height: 1em;
+    cursor: default;
+}
+
+.item-menu {
+    position: absolute;
+    font-family: sans-serif;
+    background-color: #333333;
+    margin: 0;
+    /*list-style-type: none;*/
+    /*padding: 0.1em 0;*/
+    font-size: 80%;
+    visibility: hidden;
+}
+
+.hide-menu {
+    visibility: visible;
+}
+
+/*ul {*/
+    /*background-color: #333333;*/
+    /*margin: 0;*/
+    /*list-style-type: none;*/
+    /*padding: 0.1em 0;*/
+    /*font-size: 80%;*/
+    /*visibility: hidden;*/
+/*}*/
+
+/*li {*/
+    /*color: #aaaaaa;*/
+    /*padding: 0.2em 1em;*/
+/*}*/
+
+.item-col {
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+}
+
+.item-key {
+    padding-right: 1em;
+    padding-left: 1em;
+}
+
+
+#tick-file-browser {
+    /*visibility: hidden;*/
+}
+
+#tick-terminal {
+    /*visibility: hidden;*/
+}
+
+
+#tick-new {
+    visibility: hidden;
+}
+/*td {*/
+    /*height: 20px !important;*/
+/*}*/
+
+.item-row {
+    color: #aaaaaa;
+    /*padding: 0.2em 10em;*/
+    /*height: 1em;*/
+}
+
+.menu-button {
+    background-color: transparent;
+    float: left;
+    border: 0;
+    color: #aaaaaa;
+    font-size: 80%;
+}
+
+#toggleTerminal {
+
+}
+
+#toggleBrowser {
+
+}

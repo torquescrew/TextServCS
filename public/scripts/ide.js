@@ -30,16 +30,41 @@ ide.setup = function () {
 
   serv.run('readSetting', ['browser_open'], function (open) {
     if (!open) {
-      ide.hideBrowser();
+//      ide.hideBrowser();
     }
   });
 
   serv.run('readSetting', ['terminal_open'], function (open) {
     if (!open) {
-      ide.hideTerm();
+//      ide.hideTerm();
     }
   });
+
+
+//  ide.setupMenu();
 };
+
+
+
+
+//ide.setupMenu = function () {
+//  $('#file-button').click(function () {
+////    alert("file-menu");
+//
+//    $('#file-menu').css('visibility', 'visible');
+//
+//
+//  });
+//
+//  ide.openMenu();
+//};
+//
+//
+//ide.openMenu = function () {
+////  $(function() {
+////    $( "#menu" ).menu({ position: { my: "left top", at: "right-5 top+5" } });
+////  });
+//};
 
 
 ide.setupButtons = function () {
@@ -98,3 +123,4 @@ ide.restoreTerm = function () {
 };
 
 ide.setup();
+
