@@ -66,27 +66,48 @@ ide.setup = function () {
 ////  });
 //};
 
+ide.toggleFileBrowser = function () {
+  if (ide.mHasBrowser) {
+    ide.hideBrowser();
+  }
+  else {
+    ide.restoreBrowser();
+  }
+  ide.mHasBrowser = !ide.mHasBrowser;
+};
+
+ide.toggleTerminal = function () {
+  if (ide.mHasTerminal) {
+    ide.hideTerm();
+  }
+  else {
+    ide.restoreTerm();
+  }
+  ide.mHasTerminal = !ide.mHasTerminal;
+};
+
 
 ide.setupButtons = function () {
-  ide.mToggleTermButton.click(function () {
-    if (ide.mHasTerminal) {
-      ide.hideTerm();
-    }
-    else {
-      ide.restoreTerm();
-    }
-    ide.mHasTerminal = !ide.mHasTerminal;
-  });
+//  ide.mToggleTermButton.click(function () {
+//    ide.toggleTerminal();
+////    if (ide.mHasTerminal) {
+////      ide.hideTerm();
+////    }
+////    else {
+////      ide.restoreTerm();
+////    }
+////    ide.mHasTerminal = !ide.mHasTerminal;
+//  });
 
-  ide.mToggleBrowser.click(function  () {
-    if (ide.mHasBrowser) {
-      ide.hideBrowser();
-    }
-    else {
-      ide.restoreBrowser();
-    }
-    ide.mHasBrowser = !ide.mHasBrowser;
-  });
+//  ide.mToggleBrowser.click(function  () {
+//    if (ide.mHasBrowser) {
+//      ide.hideBrowser();
+//    }
+//    else {
+//      ide.restoreBrowser();
+//    }
+//    ide.mHasBrowser = !ide.mHasBrowser;
+//  });
 };
 
 

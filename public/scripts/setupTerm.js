@@ -49,9 +49,6 @@ Term.setup = function () {
       Term.mSocket.emit('setup term', '');
       Term.mSocket.emit("data", 'pwd\r');
     });
-
-
-
   };
 
   $(window).resize(function () {
@@ -59,7 +56,6 @@ Term.setup = function () {
   });
 };
 Term.setup();
-//Term.destroy();
 
 Term.destroy = function () {
   Term.mTerm.destroy();

@@ -32,6 +32,26 @@ menu.setup = function () {
     $(this).css("background-color", menu.backgroundColor);
   });
 
+  menu.hookupItems();
+};
+
+
+menu.hookupItems = function () {
+  $('#toggleTerminal').click(function () {
+    ide.toggleTerminal();
+    menu.closeAll();
+  });
+
+  $('#toggleFileBrowser').click(function () {
+    ide.toggleFileBrowser();
+    menu.closeAll();
+  });
+};
+
+menu.closeAll = function () {
+  menu.menus.forEach(function (m) {
+    m.close();
+  });
 };
 
 
