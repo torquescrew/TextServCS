@@ -12,8 +12,8 @@ if (typeof exports !== 'undefined') {
   var express = require("express")
     , http = require("http")
     , path = require("path")
-    , wd = require("./../../walkDirectory")
-    , u = require("./utility")
+    , wd = require("./walkDirectory")
+    , u = require("./public/scripts/utility")
     , fs = require("fs");
 
 
@@ -78,7 +78,10 @@ fio.writeSetting = function (name, value) {
 };
 
 
-
+/**
+ * @param {string} file
+ * @returns {{file: (String), content: (string)}}
+ */
 fio.readFileSync = function (file) {
   var content = fs.readFileSync(file);
 
@@ -107,6 +110,7 @@ fio.openFolder = function (req, res) {
   }
   fio.readFolder(folder, res);
 };
+
 
 /**
  * @param {Request} req

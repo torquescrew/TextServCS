@@ -4,67 +4,74 @@ var fs = require('fs')
   , u = require('./public/scripts/utility')
   , underscore = require('underscore');
 
+var walk = walk || {};
+
 
 /** @type {string[]} */
-var ignore = [".hi", ".o", ".hs~"];
+walk.ignore = [".hi", ".o", ".hs~"];
 
 /**
  * @param {string} path
  * @returns {boolean}
  */
-function isDir(path) {
+walk.isDir = function (path) {
   return u.okString(path) && u.stripFolder(path)[0] !== '.' && fs.statSync(path).isDirectory();
-}
+};
+
 
 /**
  * @param {string} path
  * @returns {boolean}
  */
-function isFile(path) {
-  return u.okString(path) && fs.statSync(path).isFile() && !shouldIgnore(path);
-}
+walk.isFile = function (path) {
+  return u.okString(path) && fs.statSync(path).isFile() && !walk.shouldIgnore(path);
+};
 
 /**
  * @param {string} path
  * @returns {boolean}
  */
-function shouldIgnore(path) {
-  return underscore.some(ignore, function (ext) {
+walk.shouldIgnore = function (path) {
+  return underscore.some(walk.ignore, function (ext) {
     return u.endsWith(path, ext);
   });
-}
+};
 
 /**
  * @param {string} folder
  * @param {object} response
  * @returns {void}
  */
-function getDirectoryList(folder, response) {
+walk.getDirectoryList = function (folder, response) {
   var html = '';
-  var walk = function (folder) {
+  var walkdir = function (folder) {
     var item, path, _i, _len, _ref, _results;
     _ref = fs.readdirSync(folder);
     _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       item = _ref[_i];
       path = folder + '/' + item;
-      if (isDir(path)) {
+      if (walk.isDir(path)) {
         html += "<li class=\"folder\">" + u.stripFolder(path) + "/<ul>";
-        walk(path);
+        walkdir(path);
         html += "</ul></li>";
-      } else if (isFile(path)) {
+      }
+      else if (walk.isFile(path)) {
         html += "<li class=\"file\" id=" + path + ">" + u.stripFolder(path) + "</li>";
       }
       _results.push(html);
     }
   };
-  walk(folder);
+  walkdir(folder);
   response.json({
     folderName: folder,
     content: html
   });
-}
+};
 
-if (typeof exports !== "undefined" && exports !== null) {
-  exports.getDirectoryList = getDirectoryList;
+
+
+
+if (typeof exports !== "undefined") {
+  exports.getDirectoryList = walk.getDirectoryList;
 }

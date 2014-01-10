@@ -35,6 +35,13 @@ tr {
 }
 
 
+.window {
+    position: absolute;
+    width: 400px;
+    height: 300px;
+    left: 130px;
+    top: 130px;
+}
 
 
 #browser {

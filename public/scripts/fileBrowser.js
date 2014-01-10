@@ -1,30 +1,23 @@
+"use strict";
 
-var Browser = Browser || {};
-//Browser.socket = null;
-Browser.socket = io.connect('http://localhost');
+var browser = browser || {};
 
-//(function() {
-//  "use strict";
+browser.socket = io.connect('http://localhost');
 
-//  Browser.socket = io.connect('http://localhost');
-
-  Browser.socket.on('news', function(data) {
+browser.setup = function () {
+  browser.socket.on('news', function(data) {
     console.log('fileBrowser on news ' + data);
-    Browser.socket.emit('my other event', { my: 'data' });
+    browser.socket.emit('my other event', { my: 'data' });
   });
 
-  openFolder("");
-
-//})();
-
+  browser.openFolder("");
+};
 
 /**
  * @param {string} folder
  * @returns {void}
  */
-function openFolder(folder) {
-  "use strict";
-
+browser.openFolder = function (folder) {
   if (!u.validStr(folder)) {
     folder = "";
   }
@@ -35,38 +28,30 @@ function openFolder(folder) {
     function (data) {
       if (data.content) {
         $("#fileTree").html(data.content);
-        Browser.setUpFileTree();
+        browser.setUpFileTree();
       }
     });
-}
-
+};
 
 /**
  * Ask server to read file and post it to editor
  * @param {string} file
  */
-Browser.requestOpenFile = function(file) {
-  "use strict";
-
-
-  if (Browser.socket === null) {
-    alert("Browser.socket is null");
+browser.requestOpenFile = function(file) {
+  if (browser.socket === null) {
+    alert("browser.socket is null");
   }
 
   if (u.validStr(file)) {
     console.log("emit req_open_file: " + file);
-    Browser.socket.emit('req_open_file', { fileName: file });
+    browser.socket.emit('req_open_file', { fileName: file });
   }
-
 };
-
 
 /**
  * @returns {void}
  */
-Browser.setUpFileTree = function() {
-  "use strict";
-
+browser.setUpFileTree = function() {
   var folder = $(".folder");
   folder.mouseover(function() {
     $(this).css("color", "#ffffff");
@@ -93,7 +78,7 @@ Browser.setUpFileTree = function() {
 
   file.click(function(evt) {
     evt.stopPropagation();
-    Browser.requestOpenFile($(this).attr("id"));
+    browser.requestOpenFile($(this).attr("id"));
   });
 
   $(".myButton").hover((function() {
@@ -104,3 +89,5 @@ Browser.setUpFileTree = function() {
     $(this).css("background", "none");
   });
 };
+
+browser.setup();

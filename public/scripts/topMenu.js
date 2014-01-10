@@ -37,6 +37,12 @@ menu.setup = function () {
 
 
 menu.hookupItems = function () {
+
+  $('#openFile').click(function () {
+    $('body').append('<div class="window"><iframe src="../fileBrowser.html"></iframe></div>');
+    menu.closeAll();
+  });
+
   $('#toggleTerminal').click(function () {
     ide.toggleTerminal();
     menu.closeAll();

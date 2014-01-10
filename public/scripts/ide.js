@@ -26,7 +26,6 @@ ide.mToggleBrowser = $('#toggleBrowser');
 
 ide.setup = function () {
   serv.setSocket(ide.mSocket);
-  ide.setupButtons();
 
   serv.run('readSetting', ['browser_open'], function (open) {
     if (!open) {
@@ -40,31 +39,8 @@ ide.setup = function () {
     }
   });
 
-
-//  ide.setupMenu();
 };
 
-
-
-
-//ide.setupMenu = function () {
-//  $('#file-button').click(function () {
-////    alert("file-menu");
-//
-//    $('#file-menu').css('visibility', 'visible');
-//
-//
-//  });
-//
-//  ide.openMenu();
-//};
-//
-//
-//ide.openMenu = function () {
-////  $(function() {
-////    $( "#menu" ).menu({ position: { my: "left top", at: "right-5 top+5" } });
-////  });
-//};
 
 ide.toggleFileBrowser = function () {
   if (ide.mHasBrowser) {
@@ -84,30 +60,6 @@ ide.toggleTerminal = function () {
     ide.restoreTerm();
   }
   ide.mHasTerminal = !ide.mHasTerminal;
-};
-
-
-ide.setupButtons = function () {
-//  ide.mToggleTermButton.click(function () {
-//    ide.toggleTerminal();
-////    if (ide.mHasTerminal) {
-////      ide.hideTerm();
-////    }
-////    else {
-////      ide.restoreTerm();
-////    }
-////    ide.mHasTerminal = !ide.mHasTerminal;
-//  });
-
-//  ide.mToggleBrowser.click(function  () {
-//    if (ide.mHasBrowser) {
-//      ide.hideBrowser();
-//    }
-//    else {
-//      ide.restoreBrowser();
-//    }
-//    ide.mHasBrowser = !ide.mHasBrowser;
-//  });
 };
 
 

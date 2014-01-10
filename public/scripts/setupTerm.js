@@ -63,7 +63,7 @@ Term.destroy = function () {
 
 
 /**
- * @returns {Terminal.colors|*}
+ * @returns {Terminal.colors}
  */
 Term.getColors = function () {
   var c = Terminal.colors;
