@@ -13,6 +13,8 @@
     visibility: hidden;
     border-spacing: 0;
     border-collapse: collapse;
+
+    box-shadow: 7px 7px 12px #202020;
 }
 
 .show {
@@ -64,5 +66,9 @@
     font-size: 80%;
     outline: none;
     margin: 0;
+}
+
+#file-button {
+    margin-left: 0.3em;
 }
 
