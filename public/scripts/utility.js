@@ -32,6 +32,15 @@ u.tailAfter = function (string, char) {
 
 
 /**
+ * @param {*} value
+ * @returns {boolean}
+ */
+u.defined = function (value) {
+  return typeof value !== 'undefined';
+};
+
+
+/**
  * @param {string} file
  * @returns {string}
  */

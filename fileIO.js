@@ -50,6 +50,9 @@ fio.readSetting = function (name) {
   var settings = JSON.parse(data);
   setting = settings[name];
 
+  console.log(name);
+  console.log(setting);
+
   return setting;
 };
 

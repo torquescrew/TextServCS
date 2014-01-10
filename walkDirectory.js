@@ -43,6 +43,10 @@ walk.shouldIgnore = function (path) {
  * @returns {void}
  */
 walk.getDirectoryList = function (folder, response) {
+//  console.log(walk.getCurrentDirectory(folder));
+
+//  var something = walk.getCurrentDirectory(folder);
+
   var html = '';
   var walkdir = function (folder) {
     var item, path, _i, _len, _ref, _results;
@@ -63,6 +67,9 @@ walk.getDirectoryList = function (folder, response) {
     }
   };
   walkdir(folder);
+
+//  console.log(html);
+
   response.json({
     folderName: folder,
     content: html
@@ -70,8 +77,31 @@ walk.getDirectoryList = function (folder, response) {
 };
 
 
+/**
+ * @param {string} folder
+ * @returns {string}
+ */
+walk.getListForFolder = function (folder) {
+  var html = '<ul>';
+
+  var contents = fs.readdirSync(folder);
+  contents.forEach(function (item) {
+    var path = folder + '/' + item;
+    if (walk.isDir(path)) {
+      html += '<li class="folder" id="' + path + '">' + item + '/</li>';
+    }
+    else if (walk.isFile(path)) {
+      html += '<li class="file" id="' + path + '">' + item + '</li>';
+    }
+  });
+
+  html += '</ul>';
+
+  return html;
+};
 
 
 if (typeof exports !== "undefined") {
   exports.getDirectoryList = walk.getDirectoryList;
+  exports.getListForFolder = walk.getListForFolder;
 }

@@ -7,7 +7,8 @@ var express = require("express")
   , u = require("./public/scripts/utility")
   , terminal = require('term.js')
   , fio = require('./fileIO')
-  , termServer = require('./setupTermServer');
+  , termServer = require('./setupTermServer')
+  , si = require('./serverInterface');
 
 var app = express();
 var server = http.createServer(app);
@@ -58,39 +59,15 @@ io.sockets.on('connection', function (socket) {
     console.log(data);
   });
 
-//  socket.on('run', function (data) {
-////    var myLongVar = 10;
-////    data.func(5);
-//
-//    console.log(data);
-//    eval(data.func)(5);
-//    console.log("done");
-//  });
-
-  socket.on('task', function (data) {
-    var result = eval(data.func)();
-    socket.emit(data.id, result);
-  });
-
-  socket.on('task2', function (task) {
-//    var result = eval(data.func)();
-
-    //app[func].apply(this, args);
-
-    console.log(task);
-
-    if (typeof fio[task.name] !== 'undefined') {
-      var result = fio[task.name].apply(this, task.args);
-
-      console.log('result2: ' + result);
+  socket.on('task', function (task) {
+    if (typeof si[task.name] !== 'undefined') {
+      var result = si[task.name].apply(this, task.args);
 
       socket.emit(task.id, result);
     }
     else {
-      console.log("fio[task.name] doesn't exist!");
+      console.log("si[task.name](" + task.name + ") doesn't exist!");
     }
-
-
   });
 
 });

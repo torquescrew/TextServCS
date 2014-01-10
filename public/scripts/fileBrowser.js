@@ -10,6 +10,8 @@ browser.setup = function () {
     browser.socket.emit('my other event', { my: 'data' });
   });
 
+  serv.setSocket(browser.socket);
+
   browser.openFolder("");
 };
 
@@ -19,19 +21,42 @@ browser.setup = function () {
  */
 browser.openFolder = function (folder) {
   if (!u.validStr(folder)) {
-    folder = "";
-  }
-
-  $.getJSON('/_open_folder', {
-      folderName: folder
-    },
-    function (data) {
-      if (data.content) {
-        $("#fileTree").html(data.content);
-        browser.setUpFileTree();
-      }
+    serv.run('readSetting', ['folder'], function (folder) {
+      browser.initFileTree(folder);
     });
+  }
+  else {
+    browser.initFileTree(folder);
+  }
 };
+
+
+browser.getList = function (folder, callback) {
+  serv.run('getListForFolder', [folder], function (list) {
+    if (list) {
+      callback(list);
+    }
+  });
+};
+
+
+/**
+ * @param {string} folder
+ */
+browser.initFileTree = function (folder) {
+//  serv.run('getListForFolder', [folder], function (list) {
+//    if (list) {
+//      $('#fileTree').html(list);
+//      browser.setUpFileTree();
+//    }
+//  });
+
+  browser.getList(folder, function (list) {
+    $('#fileTree').html(list);
+    browser.setUpFileTree();
+  });
+};
+
 
 /**
  * Ask server to read file and post it to editor
@@ -51,8 +76,27 @@ browser.requestOpenFile = function(file) {
 /**
  * @returns {void}
  */
-browser.setUpFileTree = function() {
-  var folder = $(".folder");
+browser.setUpFileTree = function(root) {
+  if (!u.defined(root)) {
+    root = $('body');
+  }
+
+  var file = root.find('.file');
+  var folder = root.find(".folder");
+
+  file.mouseover(function() {
+    $(this).css("color", "#ffffff");
+  });
+
+  file.mouseout(function() {
+    $(this).css("color", "#999999");
+  });
+
+  file.click(function(evt) {
+    evt.stopPropagation();
+    browser.requestOpenFile($(this).attr("id"));
+  });
+
   folder.mouseover(function() {
     $(this).css("color", "#ffffff");
   });
@@ -61,33 +105,25 @@ browser.setUpFileTree = function() {
     $(this).css("color", "#BBBBBB");
   });
 
-  var file = $(".file");
-  file.mouseover(function() {
-    $(this).css("color", "#ffffff");
-  });
-
-  file.mouseout(function() {
-    $(this).css("color", "#999999");
-  });
-  $(".folder ul").hide();
-
   folder.click(function(evt) {
     evt.stopPropagation();
-    $(this).children("ul").slideToggle(100);
+    var self = this;
+
+    var folder = $(this).attr('id');
+
+    if ($(self).children().length == 0) {
+      browser.getList(folder, function (list) {
+        $(self).append(list).children().hide().slideToggle(100);
+        console.log("hi");
+        browser.setUpFileTree($(self));
+
+      });
+    }
+    else {
+      $(self).children("ul").slideToggle(100);
+    }
   });
 
-  file.click(function(evt) {
-    evt.stopPropagation();
-    browser.requestOpenFile($(this).attr("id"));
-  });
-
-  $(".myButton").hover((function() {
-    $(this).css("color", "#ffffff");
-    $(this).css("background-color", "#111111");
-  }), function() {
-    $(this).css("color", "#bbbbbb");
-    $(this).css("background", "none");
-  });
 };
 
 browser.setup();

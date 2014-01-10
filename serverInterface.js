@@ -1,11 +1,14 @@
 /**
  * Created by tobysuggate on 10/01/14.
  */
+"use strict";
 
-  // TODO: this whole file
+var fio = require('./fileIO')
+  , walk = require('./walkDirectory');
 
-var fio = require('fileIO');
-
+/*
+ These are the functions that can be called from the client side
+ */
 
 /**
  * @param {string} name
@@ -20,3 +23,14 @@ exports.writeSetting = fio.writeSetting;
  */
 exports.readSetting = fio.readSetting;
 
+/**
+ * @param {string} file
+ * @returns {{file: (String), content: (string)}}
+ */
+exports.readFileSync = fio.readFileSync;
+
+/**
+ * @param {string} folder
+ * @returns {string}
+ */
+exports.getListForFolder = walk.getListForFolder;
