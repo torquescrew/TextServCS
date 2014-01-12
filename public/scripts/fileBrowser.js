@@ -31,6 +31,10 @@ browser.openFolder = function (folder) {
 };
 
 
+/**
+ * @param {string} folder
+ * @param {function} callback
+ */
 browser.getList = function (folder, callback) {
   serv.run('getListForFolder', [folder], function (list) {
     if (list) {
@@ -44,13 +48,6 @@ browser.getList = function (folder, callback) {
  * @param {string} folder
  */
 browser.initFileTree = function (folder) {
-//  serv.run('getListForFolder', [folder], function (list) {
-//    if (list) {
-//      $('#fileTree').html(list);
-//      browser.setUpFileTree();
-//    }
-//  });
-
   browser.getList(folder, function (list) {
     $('#fileTree').html(list);
     browser.setUpFileTree();
@@ -114,9 +111,7 @@ browser.setUpFileTree = function(root) {
     if ($(self).children().length == 0) {
       browser.getList(folder, function (list) {
         $(self).append(list).children().hide().slideToggle(100);
-        console.log("hi");
         browser.setUpFileTree($(self));
-
       });
     }
     else {

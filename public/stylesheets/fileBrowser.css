@@ -43,3 +43,19 @@ ul {
     margin-left: 0;
     padding-left: 12px;
 }
+
+#browserContainer {
+    height: 275px;
+    overflow: auto;
+    border: 0;
+    background-color: #222222;
+    padding-left: 10px;
+    /*font-size: 80%;*/
+    cursor: default;
+    font-family: sans-serif;
+    line-height: 1.5em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

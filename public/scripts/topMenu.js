@@ -7,28 +7,22 @@
 var menu = menu || {};
 
 menu.fileMenu = $('#file-menu');
-menu.fileButton = $('#file-button');
-
-menu.viewButton = $('#view-button');
-menu.viewMenu = $('#view-menu');
-
 menu.menus = [];
-
 menu.items = $('.item-row');
 menu.backgroundColor = menu.fileMenu.css('background-color');
+
 
 menu.setup = function () {
 
   menu.menus.push(new MenuState('file-button', 'file-menu', menu.menus));
   menu.menus.push(new MenuState('view-button', 'view-menu', menu.menus));
+//  menu.menus.push(new MenuState('openRecent', 'recentsMenu', menu.menus, true));
 
   menu.items.mouseover(function () {
-//    $(this).css("color", "#ffffff");
     $(this).css("background-color", "#222222");
   });
 
   menu.items.mouseout(function () {
-//    $(this).css("color", "#999999");
     $(this).css("background-color", menu.backgroundColor);
   });
 
@@ -39,7 +33,7 @@ menu.setup = function () {
 menu.hookupItems = function () {
 
   $('#openFile').click(function () {
-    $('body').append('<div class="window"><iframe src="../fileBrowser.html"></iframe></div>');
+    $('body').append('<div class="window"><iframe src="../finder.html"></iframe></div>');
     menu.closeAll();
   });
 
@@ -52,6 +46,10 @@ menu.hookupItems = function () {
     ide.toggleFileBrowser();
     menu.closeAll();
   });
+
+//  $('#openRecent').mouseover(function () {
+//
+//  });
 };
 
 menu.closeAll = function () {
@@ -65,9 +63,10 @@ menu.closeAll = function () {
  * @param {string} buttonId
  * @param {string} menuId
  * @param {Array.<MenuState>} others
+ * @param {bool=} isSubMenu
  * @constructor
  */
-function MenuState(buttonId, menuId, others) {
+function MenuState(buttonId, menuId, others, isSubMenu) {
   var self = this;
 
   self.mButtonId = buttonId;
@@ -76,6 +75,7 @@ function MenuState(buttonId, menuId, others) {
   self.mOthers = others;
   self.mButton = $(('#' + self.mButtonId));
   self.mMenu = $(('#' + self.mMenuId));
+  self.mIsSub = isSubMenu || false;
 
   setupToggle();
 
@@ -83,6 +83,10 @@ function MenuState(buttonId, menuId, others) {
     self.mButton.click(function () {
       var pos = $(this).offset();
       pos.top += $(this).outerHeight(true);
+
+      if (self.mIsSub) {
+        pos.left += $(self.mMenuId).width();
+      }
 
       self.mMenu.css({ top: pos.top, left: pos.left });
       self.mMenu.toggleClass('show');
@@ -99,10 +103,18 @@ function MenuState(buttonId, menuId, others) {
     });
   }
 
+//  function setupSubMenus() {
+//    self.mSubMenus.forEach(function (sub) {
+//
+//    });
+//  }
+
   function enableMouseover() {
     self.mOthers.forEach(function (o) {
       o.mButton.mouseover(function () {
-        self.closeOthers();
+        if (!o.mIsSub) {
+          self.closeOthers();
+        }
         o.open();
       });
     });

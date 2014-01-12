@@ -1,9 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
+  <title>Finder</title>
+
+  <script src="scripts/jquery-1.10.2.js"></script>
+  <link rel="stylesheet" type="text/css" href="stylesheets/fileBrowser.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/global.css">
 </head>
 <body>
+
+<div class="fileBrowser">
+  <div id="browserContainer">
+    <ul id="fileTree"></ul>
+  </div>
+
+  <button>Cancel</button>
+  <button>Open</button>
+</div>
+
+
+
+<script src="scripts/utility.js"></script>
+<script src="scripts/talkToServer.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="scripts/fileBrowser.js"></script>
 
 </body>
 </html>
