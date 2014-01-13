@@ -17,12 +17,18 @@ pane.id = 'pane';
  */
 pane.style = 'width: 100%; height: 100%; position: absolute;';
 
-
+/**
+ * @returns {pane}
+ */
 pane.append = function () {
   pane.body.append('<div id="pane" style="' + pane.style + '"></div>');
+
+  return pane;
 };
 
-
+/**
+ * @returns {jQuery}
+ */
 pane.get = function () {
   return $('#' + pane.id);
 };
@@ -34,7 +40,17 @@ pane.exists = function () {
   return (pane.get().length > 0);
 };
 
+/**
+ * @returns {jQuery}
+ */
+pane.createAndGet = function () {
+  var p = pane.append().get();
 
-pane.remove = function () {
-  pane.body.remove('#' + pane.id);
+  p.on('mouseup', function () {
+    p.off('mouseup');
+    p.off('mousemove');
+    p.remove();
+  });
+
+  return p;
 };

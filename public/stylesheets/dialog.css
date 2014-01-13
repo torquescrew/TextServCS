@@ -35,3 +35,22 @@ body {
     background-color: forestgreen;
 }
 
+#grabberSE {
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    right: -0.4rem;
+    bottom: -0.4rem;
+    /*background-color: #5890AD;*/
+    cursor: nwse-resize;
+}
+
+
+#thing {
+    background-color: red;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    right: 60px;
+    bottom: 300px;
+}
