@@ -23,7 +23,67 @@ dlg.beginPos = new Pos(0, 0);
 dlg.setup = function () {
   dlg.setupHandle();
   dlg.setupGrabbers();
+
+  dlg.closer.click(function () {
+    dlg.close();
+  });
 };
+
+/*
+TODO: make allow multiple dialogs to exist at the same time.
+ */
+dlg.open = function (title) {
+  dlg.body.append(
+      '<div class="dialog">'
+      + '<div class="deco">'
+        + '<div class="handle"><h3 class="decTitle">' + title + '</h3></div>'
+        + '<div id="closer"></div>'
+      + '</div>'
+      + '<div class="content">'
+        + '<iframe src="fileBrowser.html" style="width: 100%; height: 100%; overflow: hidden;" seamless></iframe>'
+        + '<div id="grabberSE"></div>'
+      + '</div>'
+    + '</div>'
+  );
+
+  dlg.handle = $('.handle');
+  dlg.closer = $('#closer');
+  dlg.eventHook = $('#eventHook');
+  dlg.body = $('body');
+  dlg.window = $('.dialog');
+  dlg.content = $('.content');
+
+  dlg.grabberSE = $('#grabberSE');
+
+  dlg.setup();
+
+  dlg.centreDialog();
+};
+
+
+dlg.close = function () {
+  dlg.window.remove();
+};
+
+
+dlg.centreDialog = function () {
+  var pageWidth = $(window).width();
+  var pageHeight = $(window).height();
+
+  var modW = dlg.window.width() / 2;
+  var modH = dlg.window.height() / 2;
+
+  var x = (pageWidth / 2) - modW;
+  var y = ((pageHeight / 2) - modH) / 2;
+
+  console.log(pageHeight);
+  console.log(modH);
+
+  dlg.window.css({ left: x, top: y });
+};
+
+
+
 
 
 /** @returns {void} */
@@ -34,7 +94,6 @@ dlg.setupHandle = function () {
     var off = dlg.window.offset();
     dlg.savePositions(off.left, off.top, evt);
 
-//    var p = dlg.createPane();
     var p = pane.createAndGet();
 
     p.on('mousemove', function (e) {
@@ -46,6 +105,8 @@ dlg.setupHandle = function () {
       dlg.window.css({ left: x, top: y });
     });
   });
+
+//  dlg.closer.unbind();
 };
 
 
@@ -103,5 +164,5 @@ function Pos(x, y) {
   this.y = y;
 }
 
-
-dlg.setup();
+dlg.open('hello');
+//dlg.setup();
