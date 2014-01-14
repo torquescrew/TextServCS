@@ -6,14 +6,14 @@
 
 var dlg = dlg || {};
 
-dlg.handle = $('.handle');
-dlg.closer = $('#closer');
-dlg.eventHook = $('#eventHook');
-dlg.body = $('body');
-dlg.window = $('.dialog');
-dlg.content = $('.content');
 
-dlg.grabberSE = $('#grabberSE');
+dlg.handle = null;
+dlg.closer = null;
+dlg.eventHook = null;
+dlg.body = $('body');
+dlg.window = null;
+dlg.content = null;
+dlg.grabberSE = null;
 
 dlg.mousePos = new Pos(0, 0);
 dlg.beginPos = new Pos(0, 0);
@@ -21,6 +21,8 @@ dlg.beginPos = new Pos(0, 0);
 
 /** @returns {void} */
 dlg.setup = function () {
+
+  dlg.setupAccessors();
   dlg.setupHandle();
   dlg.setupGrabbers();
 
@@ -46,26 +48,29 @@ dlg.open = function (title) {
     + '</div>'
   );
 
-  dlg.handle = $('.handle');
-  dlg.closer = $('#closer');
-  dlg.eventHook = $('#eventHook');
-  dlg.body = $('body');
-  dlg.window = $('.dialog');
-  dlg.content = $('.content');
-
-  dlg.grabberSE = $('#grabberSE');
-
   dlg.setup();
-
   dlg.centreDialog();
 };
 
 
+/** @returns {void} */
+dlg.setupAccessors = function () {
+  dlg.handle = $('.handle');
+  dlg.closer = $('#closer');
+  dlg.eventHook = $('#eventHook');
+  dlg.window = $('.dialog');
+  dlg.content = $('.content');
+  dlg.grabberSE = $('#grabberSE');
+};
+
+
+/** @returns {void} */
 dlg.close = function () {
   dlg.window.remove();
 };
 
 
+/** @returns {void} */
 dlg.centreDialog = function () {
   var pageWidth = $(window).width();
   var pageHeight = $(window).height();
@@ -76,14 +81,8 @@ dlg.centreDialog = function () {
   var x = (pageWidth / 2) - modW;
   var y = ((pageHeight / 2) - modH) / 2;
 
-  console.log(pageHeight);
-  console.log(modH);
-
   dlg.window.css({ left: x, top: y });
 };
-
-
-
 
 
 /** @returns {void} */
@@ -94,9 +93,7 @@ dlg.setupHandle = function () {
     var off = dlg.window.offset();
     dlg.savePositions(off.left, off.top, evt);
 
-    var p = pane.createAndGet();
-
-    p.on('mousemove', function (e) {
+    pane.createAndGet().on('mousemove', function (e) {
       var change = dlg.getChange(e);
 
       var x = dlg.beginPos.x + change.x;
@@ -105,13 +102,10 @@ dlg.setupHandle = function () {
       dlg.window.css({ left: x, top: y });
     });
   });
-
-//  dlg.closer.unbind();
 };
 
 
 /**
- *
  * @param {number} x
  * @param {number} y
  * @param {Event} evt
@@ -139,17 +133,14 @@ dlg.setupGrabbers = function () {
   dlg.grabberSE.on('mousedown', function (e) {
     e.preventDefault(); // prevent text cursor
 
-    var p = pane.createAndGet();
-
     dlg.savePositions(dlg.content.width(), dlg.content.height(), e);
 
-    p.on('mousemove', function (e) {
+    pane.createAndGet().on('mousemove', function (e) {
       var change = dlg.getChange(e);
 
       dlg.window.css({ width: '' + (dlg.beginPos.x + change.x) + 'px' });
       dlg.content.css({ width: '' + (dlg.beginPos.x + change.x) + 'px', height: '' + (dlg.beginPos.y + change.y) + 'px'});
     });
-
   });
 };
 
@@ -165,4 +156,4 @@ function Pos(x, y) {
 }
 
 dlg.open('hello');
-//dlg.setup();
+
