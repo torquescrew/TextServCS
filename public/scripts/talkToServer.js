@@ -34,36 +34,10 @@ serv.setupHandlers = function () {
 };
 
 
-//serv.queryBrowserOpen = function () {
-//  serv.checkSocket();
-//
-//  serv.mSocket.emit('read_setting', { name: 'browser_open' });
-//};
-//
-//
-//serv.queryTerminalOpen = function () {
-//  serv.checkSocket();
-//
-//  serv.mSocket.emit ('read_setting', { name: 'terminal_open' });
-//};
-
-
 serv.checkSocket = function () {
   if (!serv.mSocket) {
     alert("Serv.mSocket == null");
   }
-};
-
-
-/** @type {number} */
-serv.mPageLoadTime = new Date().getTime();
-
-
-/**
- * @returns {string}
- */
-serv.createId = function () {
-  return (new Date().getTime() - serv.mPageLoadTime).toString();
 };
 
 
@@ -79,7 +53,7 @@ serv.run = function (funcName, args, callback) {
     throw new Error('serv.mSocket is not set')
   }
 
-  var taskId = serv.createId();
+  var taskId = u.createId();
 
   serv.mSocket.on(taskId, function (result) {
     if (callback) {

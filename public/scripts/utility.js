@@ -5,7 +5,6 @@
 
 "use strict";
 
-/** @type {u} */
 var u = u || {};
 
 /**
@@ -174,6 +173,18 @@ u.last = function (array) {
  */
 u.exportDefined = function () {
   return typeof exports !== "undefined" && exports !== null;
+};
+
+
+/** @type {number} */
+u.pageLoadTime = new Date().getTime();
+
+
+/**
+ * @returns {string}
+ */
+u.createId = function () {
+  return (new Date().getTime() - u.pageLoadTime).toString();
 };
 
 

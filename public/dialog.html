@@ -4,6 +4,7 @@
   <title></title>
 
   <link rel="stylesheet" type="text/css" href="stylesheets/dialog.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/global.css">
 
 
 
@@ -11,22 +12,20 @@
 
 <body>
 
-<!--<div class="dialog">-->
-  <!--<div class="handle">-->
-    <!--<div id="closer"></div>-->
-  <!--</div>-->
-  <!--<div class="content">-->
-    <!--<div id="grabberSE"></div>-->
-  <!--</div>-->
-<!--</div>-->
-
-
-<button onclick="dlg.open('new dialog')">open dialog</button>
-
+<button onclick="openDlg()">open dialog</button>
 
 <script src="scripts/jquery-1.10.2.js"></script>
 <script src="scripts/mouseEventPane.js"></script>
 <script src="scripts/dialog.js"></script>
+<script src="scripts/utility.js"></script>
+<script src="scripts/dialog2.js"></script>
+
+<script>
+  function openDlg () {
+    dlg.open('new dialog', '<iframe src="fileBrowser.html" style="width: 100%; height: 100%; overflow: hidden;" seamless></iframe>');
+  }
+  openDlg();
+</script>
 
 </body>
 </html>

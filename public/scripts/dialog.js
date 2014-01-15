@@ -9,7 +9,6 @@ var dlg = dlg || {};
 
 dlg.handle = null;
 dlg.closer = null;
-dlg.eventHook = null;
 dlg.window = null;
 dlg.content = null;
 dlg.grabberSE = null;
@@ -22,34 +21,44 @@ dlg.beginPos = new Pos(0, 0);
 /** @returns {void} */
 dlg.setup = function () {
 
-  dlg.setupAccessors();
   dlg.setupHandle();
   dlg.setupGrabbers();
   dlg.setupCloser();
-
-
-
 };
 
-/*
-TODO: make allow multiple dialogs to exist at the same time.
- */
-dlg.open = function (title) {
+
+dlg.open = function (title, content) {
+  var id = u.createId();
+
   dlg.body.append(
-      '<div class="dialog">'
-      + '<div class="deco">'
-        + '<div class="handle"><h3 class="decTitle">' + title + '</h3></div>'
-        + '<div id="closer"></div>'
+      '<div class="dialog" id="dialog' + id + '">'
+      + '<div class="deco" id="deco' + id + '">'
+        + '<div class="handle" id="handle' + id + '"><h3 class="decTitle">' + title + '</h3></div>'
+        + '<div class="closer" id="closer' + id + '"></div>'
       + '</div>'
       + '<div class="content">'
-        + '<iframe src="../fileBrowser.html" style="width: 100%; height: 100%; overflow: hidden;" seamless></iframe>'
+        + content
         + '<div id="grabberSE"></div>'
       + '</div>'
     + '</div>'
   );
 
+  dlg.setupAccessors(id);
+
   dlg.setup();
   dlg.centreDialog();
+};
+
+
+/**
+ * @param {string} id
+ */
+dlg.setupAccessors = function (id) {
+  dlg.handle = $('#handle' + id);
+  dlg.closer = $('#closer' + id);
+  dlg.window = $('#dialog' + id);
+  dlg.content = $('.content');
+  dlg.grabberSE = $('#grabberSE');
 };
 
 
@@ -59,26 +68,13 @@ dlg.setupCloser = function () {
 
   dlg.closer.hover(function () {
     dlg.closer.css({ 'background-color': '#444444' });
-    console.log('in');
   }, function () {
-    console.log('out');
     dlg.closer.css('background-color', 'inherit');
   });
 
   dlg.closer.click(function () {
     dlg.close();
   });
-};
-
-
-/** @returns {void} */
-dlg.setupAccessors = function () {
-  dlg.handle = $('.handle');
-  dlg.closer = $('#closer');
-  dlg.eventHook = $('#eventHook');
-  dlg.window = $('.dialog');
-  dlg.content = $('.content');
-  dlg.grabberSE = $('#grabberSE');
 };
 
 
@@ -190,5 +186,5 @@ function Pos(x, y) {
   this.y = y;
 }
 
-dlg.open('hello');
+//dlg.open('hello');
 

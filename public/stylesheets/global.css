@@ -11,32 +11,32 @@
     /*background-color: #A6393D;*/
 /*}*/
 
-::-webkit-scrollbar {
-    width: 0.70rem;
-    height: 0.65rem;
-}
+/*::-webkit-scrollbar {*/
+    /*width: 0.70rem;*/
+    /*height: 0.65rem;*/
+/*}*/
 
-::-webkit-scrollbar-button {
-    background-color: #666;
-}
+/*::-webkit-scrollbar-button {*/
+    /*background-color: #666;*/
+/*}*/
 
-::-webkit-scrollbar-track {
-    background-color: #999;
-}
+/*::-webkit-scrollbar-track {*/
+    /*background-color: #999;*/
+/*}*/
 
-::-webkit-scrollbar-track-piece {
-    background-color: #222222;
-}
+/*::-webkit-scrollbar-track-piece {*/
+    /*background-color: #222222;*/
+/*}*/
 
-::-webkit-scrollbar-thumb {
-    height: 50px;
-    background-color: #666;
-}
+/*::-webkit-scrollbar-thumb {*/
+    /*height: 50px;*/
+    /*background-color: #666;*/
+/*}*/
 
-::-webkit-scrollbar-corner {
-    background-color: #999;
-}
+/*::-webkit-scrollbar-corner {*/
+    /*background-color: #999;*/
+/*}*/
 
-::-webkit-resizer {
-    background-color: #666;
-}
+/*::-webkit-resizer {*/
+    /*background-color: #666;*/
+/*}*/
