@@ -17,8 +17,35 @@
       float: right;
     }
 
-    .container {
-      height: 100%;
+    .controls {
+      height: 1.5rem;
+
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      background-color: #000000;
+      width: 100%;
+    }
+
+    .browserContainer {
+      border: 0;
+      background-color: #222222;
+      padding-left: 10px;
+      cursor: default;
+      font-family: sans-serif;
+      line-height: 1.5em;
+
+      position: fixed;
+      overflow: auto;
+      left: 0;
+      top: 0;
+      bottom: 1.5rem;
+      right: 0;
+
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
     }
 
   </style>
@@ -27,13 +54,14 @@
 
 <body>
 
-<div class="fileBrowser container">
-  <div id="browserContainer">
+<div class="fileBrowser">
+  <div class="browserContainer">
     <ul id="fileTree"></ul>
   </div>
-
-  <button class="open">Cancel</button>
-  <button class="cancel">Open</button>
+  <div class="controls">
+    <button class="open">Cancel</button>
+    <button class="cancel">Open</button>
+  </div>
 </div>
 
 <script src="scripts/utility.js"></script>

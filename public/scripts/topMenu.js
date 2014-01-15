@@ -28,6 +28,9 @@ menu.setup = function () {
   });
 
   menu.hookupItems();
+
+  var openFileDlg = new Dialog('new dialog', '<iframe src="../finder.html" style="width: 100%; height: 100%; overflow: hidden;" seamless></iframe>');
+  openFileDlg.open();
 };
 
 
