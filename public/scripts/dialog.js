@@ -46,9 +46,9 @@ function Dialog(title, content) {
           '<div class="handle" id="handle' + mId + '"><h3 class="decTitle">' + mTitle + '</h3></div>' +
           '<div class="closer" id="closer' + mId + '"></div>' +
         '</div>' +
-        '<div class="content">' +
+        '<div class="content" id="content' + mId + '">' +
           mHTMLContent +
-          '<div id="grabberSE"></div>' +
+          '<div class="grabberSE" id="grabberSE' + mId + '"></div>' +
         '</div>' +
       '</div>'
     );
@@ -68,8 +68,8 @@ function Dialog(title, content) {
     mHandle = $('#handle' + mId);
     mCloser = $('#closer' + mId);
     mWindow = $('#dialog' + mId);
-    mContent = $('.content');
-    mGrabberSE = $('#grabberSE');
+    mContent = $('#content' + mId);
+    mGrabberSE = $('#grabberSE' + mId);
   };
 
   self.centreDialog = function () {
@@ -126,9 +126,9 @@ function Dialog(title, content) {
 
   /** @returns {void} */
   self.drawCloser = function () {
-    mCloser.append('<canvas id="closerCanvas" width="100" height="100"></canvas>');
+    mCloser.append('<canvas class="closerCanvas" id="closerCanvas' + mId + '" width="100" height="100"></canvas>');
 
-    var context = document.getElementById("closerCanvas").getContext("2d");
+    var context = document.getElementById("closerCanvas" + mId).getContext("2d");
     context.lineWidth = 10;
     context.strokeStyle = '#ffffff';
 
