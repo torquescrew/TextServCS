@@ -61,6 +61,10 @@ function Dialog(title, content) {
     self.centreDialog();
   };
 
+  self.provideSelfToChild = function () {
+    $('#document')
+  };
+
   self.close = function () {
     mWindow.remove();
   };

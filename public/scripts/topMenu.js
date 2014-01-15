@@ -1,4 +1,4 @@
-/*global ide: false, Dialog: false */
+/*global ide, Dialog, alert */
 /**
  * Created by tobysuggate on 8/01/14.
  */
@@ -28,18 +28,27 @@ menu.setup = function () {
   });
 
   menu.hookupItems();
+//  menu.openFinder();
 
-  var openFileDlg = new Dialog('new dialog', '<iframe src="../finder.html" style="width: 100%; height: 100%; overflow: hidden;" seamless></iframe>');
+};
+
+
+menu.openFinder = function () {
+  var openFileDlg = new Dialog('new dialog', '<iframe id="dialog2" src="../finder.html" style="width: 100%; height: 100%; overflow: hidden;" seamless></iframe>');
   openFileDlg.open();
+
+  window.onmessage = function (e) {
+    if (e.data === 'closeDialog') {
+      openFileDlg.close();
+    }
+  };
 };
 
 
 menu.hookupItems = function () {
 
   $('#openFile').click(function () {
-    var openFileDlg = new Dialog('new dialog', '<iframe src="../finder.html" style="width: 100%; height: 100%; overflow: hidden;" seamless></iframe>');
-    openFileDlg.open();
-
+    menu.openFinder();
     menu.closeAll();
   });
 

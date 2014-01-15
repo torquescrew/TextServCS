@@ -1,3 +1,4 @@
+/*global u, serv, alert, io */
 "use strict";
 
 var browser = browser || {};
@@ -5,7 +6,7 @@ var browser = browser || {};
 browser.socket = io.connect('http://localhost');
 
 browser.setup = function () {
-  browser.socket.on('news', function(data) {
+  browser.socket.on('news', function (data) {
     console.log('fileBrowser on news ' + data);
     browser.socket.emit('my other event', { my: 'data' });
   });
@@ -59,7 +60,8 @@ browser.initFileTree = function (folder) {
  * Ask server to read file and post it to editor
  * @param {string} file
  */
-browser.requestOpenFile = function(file) {
+browser.requestOpenFile = function (file) {
+//  alert('do i do anything>');
   if (browser.socket === null) {
     alert("browser.socket is null");
   }
@@ -73,7 +75,7 @@ browser.requestOpenFile = function(file) {
 /**
  * @returns {void}
  */
-browser.setUpFileTree = function(root) {
+browser.setUpFileTree = function (root) {
   if (!u.defined(root)) {
     root = $('body');
   }
@@ -81,34 +83,34 @@ browser.setUpFileTree = function(root) {
   var file = root.find('.file');
   var folder = root.find(".folder");
 
-  file.mouseover(function() {
+  file.mouseover(function () {
     $(this).css("color", "#ffffff");
   });
 
-  file.mouseout(function() {
+  file.mouseout(function () {
     $(this).css("color", "#999999");
   });
 
-  file.click(function(evt) {
+  file.click(function (evt) {
     evt.stopPropagation();
     browser.requestOpenFile($(this).attr("id"));
   });
 
-  folder.mouseover(function() {
+  folder.mouseover(function () {
     $(this).css("color", "#ffffff");
   });
 
-  folder.mouseout(function() {
+  folder.mouseout(function () {
     $(this).css("color", "#BBBBBB");
   });
 
-  folder.click(function(evt) {
+  folder.click(function (evt) {
     evt.stopPropagation();
     var self = this;
 
     var folder = $(this).attr('id');
 
-    if ($(self).children().length == 0) {
+    if ($(self).children().length === 0) {
       browser.getList(folder, function (list) {
         $(self).append(list).children().hide().slideToggle(100);
         browser.setUpFileTree($(self));
@@ -121,4 +123,4 @@ browser.setUpFileTree = function(root) {
 
 };
 
-browser.setup();
+//browser.setup();

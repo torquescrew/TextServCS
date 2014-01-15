@@ -172,7 +172,7 @@ u.last = function (array) {
  * @returns {boolean}
  */
 u.exportDefined = function () {
-  return typeof exports !== "undefined" && exports !== null;
+  return typeof exports !== 'undefined' && exports !== null;
 };
 
 
