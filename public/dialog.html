@@ -6,8 +6,6 @@
   <link rel="stylesheet" type="text/css" href="stylesheets/dialog.css">
   <link rel="stylesheet" type="text/css" href="stylesheets/global.css">
 
-
-
 </head>
 
 <body>
@@ -16,15 +14,17 @@
 
 <script src="scripts/jquery-1.10.2.js"></script>
 <script src="scripts/mouseEventPane.js"></script>
-<script src="scripts/dialog.js"></script>
 <script src="scripts/utility.js"></script>
-<script src="scripts/dialog2.js"></script>
+<script src="scripts/dialog.js"></script>
+
 
 <script>
   function openDlg () {
-    dlg.open('new dialog', '<iframe src="fileBrowser.html" style="width: 100%; height: 100%; overflow: hidden;" seamless></iframe>');
+    var dialog = new Dialog('new dialog', '<iframe src="fileBrowser.html" style="width: 100%; height: 100%; overflow: hidden;" seamless></iframe>');
+    dialog.open();
   }
   openDlg();
+
 </script>
 
 </body>
