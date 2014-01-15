@@ -1,3 +1,4 @@
+/*global io: false, serv */
 /**
  * Created by tobysuggate on 2/01/14.
  */

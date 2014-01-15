@@ -46,7 +46,7 @@ ul {
 
 #browserContainer {
     height: 275px;
-    overflow: auto;
+    /*overflow: auto;*/
     border: 0;
     background-color: #222222;
     padding-left: 10px;

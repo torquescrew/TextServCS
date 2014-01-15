@@ -18,11 +18,11 @@ u.validStr = function (string) {
 
 /**
  * @param {string} string
- * @param {string} char
+ * @param {string} character
  * @returns {string}
  */
-u.tailAfter = function (string, char) {
-  var i = string.lastIndexOf(char);
+u.tailAfter = function (string, character) {
+  var i = string.lastIndexOf(character);
   if (i > 0) {
     return string.slice(i + 1);
   }
@@ -83,7 +83,7 @@ u.modeForFile = function (file) {
  * @returns {boolean}
  */
 u.okString = function (str) {
-  return (str != null) && str.length > 0;
+  return (str !== null) && str.length > 0;
 };
 
 /**
@@ -95,27 +95,27 @@ u.badString = function (str) {
 };
 
 /**
- * @param {string} str
- * @param {string} char
+ * @param {string} string
+ * @param {string} character
  * @returns {string}
  */
-u.tailAfterLast = function (str, char) {
+u.tailAfterLast = function (string, character) {
   var i;
-  i = str.lastIndexOf(char);
+  i = string.lastIndexOf(character);
   if (i > 0) {
-    return str.slice(i + 1);
+    return string.slice(i + 1);
   }
   return "";
 };
 
 /**
  * @param {string} str
- * @param {string} char
+ * @param {string} character
  * @returns {string}
  */
-u.tailAfterFirst = function (str, char) {
+u.tailAfterFirst = function (str, character) {
   var i;
-  i = str.indexOf(char);
+  i = str.indexOf(character);
   if (i > 0) {
     return str.slice(i + 1);
   }

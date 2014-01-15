@@ -1,8 +1,10 @@
 /*global u: flase, pane: false */
+
 /**
  * Created by tobysuggate on 15/01/14.
+ *
+ * This code depends on utility.js, mouseEvenPane.js and dialog.css
  */
-
 
 "use strict";
 
@@ -15,7 +17,6 @@ function Pos(x, y) {
   this.x = x;
   this.y = y;
 }
-
 
 /**
  * @param {string} title

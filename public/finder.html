@@ -6,19 +6,35 @@
   <script src="scripts/jquery-1.10.2.js"></script>
   <link rel="stylesheet" type="text/css" href="stylesheets/fileBrowser.css">
   <link rel="stylesheet" type="text/css" href="stylesheets/global.css">
+
+  <style>
+
+    .open {
+      float: right;
+    }
+
+    .cancel {
+      float: right;
+    }
+
+    .container {
+      height: 100%;
+    }
+
+  </style>
+
 </head>
+
 <body>
 
-<div class="fileBrowser">
+<div class="fileBrowser container">
   <div id="browserContainer">
     <ul id="fileTree"></ul>
   </div>
 
-  <button>Cancel</button>
-  <button>Open</button>
+  <button class="open">Cancel</button>
+  <button class="cancel">Open</button>
 </div>
-
-
 
 <script src="scripts/utility.js"></script>
 <script src="scripts/talkToServer.js"></script>

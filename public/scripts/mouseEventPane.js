@@ -15,7 +15,7 @@ pane.id = 'pane';
  * We don't use a style sheet to reduce dependencies.
  * @type {string}
  */
-pane.style = 'width: 100%; height: 100%; position: absolute; z-index: 300;';
+pane.style = 'top: 0; width: 100%; height: 100%; position: absolute; z-index: 300;';
 
 /**
  * @returns {pane}

@@ -1,3 +1,4 @@
+/*global ide: false, Dialog: false */
 /**
  * Created by tobysuggate on 8/01/14.
  */
@@ -33,7 +34,9 @@ menu.setup = function () {
 menu.hookupItems = function () {
 
   $('#openFile').click(function () {
-    $('body').append('<div class="window"><iframe src="../finder.html"></iframe></div>');
+    var openFileDlg = new Dialog('new dialog', '<iframe src="../finder.html" style="width: 100%; height: 100%; overflow: hidden;" seamless></iframe>');
+    openFileDlg.open();
+
     menu.closeAll();
   });
 
