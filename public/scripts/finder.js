@@ -4,9 +4,37 @@
  */
 "use strict";
 
+var FindType = Object.freeze({
+  "folder": 0,
+  "file": 1
+});
+
+
+/**
+ * @constructor
+ */
 function Finder () {}
 
+
+/** @extends {Browser} */
 Finder.prototype = new Browser();
+
+/** @type {FindType} */
+Finder.prototype.mType = FindType.folder;
+
+/** @type {jQuery} */
+Finder.prototype.mSelected = null;
+
+
+Finder.prototype.setType = function (type) {
+  this.mType = type;
+};
+
+
+Finder.prototype.getType = function () {
+  return this.mType;
+};
+
 
 Finder.prototype.close = function () {
   window.top.postMessage('closeDialog', '*');
@@ -25,6 +53,16 @@ Finder.prototype.openFolder = function (folder) {
     self.initFileTree(folder);
   }
 };
+
+
+Finder.prototype.setSelected = function (elem) {
+  if (this.mSelected !== null) {
+    this.mSelected.css('background-color', 'inherit');
+  }
+  this.mSelected = $(elem);
+  this.mSelected.css('background-color', '#ff4444');
+};
+
 
 /**
  * @param {jQuery=} root
@@ -49,7 +87,10 @@ Finder.prototype.setupFileTree = function (root) {
 
   file.click(function (evt) {
     evt.stopPropagation();
-    self.requestOpenFile($(this).attr("id"));
+
+    if (self.getType() === FindType.file) {
+      self.setSelected(this);
+    }
   });
 
   folder.mouseover(function () {
@@ -66,6 +107,10 @@ Finder.prototype.setupFileTree = function (root) {
 
     var folder = $(this).attr('id');
 
+    if (self.mType === FindType.folder) {
+      self.setSelected(this);
+    }
+
     if ($(element).children().length === 0) {
       self.getList(folder, function (list) {
         $(element).append(list).children().hide().slideToggle(100);
@@ -77,3 +122,5 @@ Finder.prototype.setupFileTree = function (root) {
     }
   });
 };
+
+

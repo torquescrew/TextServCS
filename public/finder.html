@@ -76,7 +76,10 @@
 
 <script>
   var finder = new Finder();
+
   finder.setup();
+
+  finder.setType(FindType.file);
 
   $('.close').click(function () {
     finder.close();

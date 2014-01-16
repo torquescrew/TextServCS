@@ -4,43 +4,47 @@
  */
 "use strict";
 
-function Browser() {
+function Browser() {}
+
+
+Browser.prototype.mSocket = io.connect('http://localhost');
+
+
+Browser.prototype.setup = function () {
+  serv.setSocket(this.mSocket);
+  this.openFolder("");
+};
+
+/**
+ * @param {string} folder
+ * @returns {void}
+ */
+Browser.prototype.openFolder = function (folder) {
   var self = this;
-  var mSocket = io.connect('http://localhost');
 
-  self.setup = function () {
-    serv.setSocket(mSocket);
-    self.openFolder("");
-  };
-
-  /**
-   * @param {string} folder
-   * @returns {void}
-   */
-  self.openFolder = function (folder) {
-    if (!u.validStr(folder)) {
-      serv.run('readSetting', ['folder'], function (folder) {
-        self.initFileTree(folder);
-      });
-    }
-    else {
+  if (!u.validStr(folder)) {
+    serv.run('readSetting', ['folder'], function (folder) {
       self.initFileTree(folder);
-    }
-  };
+    });
+  }
+  else {
+    self.initFileTree(folder);
+  }
+};
 
   /**
    * TODO: should this still be done this way?
    * Ask server to read file and post it to editor
    * @param {string} file
    */
-  self.requestOpenFile = function (file) {
-    if (mSocket === null) {
+  Browser.prototype.requestOpenFile = function (file) {
+    if (this.mSocket === null) {
       alert("mSocket is null");
     }
 
     if (u.validStr(file)) {
       console.log("emit req_open_file: " + file);
-      mSocket.emit('req_open_file', { fileName: file });
+      this.mSocket.emit('req_open_file', { fileName: file });
     }
   };
   
@@ -48,7 +52,7 @@ function Browser() {
    * @param {string} folder
    * @param {function} callback
    */
-  self.getList = function (folder, callback) {
+  Browser.prototype.getList = function (folder, callback) {
     serv.run('getListForFolder', [folder], function (list) {
       if (list) {
         callback(list);
@@ -59,7 +63,9 @@ function Browser() {
   /**
    * @param {string} folder
    */
-  self.initFileTree = function (folder) {
+  Browser.prototype.initFileTree = function (folder) {
+    var self = this;
+
     self.getList(folder, function (list) {
       $('#fileTree').html(list);
       self.setupFileTree();
@@ -69,7 +75,9 @@ function Browser() {
   /**
    * @param {jQuery=} root
    */
-  self.setupFileTree = function (root) {
+  Browser.prototype.setupFileTree = function (root) {
+    var self = this;
+
     if (!u.defined(root)) {
       root = $('body');
     }
@@ -115,4 +123,6 @@ function Browser() {
       }
     });
   };
-}
+
+
+
