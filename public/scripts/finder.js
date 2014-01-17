@@ -1,14 +1,13 @@
-/*global Browser, alert, u, serv */
+/*global Browser, alert, u, serv, s */
 /**
  * Created by tobysuggate on 16/01/14.
  */
 "use strict";
 
-var FindType = Object.freeze({
-  "folder": 0,
-  "file": 1
-});
-
+//var FindType = Object.freeze({
+//  "folder": 0,
+//  "file": 1
+//});
 
 
 /**
@@ -20,8 +19,8 @@ function Finder () {}
 /** @extends {Browser} */
 Finder.prototype = new Browser();
 
-/** @type {FindType} */
-Finder.prototype.mType = FindType.folder;
+/** @type {string} */
+Finder.prototype.mType = s.folder;
 
 /** @type {jQuery} */
 Finder.prototype.mSelected = null;
@@ -34,15 +33,13 @@ Finder.prototype.setupFinder = function () {
   this.openFolder();
 
   window.onmessage = function (e) {
-    if (e.data === 'file') {
-      self.setType(FindType.file);
+    if (e.data === s.file) {
+      self.setType(s.file);
     }
-    else if (e.data === 'folder') {
-      self.setType(FindType.folder);
+    else if (e.data === s.folder) {
+      self.setType(s.folder);
     }
   };
-
-
 };
 
 
@@ -85,7 +82,7 @@ Finder.prototype.getSelectedId = function () {
   return this.mSelected.attr('id');
 };
 
-
+/** @returns {void} */
 Finder.prototype.setSelected = function (elem) {
   if (this.mSelected !== null) {
     this.mSelected.css('background-color', 'inherit');
@@ -119,7 +116,7 @@ Finder.prototype.setupFileTree = function (root) {
   file.click(function (evt) {
     evt.stopPropagation();
 
-    if (self.getType() === FindType.file) {
+    if (self.getType() === s.file) {
       self.setSelected(this);
     }
   });
@@ -138,7 +135,7 @@ Finder.prototype.setupFileTree = function (root) {
 
     var folder = $(this).attr('id');
 
-    if (self.mType === FindType.folder) {
+    if (self.mType === s.folder) {
       self.setSelected(this);
     }
 

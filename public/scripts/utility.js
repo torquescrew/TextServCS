@@ -188,6 +188,13 @@ u.createId = function () {
 };
 
 
+var s = Object.freeze({
+  file: 'file',
+  folder: 'folder',
+  requestOpenFile: 'requestOpenFile'
+});
+
+
 if (u.exportDefined()) {
   exports.okString = u.okString;
   exports.badString = u.badString;

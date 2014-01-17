@@ -78,14 +78,21 @@
   var finder = new Finder();
 
   finder.setupFinder();
-  finder.setType(FindType.file);
+  finder.setType(s.file);
 
   $('.close').click(function () {
     finder.close();
   });
 
   $('.open').click(function () {
-    finder.requestOpenFile(finder.getSelectedId());
+    if (finder.getType() === s.file) {
+      finder.requestOpenFile(finder.getSelectedId());
+    }
+    else if (finder.getType() === s.folder) {
+
+    }
+
+
     finder.close();
   });
 

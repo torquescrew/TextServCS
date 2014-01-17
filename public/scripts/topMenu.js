@@ -1,4 +1,4 @@
-/*global ide, Dialog, alert */
+/*global ide, Dialog, alert, s */
 /**
  * Created by tobysuggate on 8/01/14.
  */
@@ -14,7 +14,6 @@ menu.backgroundColor = menu.fileMenu.css('background-color');
 
 
 menu.setup = function () {
-
   menu.menus.push(new MenuState('file-button', 'file-menu', menu.menus));
   menu.menus.push(new MenuState('view-button', 'view-menu', menu.menus));
 //  menu.menus.push(new MenuState('openRecent', 'recentsMenu', menu.menus, true));
@@ -28,12 +27,13 @@ menu.setup = function () {
   });
 
   menu.hookupItems();
-  menu.openFinder();
-
+//  menu.openFinder();
 };
 
-
-menu.openFinder = function () {
+/**
+ * @param {string} findType
+ */
+menu.openFinder = function (findType) {
   var style = 'height = 20rem; width = 100%;';
   var openFileDlg = new Dialog('new dialog', '<iframe id="dialog2" src="../finder.html" style="' + style + '" seamless></iframe>');
   openFileDlg.open();
@@ -41,7 +41,7 @@ menu.openFinder = function () {
   var win = document.getElementById('dialog2').contentWindow;
 
   win.onload = function () {
-    win.postMessage('file', '*');
+    win.postMessage(findType, '*');
   };
 
   window.onmessage = function (e) {
@@ -55,7 +55,12 @@ menu.openFinder = function () {
 menu.hookupItems = function () {
 
   $('#openFile').click(function () {
-    menu.openFinder();
+    menu.openFinder(s.file);
+    menu.closeAll();
+  });
+
+  $('#openFolder').click(function () {
+    menu.openFinder(s.folder);
     menu.closeAll();
   });
 
@@ -68,11 +73,8 @@ menu.hookupItems = function () {
     ide.toggleFileBrowser();
     menu.closeAll();
   });
-
-//  $('#openRecent').mouseover(function () {
-//
-//  });
 };
+
 
 menu.closeAll = function () {
   menu.menus.forEach(function (m) {
