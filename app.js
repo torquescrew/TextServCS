@@ -66,7 +66,8 @@ io.sockets.on('connection', function (socket) {
       socket.emit(task.id, result);
     }
     else {
-      console.log("si[task.name](" + task.name + ") doesn't exist!");
+      console.log("si[" + task.name + "] doesn't exist!");
+      console.log(si);
     }
   });
 

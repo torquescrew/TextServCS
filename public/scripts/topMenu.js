@@ -28,14 +28,21 @@ menu.setup = function () {
   });
 
   menu.hookupItems();
-//  menu.openFinder();
+  menu.openFinder();
 
 };
 
 
 menu.openFinder = function () {
-  var openFileDlg = new Dialog('new dialog', '<iframe id="dialog2" src="../finder.html" style="width: 100%; height: 100%; overflow: hidden;" seamless></iframe>');
+  var style = 'height = 20rem; width = 100%;';
+  var openFileDlg = new Dialog('new dialog', '<iframe id="dialog2" src="../finder.html" style="' + style + '" seamless></iframe>');
   openFileDlg.open();
+
+  var win = document.getElementById('dialog2').contentWindow;
+
+  win.onload = function () {
+    win.postMessage('file', '*');
+  };
 
   window.onmessage = function (e) {
     if (e.data === 'closeDialog') {

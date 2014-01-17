@@ -10,6 +10,7 @@ var FindType = Object.freeze({
 });
 
 
+
 /**
  * @constructor
  */
@@ -24,6 +25,35 @@ Finder.prototype.mType = FindType.folder;
 
 /** @type {jQuery} */
 Finder.prototype.mSelected = null;
+
+
+Finder.prototype.setupFinder = function () {
+  var self = this;
+
+  serv.setSocket(this.mSocket);
+  this.openFolder();
+
+  window.onmessage = function (e) {
+    if (e.data === 'file') {
+      self.setType(FindType.file);
+    }
+    else if (e.data === 'folder') {
+      self.setType(FindType.folder);
+    }
+  };
+
+
+};
+
+
+/**
+ * @param {function (string)} callback
+ */
+Finder.prototype.getHomeFolder = function (callback) {
+  var self = this;
+
+  serv.run('getHomeFolder', [], callback);
+};
 
 
 Finder.prototype.setType = function (type) {
@@ -41,17 +71,18 @@ Finder.prototype.close = function () {
 };
 
 
-Finder.prototype.openFolder = function (folder) {
+Finder.prototype.openFolder = function () {
   var self = this;
 
-  if (!u.validStr(folder)) {
-    serv.run('readSetting', ['folder'], function (folder) {
-      self.initFileTree(folder);
-    });
-  }
-  else {
+  serv.run('getHomeFolder', [], function (folder) {
     self.initFileTree(folder);
-  }
+  });
+
+};
+
+/** @returns {string} */
+Finder.prototype.getSelectedId = function () {
+  return this.mSelected.attr('id');
 };
 
 
@@ -122,5 +153,3 @@ Finder.prototype.setupFileTree = function (root) {
     }
   });
 };
-
-

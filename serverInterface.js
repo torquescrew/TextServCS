@@ -3,8 +3,8 @@
  */
 "use strict";
 
-var fio = require('./fileIO')
-  , walk = require('./walkDirectory');
+var fio = require('./fileIO'),
+    walk = require('./walkDirectory');
 
 /*
  These are the functions that can be called from the client side
@@ -34,3 +34,9 @@ exports.readFileSync = fio.readFileSync;
  * @returns {string}
  */
 exports.getListForFolder = walk.getListForFolder;
+
+
+/**
+ * @returns {string}
+ */
+exports.getHomeFolder = fio.getHomeFolder;

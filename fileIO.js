@@ -9,12 +9,12 @@ var fio = fio || {};
 
 if (typeof exports !== 'undefined') {
 
-  var express = require("express")
-    , http = require("http")
-    , path = require("path")
-    , wd = require("./walkDirectory")
-    , u = require("./public/scripts/utility")
-    , fs = require("fs");
+  var express = require("express"),
+      http = require("http"),
+      path = require("path"),
+      wd = require("./walkDirectory"),
+      u = require("./public/scripts/utility"),
+      fs = require("fs");
 
 
   fio.mSockets = null;
@@ -173,6 +173,14 @@ fio.readFolder = function (folder, response) {
 
 
 /**
+ * @returns {string}
+ */
+fio.getHomeFolder = function () {
+  return process.env.HOME;
+};
+
+
+/**
  * @param {string} fileName
  */
 fio.openFileRes = function (fileName) {
@@ -197,7 +205,7 @@ fio.openFileRes = function (fileName) {
  * @param {Socket} socket
  * @param {object} sockets
  */
-fio.setSocket = function(socket, sockets) {
+fio.setSocket = function (socket, sockets) {
   fio.mSockets = sockets;
   fio.initSocketHandlers(socket);
 };
@@ -238,4 +246,5 @@ if (typeof exports !== 'undefined') {
   exports.setSocket = fio.setSocket;
   exports.initSocketHandlers = fio.initSocketHandlers;
   exports.readFileSync = fio.readFileSync;
+  exports.getHomeFolder = fio.getHomeFolder;
 }

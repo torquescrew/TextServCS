@@ -77,11 +77,15 @@
 <script>
   var finder = new Finder();
 
-  finder.setup();
-
+  finder.setupFinder();
   finder.setType(FindType.file);
 
   $('.close').click(function () {
+    finder.close();
+  });
+
+  $('.open').click(function () {
+    finder.requestOpenFile(finder.getSelectedId());
     finder.close();
   });
 
