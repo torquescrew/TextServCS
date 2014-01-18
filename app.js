@@ -71,6 +71,11 @@ io.sockets.on('connection', function (socket) {
     }
   });
 
+  socket.on('emitToAll', function (data) {
+    console.log(data);
+    io.sockets.emit(data.id, data.data);
+  });
+
 });
 
 

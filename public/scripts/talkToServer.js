@@ -1,3 +1,4 @@
+/*global alert, u */
 /**
  * Created by tobysuggate on 3/01/14.
  */
@@ -49,8 +50,8 @@ serv.checkSocket = function () {
  * @param {function=} callback (optional)
  */
 serv.run = function (funcName, args, callback) {
-  if (serv.mSocket == null) {
-    throw new Error('serv.mSocket is not set')
+  if (serv.mSocket === null) {
+    throw new Error('serv.mSocket is not set');
   }
 
   var taskId = u.createId();

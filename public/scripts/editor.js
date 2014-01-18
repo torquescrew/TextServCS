@@ -1,3 +1,4 @@
+/*global io, serv, u, ace, s */
 /**
  * Created by tobysuggate on 23/12/13.
  */
@@ -12,11 +13,11 @@ edit.mEditor = null;
 edit.setupHandlers = function () {
   serv.setSocket(edit.mSocket);
 
-  edit.mSocket.on('news', function (data) {
-    console.log('editor on news: lalallalalallalalal!!!');
-    console.log(data);
-    edit.mSocket.emit('my other event', { my: 'data' });
-  });
+//  edit.mSocket.on('news', function (data) {
+//    console.log('editor on news: lalallalalallalalal!!!');
+//    console.log(data);
+//    edit.mSocket.emit('my other event', { my: 'data' });
+//  });
 
 //  edit.mSocket.on('res_open_file', function (data) {
 //    console.log('res_open_file: ' + data.fileName);
@@ -24,36 +25,17 @@ edit.setupHandlers = function () {
 //  });
 
 
-  edit.mSocket.on('req_open_file', function (data) {
-
-    console.log('req_open_file client************************************');
-
+  edit.mSocket.on(s.requestOpenFile, function (data) {
     serv.run('readFileSync', [data.fileName], function (res) {
       edit.openFile2(res.file, res.content);
     });
   });
-
-//  edit.mSocket.emit('req_open_file', 'hi');
-
-
-
-//  serv.run(function () {
-//    return fio.readSetting('folder');
-//  }, function (result) {
-//    console.log(result);
-//  });
-
-
-//  serv.run2('readSetting', 'folder', function (res) {
-//    console.log('omg: ' + res);
-//  });
 
   serv.run('readSetting', ['file'], function (fileName) {
     serv.run('readFileSync', [fileName], function (res) {
       edit.openFile2(res.file, res.content);
     });
   });
-
 };
 
 
@@ -65,16 +47,7 @@ edit.setCurrentFile = function (name) {
     location.hash = name;
     document.title = u.removePath(name);
 
-//    serv.run(function () {
-//      return fio.writeSetting('file', name);
-//    }, function (res) {
-//      console.log("current file set: " + name);
-//      console.log(res);
-//    });
-
-//    serv.run2('writeSetting', 'file', name);
-
-    serv.run3('writeSetting', ['file', name], function (res) {
+    serv.run('writeSetting', ['file', name], function (res) {
       console.log(res);
     });
   }
@@ -167,7 +140,7 @@ edit.setHotKeys = function () {
     name: 'save',
     bindKey: {win: 'Ctrl-S', mac: 'Command-S'},
     exec: function () {
-      saveFile();
+      edit.saveFile();
     }
   });
 
@@ -175,13 +148,14 @@ edit.setHotKeys = function () {
     name: 'build',
     bindKey: {win: 'Ctrl-B', mac: 'Command-B'},
     exec: function () {
-      var command = "ghc " + Editor.getCurrentFile();
-
-      console.log('runCommand("' + command + '");');
-
-      runCommand(command);
+      //TODO
     }
   });
+};
+
+
+edit.saveFile = function () {
+  //TODO
 };
 
 
@@ -203,11 +177,11 @@ edit.setMode = function (fileName) {
 
 
 
-$(document).ready(function () {
-  if ($('#editor').length) {
-    edit.mEditor = ace.edit("editor");
-    edit.setUpEditor();
-
-    edit.setupHandlers();
-  }
-});
+//$(document).ready(function () {
+//  if ($('#editor').length) {
+//    edit.mEditor = ace.edit("editor");
+//    edit.setUpEditor();
+//
+//    edit.setupHandlers();
+//  }
+//});

@@ -4,6 +4,9 @@
 
 "use strict";
 
+var s = require('./public/scripts/strings').s;
+
+
 var fio = fio || {};
 
 
@@ -215,11 +218,11 @@ fio.setSocket = function (socket, sockets) {
  * @param {Socket} socket
  */
 fio.initSocketHandlers = function (socket) {
-  socket.on('req_open_file', function (data) {
+  socket.on(s.requestOpenFile, function (data) {
     console.log("req_open_file: " + data.fileName);
 //    fio.openFileRes(data.fileName);
 
-    fio.mSockets.emit('req_open_file', data);
+    fio.mSockets.emit(s.requestOpenFile, data);
   });
 
   socket.on('write_setting', function (data) {

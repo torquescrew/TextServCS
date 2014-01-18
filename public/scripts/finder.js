@@ -1,13 +1,8 @@
-/*global Browser, alert, u, serv, s */
+/*global Browser, alert, u, s */
 /**
  * Created by tobysuggate on 16/01/14.
  */
 "use strict";
-
-//var FindType = Object.freeze({
-//  "folder": 0,
-//  "file": 1
-//});
 
 
 /**
@@ -29,7 +24,7 @@ Finder.prototype.mSelected = null;
 Finder.prototype.setupFinder = function () {
   var self = this;
 
-  serv.setSocket(this.mSocket);
+//  serv.setSocket(this.mSocket);
   this.openFolder();
 
   window.onmessage = function (e) {
@@ -47,9 +42,9 @@ Finder.prototype.setupFinder = function () {
  * @param {function (string)} callback
  */
 Finder.prototype.getHomeFolder = function (callback) {
-  var self = this;
+//  var self = this;
 
-  serv.run('getHomeFolder', [], callback);
+  this.mBridge.run('getHomeFolder', [], callback);
 };
 
 
@@ -71,7 +66,7 @@ Finder.prototype.close = function () {
 Finder.prototype.openFolder = function () {
   var self = this;
 
-  serv.run('getHomeFolder', [], function (folder) {
+  this.mBridge.run('getHomeFolder', [], function (folder) {
     self.initFileTree(folder);
   });
 

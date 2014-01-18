@@ -1,4 +1,4 @@
-/*global io, serv, u, alert */
+/*global io, u, alert, s, Bridge */
 /**
  * Created by tobysuggate on 16/01/14.
  */
@@ -7,12 +7,36 @@
 function Browser() {}
 
 
-Browser.prototype.mSocket = io.connect('http://localhost');
+//Browser.prototype.mSocket = io.connect('http://localhost');
 
+Browser.prototype.mBridge = new Bridge();
 
 Browser.prototype.setupBrowser = function () {
-  serv.setSocket(this.mSocket);
+
+
+//  serv.setSocket(this.mBridge.mSocket);
+  this.setupSocket();
   this.openFolder("");
+};
+
+
+/** @returns {void} */
+Browser.prototype.setupSocket = function () {
+  var self = this;
+
+//  this.mSocket.on('news', function () {
+//    console.log("this.mSocket.on('news'");
+//  });
+//
+//  console.log(io);
+//  io.sockets.send('news');
+
+//  this.mSocket.sockets.send('news', { hello: 'world' });
+
+  this.mBridge.on(s.requestOpenFolder, function (data) {
+//    alert('mBridge.on(s.requestOpenFolder,');
+    self.openFolder(data.name);
+  });
 };
 
 /**
@@ -23,7 +47,7 @@ Browser.prototype.openFolder = function (folder) {
   var self = this;
 
   if (!u.validStr(folder)) {
-    serv.run('readSetting', ['folder'], function (folder) {
+    this.mBridge.run('readSetting', ['folder'], function (folder) {
       self.initFileTree(folder);
     });
   }
@@ -33,27 +57,41 @@ Browser.prototype.openFolder = function (folder) {
 };
 
 /**
- * TODO: should this still be done this way?
- * Ask server to read file and post it to editor
+ * Tell editor to open given file
  * @param {string} file
  */
 Browser.prototype.requestOpenFile = function (file) {
-  if (this.mSocket === null) {
-    alert("mSocket is null");
+  if (this.mBridge === null) {
+    alert("Browser.mBridge is null");
   }
 
   if (u.validStr(file)) {
-    console.log("emit req_open_file: " + file);
-    this.mSocket.emit('req_open_file', { fileName: file });
+//    this.mBridge.emit(s.requestOpenFile, { fileName: file });
+    this.mBridge.toAllClients(s.requestOpenFile, { fileName: file });
   }
 };
+
+/**
+ * Tell fileBrowser to open given folder
+ * @param {string} folder
+ */
+Browser.prototype.requestOpenFolder = function (folder) {
+  if (this.mBridge === null) {
+    alert("Browser.mBridge is null");
+  }
+
+  if (u.validStr(folder)) {
+    this.mBridge.toAllClients(s.requestOpenFolder, { name: folder });
+  }
+};
+
 
 /**
  * @param {string} folder
  * @param {function} callback
  */
 Browser.prototype.getList = function (folder, callback) {
-  serv.run('getListForFolder', [folder], function (list) {
+  this.mBridge.run('getListForFolder', [folder], function (list) {
     if (list) {
       callback(list);
     }
