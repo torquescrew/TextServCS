@@ -11,6 +11,7 @@
 
 <div id="editor"></div>
 
+<script src="/socket.io/socket.io.js"></script>
 <script src="scripts/jquery-1.10.2.js"></script>
 <script src="ace/src-noconflict/ace.js"></script>
 <script src="ace/src-noconflict/ext-modelist.js"></script>
@@ -18,8 +19,7 @@
 
 <script src="scripts/strings.js"></script>
 <script src="scripts/utility.js"></script>
-<script src="scripts/talkToServer.js"></script>
-<script src="/socket.io/socket.io.js"></script>
+<script src="scripts/bridge.js"></script>
 <script src="scripts/editor.js"></script>
 
 <script>
@@ -30,8 +30,6 @@
     edit.setupHandlers();
   }
 </script>
-
-<!--<script src="scripts/fileIO.js"></script>-->
 
 </body>
 </html>

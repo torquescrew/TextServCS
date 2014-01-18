@@ -168,14 +168,6 @@ u.last = function (array) {
 };
 
 
-/**
- * @returns {boolean}
- */
-u.exportDefined = function () {
-  return typeof exports !== 'undefined' && exports !== null;
-};
-
-
 /** @type {number} */
 u.pageLoadTime = new Date().getTime();
 
@@ -188,10 +180,7 @@ u.createId = function () {
 };
 
 
-
-
-
-if (u.exportDefined()) {
+if (typeof exports !== 'undefined') {
   exports.okString = u.okString;
   exports.badString = u.badString;
   exports.tailAfterLast = u.tailAfterLast;

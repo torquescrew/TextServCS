@@ -1,4 +1,4 @@
-/*global Browser, alert, u, s */
+/*global Browser, alert, u, s, bridge */
 /**
  * Created by tobysuggate on 16/01/14.
  */
@@ -24,7 +24,6 @@ Finder.prototype.mSelected = null;
 Finder.prototype.setupFinder = function () {
   var self = this;
 
-//  serv.setSocket(this.mSocket);
   this.openFolder();
 
   window.onmessage = function (e) {
@@ -42,9 +41,7 @@ Finder.prototype.setupFinder = function () {
  * @param {function (string)} callback
  */
 Finder.prototype.getHomeFolder = function (callback) {
-//  var self = this;
-
-  this.mBridge.run('getHomeFolder', [], callback);
+  bridge.run('getHomeFolder', [], callback);
 };
 
 
@@ -66,7 +63,7 @@ Finder.prototype.close = function () {
 Finder.prototype.openFolder = function () {
   var self = this;
 
-  this.mBridge.run('getHomeFolder', [], function (folder) {
+  bridge.run('getHomeFolder', [], function (folder) {
     self.initFileTree(folder);
   });
 

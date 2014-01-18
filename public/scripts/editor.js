@@ -1,38 +1,25 @@
-/*global io, serv, u, ace, s */
+/*global io, Bridge, u, ace, s */
 /**
  * Created by tobysuggate on 23/12/13.
  */
 "use strict";
 
+var bridge = new Bridge();
+
 var edit = edit || {};
 
-edit.mSocket = io.connect('http://localhost');
 edit.mEditor = null;
 
 
 edit.setupHandlers = function () {
-  serv.setSocket(edit.mSocket);
-
-//  edit.mSocket.on('news', function (data) {
-//    console.log('editor on news: lalallalalallalalal!!!');
-//    console.log(data);
-//    edit.mSocket.emit('my other event', { my: 'data' });
-//  });
-
-//  edit.mSocket.on('res_open_file', function (data) {
-//    console.log('res_open_file: ' + data.fileName);
-//    edit.openFile(data.fileName, data.content);
-//  });
-
-
-  edit.mSocket.on(s.requestOpenFile, function (data) {
-    serv.run('readFileSync', [data.fileName], function (res) {
+  bridge.on(s.requestOpenFile, function (data) {
+    bridge.run('readFileSync', [data.fileName], function (res) {
       edit.openFile2(res.file, res.content);
     });
   });
 
-  serv.run('readSetting', ['file'], function (fileName) {
-    serv.run('readFileSync', [fileName], function (res) {
+  bridge.run('readSetting', ['file'], function (fileName) {
+    bridge.run('readFileSync', [fileName], function (res) {
       edit.openFile2(res.file, res.content);
     });
   });
@@ -47,7 +34,7 @@ edit.setCurrentFile = function (name) {
     location.hash = name;
     document.title = u.removePath(name);
 
-    serv.run('writeSetting', ['file', name], function (res) {
+    bridge.run('writeSetting', ['file', name], function (res) {
       console.log(res);
     });
   }
@@ -174,14 +161,3 @@ edit.setMode = function (fileName) {
   }
 };
 
-
-
-
-//$(document).ready(function () {
-//  if ($('#editor').length) {
-//    edit.mEditor = ace.edit("editor");
-//    edit.setUpEditor();
-//
-//    edit.setupHandlers();
-//  }
-//});

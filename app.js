@@ -1,14 +1,14 @@
 "use strict";
 
-var express = require("express")
-  , http = require("http")
-  , path = require("path")
-  , fs = require("fs")
-  , u = require("./public/scripts/utility")
-  , terminal = require('term.js')
-  , fio = require('./fileIO')
-  , termServer = require('./setupTermServer')
-  , si = require('./serverInterface');
+var express = require("express"),
+    http = require("http"),
+    path = require("path"),
+    fs = require("fs"),
+    u = require("./public/scripts/utility"),
+    terminal = require('term.js'),
+    fio = require('./fileIO'),
+    termServer = require('./setupTermServer'),
+    si = require('./serverInterface');
 
 var app = express();
 var server = http.createServer(app);
@@ -34,12 +34,6 @@ app.get("/", function (req, res) {
   res.sendfile(__dirname + '/public/ide.html');
 });
 
-app.get("/_open_file", fio.openFile);
-
-app.get("/_open_folder", fio.openFolder);
-
-app.post("/_save_file", fio.saveFile);
-
 
 server.listen(app.get("port"), function () {
   console.log("Express server listening on port " + app.get("port"));
@@ -54,11 +48,6 @@ io.sockets.on('connection', function (socket) {
 
   fio.setSocket(socket, io.sockets);
 
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-
   socket.on('task', function (task) {
     if (typeof si[task.name] !== 'undefined') {
       var result = si[task.name].apply(this, task.args);
@@ -72,7 +61,6 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('emitToAll', function (data) {
-    console.log(data);
     io.sockets.emit(data.id, data.data);
   });
 

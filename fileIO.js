@@ -218,21 +218,21 @@ fio.setSocket = function (socket, sockets) {
  * @param {Socket} socket
  */
 fio.initSocketHandlers = function (socket) {
-  socket.on(s.requestOpenFile, function (data) {
-    console.log("req_open_file: " + data.fileName);
-//    fio.openFileRes(data.fileName);
+//  socket.on(s.requestOpenFile, function (data) {
+//    console.log("req_open_file: " + data.fileName);
+////    fio.openFileRes(data.fileName);
+//
+//    fio.mSockets.emit(s.requestOpenFile, data);
+//  });
 
-    fio.mSockets.emit(s.requestOpenFile, data);
-  });
-
-  socket.on('write_setting', function (data) {
-    fio.writeSetting(data.name, data.value);
-  });
-
-  socket.on('read_setting', function (data) {
-    var value = fio.readSetting(data.name);
-    socket.emit('read_setting_res', value);
-  });
+//  socket.on('write_setting', function (data) {
+//    fio.writeSetting(data.name, data.value);
+//  });
+//
+//  socket.on('read_setting', function (data) {
+//    var value = fio.readSetting(data.name);
+//    socket.emit('read_setting_res', value);
+//  });
 };
 
 

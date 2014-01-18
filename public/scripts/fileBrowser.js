@@ -4,37 +4,20 @@
  */
 "use strict";
 
+var bridge = new Bridge();
+
 function Browser() {}
 
-
-//Browser.prototype.mSocket = io.connect('http://localhost');
-
-Browser.prototype.mBridge = new Bridge();
-
 Browser.prototype.setupBrowser = function () {
-
-
-//  serv.setSocket(this.mBridge.mSocket);
   this.setupSocket();
   this.openFolder("");
 };
-
 
 /** @returns {void} */
 Browser.prototype.setupSocket = function () {
   var self = this;
 
-//  this.mSocket.on('news', function () {
-//    console.log("this.mSocket.on('news'");
-//  });
-//
-//  console.log(io);
-//  io.sockets.send('news');
-
-//  this.mSocket.sockets.send('news', { hello: 'world' });
-
-  this.mBridge.on(s.requestOpenFolder, function (data) {
-//    alert('mBridge.on(s.requestOpenFolder,');
+  bridge.on(s.requestOpenFolder, function (data) {
     self.openFolder(data.name);
   });
 };
@@ -47,7 +30,7 @@ Browser.prototype.openFolder = function (folder) {
   var self = this;
 
   if (!u.validStr(folder)) {
-    this.mBridge.run('readSetting', ['folder'], function (folder) {
+    bridge.run('readSetting', ['folder'], function (folder) {
       self.initFileTree(folder);
     });
   }
@@ -61,13 +44,12 @@ Browser.prototype.openFolder = function (folder) {
  * @param {string} file
  */
 Browser.prototype.requestOpenFile = function (file) {
-  if (this.mBridge === null) {
+  if (bridge === null) {
     alert("Browser.mBridge is null");
   }
 
   if (u.validStr(file)) {
-//    this.mBridge.emit(s.requestOpenFile, { fileName: file });
-    this.mBridge.toAllClients(s.requestOpenFile, { fileName: file });
+    bridge.toAllClients(s.requestOpenFile, { fileName: file });
   }
 };
 
@@ -76,12 +58,12 @@ Browser.prototype.requestOpenFile = function (file) {
  * @param {string} folder
  */
 Browser.prototype.requestOpenFolder = function (folder) {
-  if (this.mBridge === null) {
+  if (bridge === null) {
     alert("Browser.mBridge is null");
   }
 
   if (u.validStr(folder)) {
-    this.mBridge.toAllClients(s.requestOpenFolder, { name: folder });
+    bridge.toAllClients(s.requestOpenFolder, { name: folder });
   }
 };
 
@@ -91,7 +73,7 @@ Browser.prototype.requestOpenFolder = function (folder) {
  * @param {function} callback
  */
 Browser.prototype.getList = function (folder, callback) {
-  this.mBridge.run('getListForFolder', [folder], function (list) {
+  bridge.run('getListForFolder', [folder], function (list) {
     if (list) {
       callback(list);
     }
