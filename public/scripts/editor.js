@@ -69,6 +69,7 @@ edit.openFile = function (file, content) {
   }
 
   if (u.validStr(edit.getCurrentFile())) {
+    bridge.emit('setWindowTitle', { title: edit.getCurrentFile() });
 
     console.log('openFile: ' + edit.getCurrentFile());
     edit.setMode(edit.getCurrentFile());
@@ -93,6 +94,8 @@ edit.openFile = function (file, content) {
  */
 edit.openFile2 = function (file, content) {
   if (u.validStr(file)) {
+
+    bridge.emit('setWindowTitle', { title: file });
 
     edit.setMode(file);
     edit.mEditor.setValue(content);

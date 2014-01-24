@@ -80,7 +80,8 @@ Finder.prototype.setSelected = function (elem) {
     this.mSelected.css('background-color', 'inherit');
   }
   this.mSelected = $(elem);
-  this.mSelected.css('background-color', '#ff4444');
+  console.log(this.mSelected);
+  this.mSelected.css('background-color', '#555555');
 };
 
 

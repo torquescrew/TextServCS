@@ -27,15 +27,15 @@ menu.setup = function () {
   });
 
   menu.hookupItems();
-//  menu.openFinder();
 };
 
 /**
  * @param {string} findType
+ * @param {string} title
  */
-menu.openFinder = function (findType) {
+menu.openFinder = function (findType, title) {
   var style = 'height = 20rem; width = 100%;';
-  var openFileDlg = new Dialog('new dialog', '<iframe id="dialog2" src="../finder.html" style="' + style + '" seamless></iframe>');
+  var openFileDlg = new Dialog(title, '<iframe id="dialog2" src="../finder.html" style="' + style + '" seamless></iframe>');
   openFileDlg.open();
 
   var win = document.getElementById('dialog2').contentWindow;
@@ -55,12 +55,12 @@ menu.openFinder = function (findType) {
 menu.hookupItems = function () {
 
   $('#openFile').click(function () {
-    menu.openFinder(s.file);
+    menu.openFinder(s.file, 'Open File');
     menu.closeAll();
   });
 
   $('#openFolder').click(function () {
-    menu.openFinder(s.folder);
+    menu.openFinder(s.folder, 'Open Folder');
     menu.closeAll();
   });
 

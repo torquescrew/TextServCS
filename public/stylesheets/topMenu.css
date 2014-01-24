@@ -21,11 +21,9 @@
     visibility: visible;
 }
 
-
 .darken {
     background-color: #333333 !important;
 }
-
 
 .item-col {
     min-width: 1em;
@@ -41,7 +39,6 @@
     text-align: right;
 }
 
-
 #tick-file-browser {
     /*visibility: hidden;*/
 }
@@ -49,7 +46,6 @@
 #tick-terminal {
     /*visibility: hidden;*/
 }
-
 
 #tick-new {
     visibility: hidden;

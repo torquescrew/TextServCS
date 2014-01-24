@@ -1,4 +1,4 @@
-/*global io, Bridge */
+/*global io, Bridge, u */
 /**
  * Created by tobysuggate on 2/01/14.
  */
@@ -34,8 +34,12 @@ ide.setup = function () {
 
   bridge.run('readSetting', ['terminal_open'], function (open) {
     if (!open) {
-//      ide.hideTerm();
+      ide.hideTerm();
     }
+  });
+
+  bridge.on('setWindowTitle', function (data) {
+    document.title = u.removePath(data.title);
   });
 };
 
