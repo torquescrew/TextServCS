@@ -26,11 +26,11 @@ ide.mToggleTermButton = $('#toggleTerminal');
 ide.mToggleBrowser = $('#toggleBrowser');
 
 ide.setup = function () {
-  bridge.run('readSetting', ['browser_open'], function (open) {
-    if (!open) {
+//  bridge.run('readSetting', ['browser_open'], function (open) {
+//    if (!open) {
 //      ide.hideBrowser();
-    }
-  });
+//    }
+//  });
 
   bridge.run('readSetting', ['terminal_open'], function (open) {
     if (!open) {

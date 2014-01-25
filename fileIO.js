@@ -20,7 +20,7 @@ if (typeof exports !== 'undefined') {
       fs = require("fs");
 
 
-  fio.mSockets = null;
+//  fio.mSockets = null;
   fio.mSettingsFile = process.env.HOME + "/.textServ";
 
   fio.defaultSettings = {
@@ -183,57 +183,57 @@ fio.getHomeFolder = function () {
 };
 
 
-/**
- * @param {string} fileName
- */
-fio.openFileRes = function (fileName) {
-  var data = "";
-
-  if (fs.existsSync(fileName)) {
-    data = fs.readFileSync(fileName);
-
-    if (u.okString(fileName) && u.okString(data.toString())) {
-      console.log('res_open_file ' + fileName);
-
-      fio.mSockets.emit('res_open_file', {
-        fileName: fileName,
-        content: data.toString()
-      });
-    }
-  }
-};
-
-
-/**
- * @param {Socket} socket
- * @param {object} sockets
- */
-fio.setSocket = function (socket, sockets) {
-  fio.mSockets = sockets;
-  fio.initSocketHandlers(socket);
-};
-
-
-/**
- * @param {Socket} socket
- */
-fio.initSocketHandlers = function (socket) {
-//  socket.on(s.requestOpenFile, function (data) {
-//    console.log("req_open_file: " + data.fileName);
-////    fio.openFileRes(data.fileName);
+///**
+// * @param {string} fileName
+// */
+//fio.openFileRes = function (fileName) {
+//  var data = "";
 //
-//    fio.mSockets.emit(s.requestOpenFile, data);
-//  });
-
-//  socket.on('write_setting', function (data) {
-//    fio.writeSetting(data.name, data.value);
-//  });
+//  if (fs.existsSync(fileName)) {
+//    data = fs.readFileSync(fileName);
 //
-//  socket.on('read_setting', function (data) {
-//    var value = fio.readSetting(data.name);
-//    socket.emit('read_setting_res', value);
-//  });
-};
+//    if (u.okString(fileName) && u.okString(data.toString())) {
+//      console.log('res_open_file ' + fileName);
+//
+//      fio.mSockets.emit('res_open_file', {
+//        fileName: fileName,
+//        content: data.toString()
+//      });
+//    }
+//  }
+//};
+
+
+///**
+// * @param {Socket} socket
+// * @param {object} sockets
+// */
+//fio.setSocket = function (socket, sockets) {
+//  fio.mSockets = sockets;
+////  fio.initSocketHandlers(socket);
+//};
+
+
+///**
+// * @param {Socket} socket
+// */
+//fio.initSocketHandlers = function (socket) {
+////  socket.on(s.requestOpenFile, function (data) {
+////    console.log("req_open_file: " + data.fileName);
+//////    fio.openFileRes(data.fileName);
+////
+////    fio.mSockets.emit(s.requestOpenFile, data);
+////  });
+//
+////  socket.on('write_setting', function (data) {
+////    fio.writeSetting(data.name, data.value);
+////  });
+////
+////  socket.on('read_setting', function (data) {
+////    var value = fio.readSetting(data.name);
+////    socket.emit('read_setting_res', value);
+////  });
+//};
 
 
 if (typeof exports !== 'undefined') {
@@ -245,7 +245,7 @@ if (typeof exports !== 'undefined') {
   exports.writeFile = fio.writeFile;
   exports.readFile = fio.readFile;
   exports.readFolder = fio.readFolder;
-  exports.openFileRes = fio.openFileRes;
+//  exports.openFileRes = fio.openFileRes;
   exports.setSocket = fio.setSocket;
   exports.initSocketHandlers = fio.initSocketHandlers;
   exports.readFileSync = fio.readFileSync;

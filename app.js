@@ -46,7 +46,7 @@ io.sockets.on('connection', function (socket) {
     termServer.onConnection(socket);
   });
 
-  fio.setSocket(socket, io.sockets);
+//  fio.setSocket(socket, io.sockets);
 
   socket.on('task', function (task) {
     if (typeof si[task.name] !== 'undefined') {

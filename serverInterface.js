@@ -40,3 +40,11 @@ exports.getListForFolder = walk.getListForFolder;
  * @returns {string}
  */
 exports.getHomeFolder = fio.getHomeFolder;
+
+
+/**
+ * Executed synchronously
+ * @param {string} file
+ * @param {string} content
+ */
+exports.writeFile = fio.writeFile;

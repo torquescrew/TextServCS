@@ -58,34 +58,42 @@ edit.getCurrentFile = function () {
 
 
 /**
- * @param {string} file
- * @param {string} content
+ * @param {function} callback
  */
-edit.openFile = function (file, content) {
-  console.log('openFile(res)');
-
-  if (u.validStr(file)) {
-    edit.setCurrentFile(file);
-  }
-
-  if (u.validStr(edit.getCurrentFile())) {
-    bridge.emit('setWindowTitle', { title: edit.getCurrentFile() });
-
-    console.log('openFile: ' + edit.getCurrentFile());
-    edit.setMode(edit.getCurrentFile());
-    edit.mEditor.setValue(content);
-    edit.mEditor.clearSelection();
-    edit.mEditor.scrollToLine(0);
-
-    document.title = u.removePath(edit.getCurrentFile());
-
-    var UndoManager = ace.require("ace/undomanager").UndoManager;
-    edit.mEditor.getSession().setUndoManager(new UndoManager());
-  }
-  else {
-    console.log("invalid current file");
-  }
+edit.getCurrentFile = function(callback) {
+  bridge.run('readSetting', ['file'], callback);
 };
+
+
+///**
+// * @param {string} file
+// * @param {string} content
+// */
+//edit.openFile = function (file, content) {
+//  console.log('openFile(res)');
+//
+//  if (u.validStr(file)) {
+//    edit.setCurrentFile(file);
+//  }
+//
+//  if (u.validStr(edit.getCurrentFile())) {
+//    bridge.emit('setWindowTitle', { title: edit.getCurrentFile() });
+//
+//    console.log('openFile: ' + edit.getCurrentFile());
+//    edit.setMode(edit.getCurrentFile());
+//    edit.mEditor.setValue(content);
+//    edit.mEditor.clearSelection();
+//    edit.mEditor.scrollToLine(0);
+//
+//    document.title = u.removePath(edit.getCurrentFile());
+//
+//    var UndoManager = ace.require("ace/undomanager").UndoManager;
+//    edit.mEditor.getSession().setUndoManager(new UndoManager());
+//  }
+//  else {
+//    console.log("invalid current file");
+//  }
+//};
 
 
 /**
@@ -104,6 +112,8 @@ edit.openFile2 = function (file, content) {
 
     var UndoManager = ace.require("ace/undomanager").UndoManager;
     edit.mEditor.getSession().setUndoManager(new UndoManager());
+
+    edit.setCurrentFile(file);
   }
   else {
     console.log("invalid current file");
@@ -145,7 +155,11 @@ edit.setHotKeys = function () {
 
 
 edit.saveFile = function () {
-  //TODO
+  edit.getCurrentFile(function (file) {
+    var content = edit.mEditor.getValue();
+
+    bridge.run('writeFile', [file, content]);
+  });
 };
 
 
