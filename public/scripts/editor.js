@@ -65,37 +65,6 @@ edit.getCurrentFile = function(callback) {
 };
 
 
-///**
-// * @param {string} file
-// * @param {string} content
-// */
-//edit.openFile = function (file, content) {
-//  console.log('openFile(res)');
-//
-//  if (u.validStr(file)) {
-//    edit.setCurrentFile(file);
-//  }
-//
-//  if (u.validStr(edit.getCurrentFile())) {
-//    bridge.emit('setWindowTitle', { title: edit.getCurrentFile() });
-//
-//    console.log('openFile: ' + edit.getCurrentFile());
-//    edit.setMode(edit.getCurrentFile());
-//    edit.mEditor.setValue(content);
-//    edit.mEditor.clearSelection();
-//    edit.mEditor.scrollToLine(0);
-//
-//    document.title = u.removePath(edit.getCurrentFile());
-//
-//    var UndoManager = ace.require("ace/undomanager").UndoManager;
-//    edit.mEditor.getSession().setUndoManager(new UndoManager());
-//  }
-//  else {
-//    console.log("invalid current file");
-//  }
-//};
-
-
 /**
  * @param {string} file
  * @param {string} content
@@ -121,15 +90,13 @@ edit.openFile2 = function (file, content) {
 };
 
 
+/**
+ * Themes: "ace/theme/monokai",
+ * "ace/theme/kr_theme",
+ * "ace/theme/solarized_dark"
+ */
 edit.setUpEditor = function () {
-//  Editor.mEditor.setTheme("ace/theme/monokai");
   edit.mEditor.setTheme("ace/theme/kr_theme");
-//  gEditor.setTheme("ace/theme/solarized_dark");
-
-//  Editor.mEditor.setOptions({
-//    enableBasicAutocompletion: true,
-//    enableSnippets: true
-//  });
 
   edit.setHotKeys();
 };

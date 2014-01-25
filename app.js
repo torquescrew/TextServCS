@@ -6,7 +6,6 @@ var express = require("express"),
     fs = require("fs"),
     u = require("./public/scripts/utility"),
     terminal = require('term.js'),
-    fio = require('./fileIO'),
     termServer = require('./setupTermServer'),
     si = require('./serverInterface');
 
@@ -45,8 +44,6 @@ io.sockets.on('connection', function (socket) {
   socket.on('setup term', function (data) {
     termServer.onConnection(socket);
   });
-
-//  fio.setSocket(socket, io.sockets);
 
   socket.on('task', function (task) {
     if (typeof si[task.name] !== 'undefined') {

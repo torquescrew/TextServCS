@@ -35,12 +35,10 @@ exports.readFileSync = fio.readFileSync;
  */
 exports.getListForFolder = walk.getListForFolder;
 
-
 /**
  * @returns {string}
  */
 exports.getHomeFolder = fio.getHomeFolder;
-
 
 /**
  * Executed synchronously
