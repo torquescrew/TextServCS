@@ -21,65 +21,42 @@
       <button id="file-button" class="menu-button">File</button>
       <button id="view-button" class="menu-button">View</button>
 
-      <table id="file-menu" class="item-menu">
-        <!--<tr class="item-row">-->
-          <!--<td class="item-col"></td>-->
-          <!--<td class="item-col" id="newFile">New</td>-->
-          <!--<td class="item-col item-key">c-n</td>-->
-        <!--</tr>-->
-        <tr class="item-row">
-          <td class="item-col"></td>
-          <td class="item-col" id="openFile">Open</td>
-          <td class="item-col item-key">c-o</td>
-        </tr>
-        <!--<tr class="item-row">-->
-          <!--<td class="item-col"></td>-->
-          <!--<td class="item-col" id="openRecent">Open Recent</td>-->
-          <!--<td class="item-col item-key">►</td>-->
-        <!--</tr>-->
-        <tr class="item-row">
-          <td class="item-col"></td>
-          <td class="item-col" id="openFolder">Open Folder</td>
-          <td class="item-col item-key"></td>
-        </tr>
-        <tr class="item-row">
-          <td class="item-col"></td>
-          <td class="item-col" id="saveFile">Save</td>
-          <td class="item-col item-key">c-s</td>
-        </tr>
-        <!--<tr class="item-row">-->
-          <!--<td class="item-col"></td>-->
-          <!--<td class="item-col" id="renameFile">Rename</td>-->
-          <!--<td class="item-col item-key"></td>-->
-        <!--</tr>-->
-      </table>
+      <ul id="file-menu" class="item-menu">
+        <li class="item-row" id="openFile">
+          <div class="listColA">✓</div>
+          <div class="listColB">Open File</div>
+          <div class="listColC">c-o</div>
+        </li>
 
-      <table id="view-menu" class="item-menu">
-        <tr class="item-row">
-          <td id="tick-file-browser" class="item-col">✓</td>
-          <td class="item-col" id="toggleFileBrowser">File Browser</td>
-          <td class="item-col item-key">c-s-f</td>
-        </tr>
-        <tr class="item-row">
-          <td id="tick-terminal" class="item-col">✓</td>
-          <td class="item-col" id="toggleTerminal">Terminal</td>
-          <td class="item-col item-key">c-s-t</td>
-        </tr>
-      </table>
+        <li class="item-row" id="openRecent">
+          <div class="listColA">✓</div>
+          <div class="listColB">Open Recent</div>
+          <div class="listColC">►</div>
+        </li>
+        <li class="item-row" id="openFolder">
+          <div class="listColA">✓</div>
+          <div class="listColB">Open Folder</div>
+          <div class="listColC">c-f</div>
+        </li>
+        <li class="item-row" id="saveFile">
+          <div class="listColA">✓</div>
+          <div class="listColB">Save File</div>
+          <div class="listColC">c-s</div>
+        </li>
+      </ul>
 
-      <table id="recentsMenu" class="item-menu">
-        <tr class="item-row">
-          <!--<td class="item-col"></td>-->
-          <td class="item-col">someFile.txt</td>
-          <!--<td class="item-col item-key"></td>-->
-        </tr>
-        <tr class="item-row">
-          <td class="item-col">someFile.txt</td>
-        </tr>
-        <tr class="item-row">
-          <td class="item-col">someFile.txt</td>
-        </tr>
-      </table>
+      <ul id="view-menu" class="item-menu">
+        <li class="item-row" id="toggleFileBrowser">
+          <div class="listColA">✓</div>
+          <div class="listColB">File Browser</div>
+          <div class="listColC">c-s-b</div>
+        </li>
+        <li class="item-row" id="toggleTerminal">
+          <div class="listColA">✓</div>
+          <div class="listColB">Terminal</div>
+          <div class="listColC">c-s-t</div>
+        </li>
+      </ul>
 
     </td>
   </tr>
