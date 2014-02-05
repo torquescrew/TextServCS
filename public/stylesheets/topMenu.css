@@ -9,7 +9,7 @@
     font-family: sans-serif;
     background-color: #333333;
     margin: 0;
-    font-size: 80%;
+    font-size: small;
     visibility: hidden;
     padding: 0;
     box-shadow: 7px 7px 12px #202020;
@@ -41,6 +41,10 @@
     height: 1rem;
     padding: 0.2rem;
 }
+
+/*#recentMenu {*/
+    /*width: 8rem;*/
+/*}*/
 
 
 .show {
@@ -83,7 +87,7 @@
     float: left;
     border: 0;
     color: #aaaaaa;
-    font-size: 80%;
+    font-size: small;
     outline: none;
     margin: 0;
 }
