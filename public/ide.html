@@ -9,6 +9,28 @@
   <link rel="stylesheet" type="text/css" href="stylesheets/global.css">
   <link rel="stylesheet" type="text/css" href="stylesheets/topMenu.css">
   <link rel="stylesheet" type="text/css" href="stylesheets/dialog.css">
+
+
+  <link rel="stylesheet" href="Jquery-ui/themes/base/all.css">
+  <script src="Jquery-ui/jquery-1.10.2.js"></script>
+  <script src="Jquery-ui/ui/core.js"></script>
+  <script src="Jquery-ui/ui/widget.js"></script>
+  <script src="Jquery-ui/ui/position.js"></script>
+  <script src="Jquery-ui/ui/menu.js"></script>
+  <link rel="stylesheet" href="Jquery-ui/demos/demos.css">
+  <script>
+    $(function() {
+      $( "#fileMenu" ).menu();
+    });
+  </script>
+  <style>
+    .ui-menu {
+
+      width: 150px;
+      position: absolute;
+
+    }
+  </style>
 </head>
 
 <body>
@@ -21,7 +43,7 @@
       <button id="file-button" class="menu-button">File</button>
       <button id="view-button" class="menu-button">View</button>
 
-      <ul id="file-menu" class="item-menu">
+      <ul id="fileMenu" class="myMenu">
         <li class="item-row" id="openFile">
           <div class="listColA">✓</div>
           <div class="listColB">Open File</div>
@@ -29,29 +51,22 @@
         </li>
 
         <li class="item-row" id="openRecent">
-          <div class="listColA">✓</div>
-          <div class="listColB">Open Recent</div>
-          <div class="listColC">►</div>
-
-          <ul id="recentMenu" class="item-menu">
-            <li class="item-row" id="file1">
-              <div class="listColA">✓</div>
-              <div class="listColB">file1</div>
-              <div class="listColC">c-s-b</div>
-            </li>
-            <li class="item-row" id="file2">
-              <div class="listColA">✓</div>
-              <div class="listColB">file2</div>
-              <div class="listColC">c-s-t</div>
-            </li>
+        <div class="listColA">✓</div>
+        <div class="listColB">Open Recent</div>
+        <div class="listColC"></div>
+          <ul>
+            <li>file 1</li>
+            <li>file 2</li>
+            <li>file 3</li>
           </ul>
-
         </li>
+
         <li class="item-row" id="openFolder">
           <div class="listColA">✓</div>
           <div class="listColB">Open Folder</div>
           <div class="listColC">c-f</div>
         </li>
+
         <li class="item-row" id="saveFile">
           <div class="listColA">✓</div>
           <div class="listColB">Save File</div>
@@ -59,21 +74,58 @@
         </li>
       </ul>
 
-      <ul id="view-menu" class="item-menu">
-        <li class="item-row" id="toggleFileBrowser">
-          <div class="listColA">✓</div>
-          <div class="listColB">File Browser</div>
-          <div class="listColC">c-s-b</div>
-        </li>
-        <li class="item-row" id="toggleTerminal">
-          <div class="listColA">✓</div>
-          <div class="listColB">Terminal</div>
-          <div class="listColC">c-s-t</div>
-        </li>
-      </ul>
 
 
+      <!--<ul id="file-menu" class="item-menu">-->
+        <!--<li class="item-row" id="openFile">-->
+          <!--<div class="listColA">✓</div>-->
+          <!--<div class="listColB">Open File</div>-->
+          <!--<div class="listColC">c-o</div>-->
+        <!--</li>-->
 
+        <!--<li class="item-row" id="openRecent">-->
+          <!--<div class="listColA">✓</div>-->
+          <!--<div class="listColB">Open Recent</div>-->
+          <!--<div class="listColC">►</div>-->
+
+          <!--<ul id="recentMenu" class="item-menu">-->
+            <!--<li class="item-row" id="file1">-->
+              <!--<div class="listColA">✓</div>-->
+              <!--<div class="listColB">file1</div>-->
+              <!--<div class="listColC">c-s-b</div>-->
+            <!--</li>-->
+            <!--<li class="item-row" id="file2">-->
+              <!--<div class="listColA">✓</div>-->
+              <!--<div class="listColB">file2</div>-->
+              <!--<div class="listColC">c-s-t</div>-->
+            <!--</li>-->
+          <!--</ul>-->
+
+        <!--</li>-->
+        <!--<li class="item-row" id="openFolder">-->
+          <!--<div class="listColA">✓</div>-->
+          <!--<div class="listColB">Open Folder</div>-->
+          <!--<div class="listColC">c-f</div>-->
+        <!--</li>-->
+        <!--<li class="item-row" id="saveFile">-->
+          <!--<div class="listColA">✓</div>-->
+          <!--<div class="listColB">Save File</div>-->
+          <!--<div class="listColC">c-s</div>-->
+        <!--</li>-->
+      <!--</ul>-->
+
+      <!--<ul id="view-menu" class="item-menu">-->
+        <!--<li class="item-row" id="toggleFileBrowser">-->
+          <!--<div class="listColA">✓</div>-->
+          <!--<div class="listColB">File Browser</div>-->
+          <!--<div class="listColC">c-s-b</div>-->
+        <!--</li>-->
+        <!--<li class="item-row" id="toggleTerminal">-->
+          <!--<div class="listColA">✓</div>-->
+          <!--<div class="listColB">Terminal</div>-->
+          <!--<div class="listColC">c-s-t</div>-->
+        <!--</li>-->
+      <!--</ul>-->
 
     </td>
   </tr>

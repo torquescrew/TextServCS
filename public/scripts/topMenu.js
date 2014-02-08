@@ -7,25 +7,22 @@
 
 var menu = menu || {};
 
-//menu.fileMenu = $('#file-menu');
 menu.menus = [];
-//menu.items = $('.item-row');
-//menu.backgroundColor = menu.fileMenu.css('background-color');
 
 
 menu.setup = function () {
 
-  var fileMenu = new MenuState();
-  fileMenu.setup('file-button', 'file-menu', menu.menus);
-  menu.menus.push(fileMenu);
-
-  var viewMenu = new MenuState();
-  viewMenu.setup('view-button', 'view-menu', menu.menus);
-  menu.menus.push(viewMenu);
-
-  var recentFileMenu = new MenuState();
-  recentFileMenu.setup('openRecent', 'recentMenu', menu.menus, fileMenu);
-  menu.menus.push(recentFileMenu);
+//  var fileMenu = new MenuState();
+//  fileMenu.setup('file-button', 'file-menu', menu.menus);
+//  menu.menus.push(fileMenu);
+//
+//  var viewMenu = new MenuState();
+//  viewMenu.setup('view-button', 'view-menu', menu.menus);
+//  menu.menus.push(viewMenu);
+//
+//  var recentFileMenu = new MenuState();
+//  recentFileMenu.setup('openRecent', 'recentMenu', menu.menus, fileMenu);
+//  menu.menus.push(recentFileMenu);
 
 //  menu.menus.push(new MenuState('openRecent', 'recentMenu', menu.menus, true));
 
@@ -71,6 +68,16 @@ menu.openFinder = function (findType, title) {
 
 
 menu.hookupItems = function () {
+  var fileButton = $('#file-button');
+  var myMenu = $('.myMenu');
+
+  fileButton.click(function () {
+    var pos = fileButton.offset();
+    pos.top += fileButton.outerHeight(true);
+
+    myMenu.css({ top: pos.top, left: pos.left });
+    myMenu.toggleClass('show');
+  });
 
   $('#openFile').click(function () {
     menu.openFinder(s.file, 'Open File');
