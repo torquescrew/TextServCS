@@ -83,9 +83,25 @@ fio.writeSetting = function (name, value) {
  * @returns {{file: (String), content: (string)}}
  */
 fio.readFileSync = function (file) {
-  var content = fs.readFileSync(file);
+  console.log(file);
+  var stats = null;
 
-  return { file: file, content: content.toString() };
+  if (u.okString(file)) {
+    stats = fs.statSync(file);
+    console.log("is character device: " + stats.isCharacterDevice());
+  }
+
+
+
+  if (stats && stats.isFile()) {
+    var content = fs.readFileSync(file);
+
+    return { file: file, content: content.toString() };
+  }
+
+  console.log(file + " is not a file");
+
+  return { file: file, content: file + " is not a file." };
 };
 
 

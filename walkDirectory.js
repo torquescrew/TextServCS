@@ -8,7 +8,7 @@ var walk = walk || {};
 
 
 /** @type {string[]} */
-walk.ignore = [".hi", ".o", ".hs~"];
+walk.ignore = [".hi", ".o", ".hs~", ".face.icon"];
 
 /**
  * @param {string} path
@@ -24,7 +24,9 @@ walk.isDir = function (path) {
  * @returns {boolean}
  */
 walk.isFile = function (path) {
-  return u.okString(path) && fs.statSync(path).isFile() && !walk.shouldIgnore(path);
+  console.log("isFile: " + path);
+
+  return !walk.shouldIgnore(path) && u.okString(path) && fs.statSync(path).isFile();
 };
 
 /**
