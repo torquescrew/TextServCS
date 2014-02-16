@@ -7,42 +7,61 @@
 
 var menu = menu || {};
 
-menu.menus = [];
+menu.fileMenu = $('#fileMenu');
+menu.viewMenu = $('#viewMenu');
 
 
 menu.setup = function () {
-
-//  var fileMenu = new MenuState();
-//  fileMenu.setup('file-button', 'file-menu', menu.menus);
-//  menu.menus.push(fileMenu);
-//
-//  var viewMenu = new MenuState();
-//  viewMenu.setup('view-button', 'view-menu', menu.menus);
-//  menu.menus.push(viewMenu);
-//
-//  var recentFileMenu = new MenuState();
-//  recentFileMenu.setup('openRecent', 'recentMenu', menu.menus, fileMenu);
-//  menu.menus.push(recentFileMenu);
-
-//  menu.menus.push(new MenuState('openRecent', 'recentMenu', menu.menus, true));
-
-//  menu.items.mouseover(function () {
-//    $(this).css("background-color", "#222222");
-//  });
-//
-//  menu.items.mouseout(function () {
-//    $(this).css("background-color", menu.backgroundColor);
-//  });
-
-  menu.hookupItems();
+  menu.hookupFileMenu();
+  menu.hookupViewMenu();
 };
 
 
-menu.setupRecents = function () {
-  $('#openRecent').mouseover(function () {
+menu.hookupFileMenu = function () {
+  var fileButton = $('#file-button');
 
+  fileButton.click(function () {
+    var pos = fileButton.offset();
+    pos.top += fileButton.outerHeight(true);
+
+    menu.fileMenu.css({ top: pos.top, left: pos.left });
+    menu.fileMenu.toggleClass('show');
+  });
+
+  $('#openFile').click(function () {
+    menu.openFinder(s.file, 'Open File');
+    menu.closeAll();
+  });
+
+  $('#openFolder').click(function () {
+    menu.openFinder(s.folder, 'Open Folder');
+    menu.closeAll();
   });
 };
+
+menu.hookupViewMenu = function () {
+  var viewButton = $('#view-button');
+
+  viewButton.click(function () {
+    var pos = viewButton.offset();
+    pos.top += viewButton.outerHeight(true);
+
+    menu.viewMenu.css({ top: pos.top, left: pos.left });
+    menu.viewMenu.toggleClass('show');
+  });
+
+
+  $('#toggleTerminal').click(function () {
+    ide.toggleTerminal();
+    menu.closeAll();
+  });
+
+  $('#toggleFileBrowser').click(function () {
+    ide.toggleFileBrowser();
+    menu.closeAll();
+  });
+};
+
 
 /**
  * @param {string} findType
@@ -66,45 +85,9 @@ menu.openFinder = function (findType, title) {
   };
 };
 
-
-menu.hookupItems = function () {
-  var fileButton = $('#file-button');
-  var myMenu = $('.myMenu');
-
-  fileButton.click(function () {
-    var pos = fileButton.offset();
-    pos.top += fileButton.outerHeight(true);
-
-    myMenu.css({ top: pos.top, left: pos.left });
-    myMenu.toggleClass('show');
-  });
-
-  $('#openFile').click(function () {
-    menu.openFinder(s.file, 'Open File');
-    menu.closeAll();
-  });
-
-  $('#openFolder').click(function () {
-    menu.openFinder(s.folder, 'Open Folder');
-    menu.closeAll();
-  });
-
-  $('#toggleTerminal').click(function () {
-    ide.toggleTerminal();
-    menu.closeAll();
-  });
-
-  $('#toggleFileBrowser').click(function () {
-    ide.toggleFileBrowser();
-    menu.closeAll();
-  });
-};
-
-
 menu.closeAll = function () {
-  menu.menus.forEach(function (m) {
-    m.close();
-  });
+  menu.fileMenu.removeClass('show');
+  menu.viewMenu.removeClass('show');
 };
 
 
